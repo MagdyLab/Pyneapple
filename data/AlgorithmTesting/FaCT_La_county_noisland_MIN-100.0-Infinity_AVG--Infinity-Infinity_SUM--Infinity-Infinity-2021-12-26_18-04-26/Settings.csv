@@ -1,0 +1,7 @@
+Constraint, Attribute Name, Lower Bound, Upper Bound
+Min, pop_16up, 100.0, Infinity
+Max, pop_16up, -Infinity, Infinity
+Avg, pop_16up, -Infinity, Infinity
+Sum, pop_16up, -Infinity, Infinity
+Count, , -Infinity, Infinity
+Rand,1,1

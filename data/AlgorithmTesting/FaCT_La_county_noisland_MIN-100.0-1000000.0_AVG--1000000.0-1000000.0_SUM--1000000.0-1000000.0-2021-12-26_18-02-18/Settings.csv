@@ -1,0 +1,7 @@
+Constraint, Attribute Name, Lower Bound, Upper Bound
+Min, pop_16up, 100.0, 1000000.0
+Max, pop_16up, -1000000.0, 1000000.0
+Avg, pop_16up, -1000000.0, 1000000.0
+Sum, pop_16up, -1000000.0, 1000000.0
+Count, , -1000000.0, 1000000.0
+Rand,1,1
