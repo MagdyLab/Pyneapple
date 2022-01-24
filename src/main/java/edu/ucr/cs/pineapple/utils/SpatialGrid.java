@@ -23,7 +23,7 @@ public class SpatialGrid{
     double minX, minY, maxX, maxY;
     private Map<Integer, Set<Integer>> grid_area;
     private Map<Integer, Set<Integer>> area_grid;
-    Map<Integer, Set<Integer>> neighbors;
+    Map<Integer, Set<Integer>> RookNeighbors;
     public SpatialGrid(double minx, double miny, double maxx, double maxy){
         minX = minx;
         minY = miny;
@@ -40,7 +40,7 @@ public class SpatialGrid{
         grid_area = new HashMap<Integer, Set<Integer>>();
         area_grid = new HashMap<Integer, Set<Integer>>();
     }
-    public void creatreIndex(int n, List<Geometry> polygons){
+    public void creatreIndexWithGeometry(int n, List<Geometry> polygons){
         double widthStep = (maxX - minX) / n;
         double heightStep = (maxY - minY) / n;
         int listLength = polygons.size();
@@ -65,20 +65,20 @@ public class SpatialGrid{
             for (int x = cminGridIndexX; x <= cmaxGridIndexX; x++){
                 for(int y = cminGridIndexY; y <= cmaxGridIndexY; y++){
                     int key = y *n + x;
-                    int id = Integer.parseInt(feature.getID().split("\\.")[1]) - 1;
+                    /*int id = Integer.parseInt(feature.getID().split("\\.")[1]) - 1;
                     if(id != i)
-                        System.out.println("ID != I");
+                        System.out.println("ID != I");*/
                     if(grid_area.containsKey(key)){
-                        grid_area.get(key).add(id);
+                        grid_area.get(key).add(i);
                     }else{
                         grid_area.put(key, new TreeSet<Integer>());
-                        grid_area.get(key).add(id);
+                        grid_area.get(key).add(i);
                     }
-                    if (area_grid.containsKey(id)){
-                        area_grid.get(id).add(key);
+                    if (area_grid.containsKey(i)){
+                        area_grid.get(i).add(key);
                     }else{
-                        area_grid.put(id, new TreeSet<Integer>());
-                        area_grid.get(id).add(key);
+                        area_grid.put(i, new TreeSet<Integer>());
+                        area_grid.get(i).add(key);
                     }
                 }
             }
@@ -130,8 +130,9 @@ public class SpatialGrid{
         }
 
     }
-    public void calculateContiguity(List<Geometry> geometries){
-        neighbors = new HashMap<Integer, Set<Integer>>();
+    public void RookWithGeometry(List<Geometry> geometries){
+        creatreIndexWithGeometry(45, geometries);
+        RookNeighbors = new HashMap<Integer, Set<Integer>>();
         int listLength = geometries.size();
         for(int i = 0; i < listLength; i++){
             //System.out.println(i== (Integer.parseInt(fList.get(i).getID().split("\\.")[1]) - 1));
@@ -145,23 +146,23 @@ public class SpatialGrid{
             for(Integer aid: areas){
                 if(aid == i)
                     continue;
-                Boolean intersects = pGeometry.intersects((Geometry)fList.get(aid).getDefaultGeometry());
-                Geometry intersection = pGeometry.intersection((Geometry)fList.get(aid).getDefaultGeometry());
+                Boolean intersects = pGeometry.intersects((Geometry)geometries.get(aid));
+                Geometry intersection = pGeometry.intersection((Geometry)geometries.get(aid));
                 if( intersects && !(intersection instanceof  Point || intersection instanceof  MultiPoint)){
                     //System.out.println(intersection.getClass().getName());
-                    if (neighbors.containsKey(i)) {
-                        neighbors.get(i).add(aid);
+                    if (RookNeighbors.containsKey(i)) {
+                        RookNeighbors.get(i).add(aid);
                     }
                     else{
-                        neighbors.put(i, new TreeSet<Integer>());
-                        neighbors.get(i).add(aid);
+                        RookNeighbors.put(i, new TreeSet<Integer>());
+                        RookNeighbors.get(i).add(aid);
                     }
 
-                    if(neighbors.containsKey(aid))
-                        neighbors.get(aid).add(i);
+                    if(RookNeighbors.containsKey(aid))
+                        RookNeighbors.get(aid).add(i);
                     else{
-                        neighbors.put(aid, new TreeSet<Integer>());
-                        neighbors.get(aid).add(i);
+                        RookNeighbors.put(aid, new TreeSet<Integer>());
+                        RookNeighbors.get(aid).add(i);
                     }
 
                 }
@@ -169,7 +170,7 @@ public class SpatialGrid{
         }
     }
     public void calculateContiguity(List<SimpleFeature> fList){
-        neighbors = new HashMap<Integer, Set<Integer>>();
+        RookNeighbors = new HashMap<Integer, Set<Integer>>();
         int listLength = fList.size();
         for(int i = 0; i < listLength; i++){
             //System.out.println(i== (Integer.parseInt(fList.get(i).getID().split("\\.")[1]) - 1));
@@ -187,19 +188,19 @@ public class SpatialGrid{
                 Geometry intersection = pGeometry.intersection((Geometry)fList.get(aid).getDefaultGeometry());
                 if( intersects && !(intersection instanceof  Point || intersection instanceof  MultiPoint)){
                     //System.out.println(intersection.getClass().getName());
-                    if (neighbors.containsKey(i)) {
-                        neighbors.get(i).add(aid);
+                    if (RookNeighbors.containsKey(i)) {
+                        RookNeighbors.get(i).add(aid);
                     }
                     else{
-                        neighbors.put(i, new TreeSet<Integer>());
-                        neighbors.get(i).add(aid);
+                        RookNeighbors.put(i, new TreeSet<Integer>());
+                        RookNeighbors.get(i).add(aid);
                     }
 
-                    if(neighbors.containsKey(aid))
-                        neighbors.get(aid).add(i);
+                    if(RookNeighbors.containsKey(aid))
+                        RookNeighbors.get(aid).add(i);
                     else{
-                        neighbors.put(aid, new TreeSet<Integer>());
-                        neighbors.get(aid).add(i);
+                        RookNeighbors.put(aid, new TreeSet<Integer>());
+                        RookNeighbors.get(aid).add(i);
                     }
 
                 }
@@ -208,8 +209,8 @@ public class SpatialGrid{
     }
     public Set<Integer> getNeighbors(Integer id){
 
-        if(neighbors.containsKey(id)){
-            return neighbors.get(id);
+        if(RookNeighbors.containsKey(id)){
+            return RookNeighbors.get(id);
         }else{
             return new TreeSet<>();
         }
@@ -236,7 +237,7 @@ public class SpatialGrid{
 
     }
     public void setNeighbors(Map<Integer, Set<Integer>> n){
-        this.neighbors = n;
+        this.RookNeighbors = n;
     }
     public static void main(String args[]) throws IOException {
         File file = new File("data/merged_noisland.shp");

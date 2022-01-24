@@ -1,5 +1,9 @@
 package edu.ucr.cs.pineapple.regionalization;
 
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.RegionNew;
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.Tabu;
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.TabuReturn;
+import edu.ucr.cs.pineapple.utils.SpatialGrid;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
