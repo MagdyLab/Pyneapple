@@ -1,4 +1,4 @@
-package edu.ucr.cs.pineapple.utils;
+package edu.ucr.cs.pineapple.regionalization;
 
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
@@ -39,51 +39,6 @@ public class SpatialGrid{
         maxY = -1;
         grid_area = new HashMap<Integer, Set<Integer>>();
         area_grid = new HashMap<Integer, Set<Integer>>();
-    }
-    public void creatreIndex(int n, List<Geometry> polygons){
-        double widthStep = (maxX - minX) / n;
-        double heightStep = (maxY - minY) / n;
-        int listLength = polygons.size();
-        for(int i = 0; i < listLength; i++){
-            //SimpleFeature feature = fList.get(i);
-            Geometry geometry = polygons.get(i);
-            double cminx = geometry.getEnvelope().getCoordinates()[0].getX();
-            double cminy = geometry.getEnvelope().getCoordinates()[0].getY();
-            double cmaxx = geometry.getEnvelope().getCoordinates()[2].getX();
-            double cmaxy = geometry.getEnvelope().getCoordinates()[2].getY();
-            if(cminx < minX || cmaxx > maxX || cminy < minY || cmaxy > maxY){
-                System.out.println("Error!");
-            }
-
-            int cminGridIndexX = (int) ((cminx - minX) / widthStep);
-            int cminGridIndexY = (int) ((cminy - minY) / heightStep);
-            int cmaxGridIndexX = (int) ((cmaxx - minX) / widthStep);
-            int cmaxGridIndexY = (int) ((cmaxy - minY) / heightStep);
-            /*if(i == 545){
-                System.out.println("545: " + ((cminx - minX) / widthStep) + " " + ((cminy - minY) / heightStep) + " " +((cmaxx - minX) / widthStep) + " " + ((cmaxy - minY) / heightStep));
-            }*/
-            for (int x = cminGridIndexX; x <= cmaxGridIndexX; x++){
-                for(int y = cminGridIndexY; y <= cmaxGridIndexY; y++){
-                    int key = y *n + x;
-                    int id = Integer.parseInt(feature.getID().split("\\.")[1]) - 1;
-                    if(id != i)
-                        System.out.println("ID != I");
-                    if(grid_area.containsKey(key)){
-                        grid_area.get(key).add(id);
-                    }else{
-                        grid_area.put(key, new TreeSet<Integer>());
-                        grid_area.get(key).add(id);
-                    }
-                    if (area_grid.containsKey(id)){
-                        area_grid.get(id).add(key);
-                    }else{
-                        area_grid.put(id, new TreeSet<Integer>());
-                        area_grid.get(id).add(key);
-                    }
-                }
-            }
-        }
-
     }
     public void createIndex(int n,List<SimpleFeature> fList){
         double widthStep = (maxX - minX) / n;
@@ -129,44 +84,6 @@ public class SpatialGrid{
             }
         }
 
-    }
-    public void calculateContiguity(List<Geometry> geometries){
-        neighbors = new HashMap<Integer, Set<Integer>>();
-        int listLength = geometries.size();
-        for(int i = 0; i < listLength; i++){
-            //System.out.println(i== (Integer.parseInt(fList.get(i).getID().split("\\.")[1]) - 1));
-
-            Set<Integer> areas = new TreeSet<Integer>();
-            for(Integer g: area_grid.get(i)){
-                if(g != i)
-                    areas.addAll(grid_area.get(g));
-            }
-            Geometry pGeometry = geometries.get(i);
-            for(Integer aid: areas){
-                if(aid == i)
-                    continue;
-                Boolean intersects = pGeometry.intersects((Geometry)fList.get(aid).getDefaultGeometry());
-                Geometry intersection = pGeometry.intersection((Geometry)fList.get(aid).getDefaultGeometry());
-                if( intersects && !(intersection instanceof  Point || intersection instanceof  MultiPoint)){
-                    //System.out.println(intersection.getClass().getName());
-                    if (neighbors.containsKey(i)) {
-                        neighbors.get(i).add(aid);
-                    }
-                    else{
-                        neighbors.put(i, new TreeSet<Integer>());
-                        neighbors.get(i).add(aid);
-                    }
-
-                    if(neighbors.containsKey(aid))
-                        neighbors.get(aid).add(i);
-                    else{
-                        neighbors.put(aid, new TreeSet<Integer>());
-                        neighbors.get(aid).add(i);
-                    }
-
-                }
-            }
-        }
     }
     public void calculateContiguity(List<SimpleFeature> fList){
         neighbors = new HashMap<Integer, Set<Integer>>();

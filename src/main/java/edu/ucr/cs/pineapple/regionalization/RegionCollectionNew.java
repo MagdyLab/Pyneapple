@@ -1,7 +1,5 @@
 package edu.ucr.cs.pineapple.regionalization;
 
-import edu.ucr.cs.pineapple.regionalization.EMPUtils.RegionNew;
-
 import java.util.Map;
 
 public class RegionCollectionNew{

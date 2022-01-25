@@ -29,6 +29,10 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
+
 
 class DataPartition {
 
@@ -949,7 +953,7 @@ class EnclavesAssignmentThread implements Callable<Partition> {
 
 
 
-public class SMPP{
+public class SMPP  implements RegionalizationMethod{
 
 
     public static Random rand = new Random();
@@ -2085,11 +2089,11 @@ public class SMPP{
 
 
     public static Move selectRandomMove(ArrayList<Integer> movable_units,
-                                                                                      ArrayList<Long> household,
-                                                                                      ArrayList<Long> population,
-                                                                                      Partition currentP,
-                                                                                      Long threshold,
-                                                                                      ArrayList<List> neighbors) {
+                                        ArrayList<Long> household,
+                                        ArrayList<Long> population,
+                                        Partition currentP,
+                                        Long threshold,
+                                        ArrayList<List> neighbors) {
 
         Move move = new Move();
 

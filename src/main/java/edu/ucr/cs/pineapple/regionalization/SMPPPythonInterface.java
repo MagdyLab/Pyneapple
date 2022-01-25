@@ -1,6 +1,6 @@
 package edu.ucr.cs.pineapple.regionalization;
 
-//import com.opencsv.CSVWriter;
+import com.opencsv.CSVWriter;
 import org.apache.commons.lang3.ObjectUtils;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
@@ -315,15 +315,15 @@ public class SMPPPythonInterface {
             path = "SMPPRandom.csv";
         FileWriter outputFile = new FileWriter(
                 new File(path), true);
-        //CSVWriter csv = new CSVWriter(outputFile);
+        CSVWriter csv = new CSVWriter(outputFile);
 
         String[] row = {String.valueOf(dataset), String.valueOf(maxItr), String.valueOf(threshold), String.valueOf(convSA), String.valueOf(alpha), String.valueOf(nColumns), String.valueOf(cores),
                 String.valueOf(maxP), String.valueOf(oldHeterogeneity), String.valueOf(pH), String.valueOf(improvement), String.valueOf(percentage),
                 String.valueOf(0), String.valueOf(totalFindingNeighbors), String.valueOf(totalPartitioning), String.valueOf(totalFindingNeighbors1), String.valueOf(totalGrowRegions), String.valueOf(totalAssignEnclaves),
                 String.valueOf(totalSearch), String.valueOf(totalTime)};
-        //csv.writeNext(row);
+        csv.writeNext(row);
 
-        //csv.close();
+        csv.close();
         return maxP;
 
     }
