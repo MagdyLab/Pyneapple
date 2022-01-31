@@ -1,4 +1,73 @@
 def emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh):
+	 """The enriched max-p-regions (EMP) involves the aggregation of n areas into an unknown maximum number of
+    homogeneous regions, while ensuring that each region is contiguous and satisfies a set of constraints. The constraints 
+    are 
+
+    Parameters
+    ----------
+
+    df : geopandas.GeoDataFrame, required
+        Geodataframe containing original data
+
+    w : libpysal.weights.W, required
+        Weights object created from given data
+
+    disname : String, required
+        Strings for attribute names to measure similarity (cols of ``geopandas.GeoDataFrame``).
+
+    minName : string, requied
+        The name of the spatial extensive attribute variable for the MIN constraint.
+
+    minLow : {int, float}, required
+        The lowerbound for the MIN range.
+
+    minHigh : {int, float}, required
+        The upperbound for the MIN range.
+
+    maxName : string, requied
+        The name of the spatial extensive attribute variable for the MAX constraint.
+
+    maxLow : {int, float}, required
+        The lowerbound for the MAX range.
+
+    maxHigh : {int, float}, required
+        The upperbound for the MAX range.
+
+	avgName : string, requied
+        The name of the spatial extensive attribute variable for the AVG constraint.
+
+    avgLow : {int, float}, required
+        The lowerbound for the AVG range.
+
+    avgHigh : {int, float}, required
+        The upperbound for the AVG range.
+
+    sumName : string, requied
+        The name of the spatial extensive attribute variable for the SUM constraint.
+
+    sumLow : {int, float}, required
+        The lowerbound for the SUM range.
+
+    sumHigh : {int, float}, required
+        The upperbound for the SUM range.
+
+    countLow : {int, float}, required
+        The lowerbound for the COUNT range.
+
+    countHigh : {int, float}, required
+        The upperbound for the COUNT range.
+
+
+    Returns
+    -------
+
+    max_p : int
+        The number of regions.
+
+    labels : numpy.array
+        Region IDs for observations.
+
+    """
     neighborHashMap = java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = java.util.TreeSet()
