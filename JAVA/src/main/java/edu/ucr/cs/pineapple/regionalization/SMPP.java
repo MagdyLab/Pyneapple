@@ -29,10 +29,6 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.Filter;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-
-
 
 class DataPartition {
 
@@ -187,6 +183,7 @@ class Partition {
     private ArrayList<Integer> assignedAreas;
     private HashMap<Integer, Integer> areasWithRegions;
     private long dissimilarity;
+    private int p;
 
     public Partition(Partition partition) {
 
@@ -196,6 +193,7 @@ class Partition {
         this.assignedAreas = new ArrayList<>(partition.assignedAreas);
         this.areasWithRegions = new HashMap<>(partition.areasWithRegions);
         this.dissimilarity = partition.dissimilarity;
+        this.p = 0;
     }
 
     public Partition(int ID, HashMap<Integer, Region> regions, long dissimilarity) {
@@ -228,7 +226,12 @@ class Partition {
 
         this.regions.put(regionID, region);
     }
-
+    public void setP(int p){
+        this.p = p;
+    }
+    public int getP(){
+        return p;
+    }
     public HashMap<Integer, Region> getRegions() {
 
         return this.regions;
@@ -953,10 +956,11 @@ class EnclavesAssignmentThread implements Callable<Partition> {
 
 
 
-public class SMPP  implements RegionalizationMethod{
+public class SMPP{
 
 
     public static Random rand = new Random();
+
 
     public static void readFiles(int dataSet,
                                  ArrayList<Long> household,
@@ -996,8 +1000,8 @@ public class SMPP  implements RegionalizationMethod{
                 break;
 
             case 6:
-                dbfFile = "Datasets/20K/20K.dbf";
-                shpFile = "Datasets/20K/20K.shp";
+                dbfFile = "C:/Users/50476/Documents/GitHub/SMP Code/Datasets/20K/20K.dbf";
+                shpFile = "C:/Users/50476/Documents/GitHub/SMP Code/Datasets/20K/20K.shp";
                 break;
 
             case 7:
@@ -1016,8 +1020,8 @@ public class SMPP  implements RegionalizationMethod{
                 break;
 
             case 10:
-                dbfFile = "Datasets/60K/60K.dbf";
-                shpFile = "Datasets/60K/60K.shp";
+                dbfFile = "C:/Users/50476/Documents/GitHub/SMP Code/Datasets/60K/60K.dbf";
+                shpFile = "C:/Users/50476/Documents/GitHub/SMP Code/Datasets/60K/60K.shp";
                 break;
 
             case 11:
@@ -1091,7 +1095,7 @@ public class SMPP  implements RegionalizationMethod{
                 SimpleFeature feature = features.next();
                 //System.out.print(feature.getID());
                 //System.out.print(": ");
-                System.out.println(feature.getDefaultGeometryProperty().getValue());
+                //System.out.println(feature.getDefaultGeometryProperty().getValue());
                 Geometry polygon = (Geometry) feature.getDefaultGeometry();
                 //System.out.println(polygon);
                 polygons.add(polygon);
@@ -2089,11 +2093,11 @@ public class SMPP  implements RegionalizationMethod{
 
 
     public static Move selectRandomMove(ArrayList<Integer> movable_units,
-                                        ArrayList<Long> household,
-                                        ArrayList<Long> population,
-                                        Partition currentP,
-                                        Long threshold,
-                                        ArrayList<List> neighbors) {
+                                                                                      ArrayList<Long> household,
+                                                                                      ArrayList<Long> population,
+                                                                                      Partition currentP,
+                                                                                      Long threshold,
+                                                                                      ArrayList<List> neighbors) {
 
         Move move = new Move();
 
@@ -2472,9 +2476,9 @@ public class SMPP  implements RegionalizationMethod{
         double t = 1;
         int convSA = 90;
         double alpha = 0.9;
-        int dataset = 14;
-        int nRows = 2;
-        int nColumns = 2;
+        int dataset = 6;
+        int nRows = 1;
+        int nColumns = 1;
         int cores = 4;
         int random = 0;
 

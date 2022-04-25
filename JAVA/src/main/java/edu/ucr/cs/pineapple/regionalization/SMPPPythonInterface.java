@@ -1,6 +1,6 @@
 package edu.ucr.cs.pineapple.regionalization;
 
-import com.opencsv.CSVWriter;
+//import com.opencsv.CSVWriter;
 import org.apache.commons.lang3.ObjectUtils;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
@@ -9,31 +9,88 @@ import org.locationtech.jts.io.WKTReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class SMPPPythonInterface {
-    public static int maxp(ArrayList<Long> disAttr, ArrayList<Long> sumAttr, Integer threshold, ArrayList<String> geometryStrings) throws ParseException, IOException {
+public class SMPPPythonInterface implements RegionalizationMethod{
+    private Partition bestP;
+    private int maxItr = 100;
+    //long threshold = 20000;
+    private int lengthTabu = 10;
+    private double t = 1;
+    private int convSA = 90;
+    private double alpha = 0.9;
+    //private int dataset = 14;
+    private int nRows = 2;
+    private int nColumns = 2;
+    private int cores = 4;
+    private int random = 0;
+    private ArrayList<Geometry> geometries;
+    public void setGeometry(ArrayList<Geometry> geometries){
+        this.geometries = geometries;
+    }
+    public void setGeometryStrings(ArrayList<String> geometryStrings) throws ParseException {
+        this.geometries = stringListToGeometryList(geometryStrings);
+    }
+    public void setGeometries(ArrayList<Geometry> geometries) {
+        this.geometries = geometries;
+    }
+    public void setNRows(int nRows){
+        this.nRows = nRows;
+    }
 
-        int maxItr = 100;
-        //long threshold = 20000;
-        int lengthTabu = 10;
-        double t = 1;
-        int convSA = 90;
-        double alpha = 0.9;
-        int dataset = 14;
-        int nRows = 2;
-        int nColumns = 2;
-        int cores = 4;
-        int random = 0;
+    public void setT(double t) {
+        this.t = t;
+    }
+
+    public void setNColumns(int nColumns) {
+        this.nColumns = nColumns;
+    }
+
+    public void setCores(int cores) {
+        this.cores = cores;
+    }
+
+    public void setConvSA(int convSA) {
+        this.convSA = convSA;
+    }
+
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
+    }
+
+    public void setLengthTabu(int lengthTabu) {
+        this.lengthTabu = lengthTabu;
+    }
+
+    public void setMaxItr(int maxItr) {
+        this.maxItr = maxItr;
+    }
+
+    public void setRandom(int random) {
+        this.random = random;
+    }
+    @Override
+    public int getP(){
+        return bestP.getP();
+    }
+    public int[] getRegionList(){
+        int noOfArea = bestP.getAreasWithRegions().size();
+        int[] regionList = new int[noOfArea];
+        for (Integer key : bestP.getAreasWithRegions().keySet()){
+            regionList[key] = bestP.getAreasWithRegions().get(key);
+        }
+        return regionList;
+    }
+    @Override
+    public void execute_regionalization(Map<Integer, Set<Integer>> neighbor, ArrayList<Long> disAttr, ArrayList<Long> sumAttr, Long threshold) throws ParseException, IOException {
+
 
         ArrayList<Geometry> polygons = new ArrayList<>();
-        polygons = stringListToGeometryList(geometryStrings);
+        polygons = this.geometries; // If not initialzied throw exception
         ArrayList<Long> population = disAttr;
         // spatially extensive attribute col#8 i ALAND
         ArrayList<Long> household =sumAttr;
@@ -114,7 +171,7 @@ public class SMPPPythonInterface {
         // ********************************************************************
 
         int maxP = 0;
-        Partition bestP;
+        //Partition bestP;
         ArrayList<Partition> partitionsBeforeEnclaves = new ArrayList<>();
         Partition bestFeasiblePartition = new Partition();
 
@@ -306,25 +363,12 @@ public class SMPPPythonInterface {
         System.out.println("\nTotal time is : " + (totalTime));
 
 
-        String path;
-        if (random == 0)
-            //path = "/home/gepspatial/Desktop/maxp/SMPP.csv";
-            path = "SMPP.csv";
-        else
-            //path = "/home/gepspatial/Desktop/maxp/SMPPRandom.csv";
-            path = "SMPPRandom.csv";
-        FileWriter outputFile = new FileWriter(
-                new File(path), true);
-        CSVWriter csv = new CSVWriter(outputFile);
 
-        String[] row = {String.valueOf(dataset), String.valueOf(maxItr), String.valueOf(threshold), String.valueOf(convSA), String.valueOf(alpha), String.valueOf(nColumns), String.valueOf(cores),
-                String.valueOf(maxP), String.valueOf(oldHeterogeneity), String.valueOf(pH), String.valueOf(improvement), String.valueOf(percentage),
-                String.valueOf(0), String.valueOf(totalFindingNeighbors), String.valueOf(totalPartitioning), String.valueOf(totalFindingNeighbors1), String.valueOf(totalGrowRegions), String.valueOf(totalAssignEnclaves),
-                String.valueOf(totalSearch), String.valueOf(totalTime)};
-        csv.writeNext(row);
+        //csv.writeNext(row);
 
-        csv.close();
-        return maxP;
+        //csv.close();
+        //return maxP;
+        bestP.setP(maxP);
 
     }
 
@@ -335,10 +379,12 @@ public class SMPPPythonInterface {
     }
     public static ArrayList stringListToGeometryList(ArrayList<String> wktStrings) throws ParseException {
         ArrayList<Geometry> polygons = new ArrayList<>();
-        for (String wktString:wktStrings
-        ) {
+        System.out.println(wktStrings.size());
+        for (String wktString:wktStrings) {
             polygons.add(stringToGeometry(wktString));
         }
         return polygons;
     }
+
+
 }

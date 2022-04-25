@@ -1,5 +1,10 @@
 package edu.ucr.cs.pineapple.regionalization;
 
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.RegionCollectionNew;
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.RegionNew;
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.Tabu;
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.TabuReturn;
+import edu.ucr.cs.pineapple.utils.SpatialGrid;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
@@ -47,8 +52,9 @@ public class EMP implements RegionalizationMethod {
     public void execute_regionalization(Map<Integer, Set<Integer>> neighbor,
                                         ArrayList<Long> disAttr,
                                         ArrayList<Long> sumAttr,
-                                        Double threshold){
+                                        Long thresholdLong){
         int tabuLength = 100;
+        Double threshold = thresholdLong.doubleValue();
         int max_no_move = disAttr.size();
         SpatialGrid sg = new SpatialGrid();
         sg.setNeighbors(neighbor);
@@ -1279,8 +1285,7 @@ public class EMP implements RegionalizationMethod {
 
 
     }
-
-    public static void  set_input(String fileName,
+    public static void  set_input_construct(String fileName,
                                   String minAttrName,
                                   Double minAttrLow,
                                   Double minAttrHigh,
@@ -1328,6 +1333,7 @@ public class EMP implements RegionalizationMethod {
         int count = 0;
         Double avgTotal = 0.0;
         Double sumTotal = 0.0;
+        ArrayList<Geometry> geometryList = new ArrayList<>();
         try (FeatureIterator<SimpleFeature> features = collection.features()) {
             while (features.hasNext()) {
                 SimpleFeature feature = features.next();
@@ -1364,6 +1370,7 @@ public class EMP implements RegionalizationMethod {
                 //System.out.print(": ");
                 //fList.add(feature);
                 Geometry geometry = (Geometry) feature.getDefaultGeometry();
+                geometryList.add(geometry);
                 double cminx = geometry.getEnvelope().getCoordinates()[0].getX();
                 double cminy = geometry.getEnvelope().getCoordinates()[0].getY();
                 double cmaxx = geometry.getEnvelope().getCoordinates()[2].getX();
@@ -1410,9 +1417,10 @@ public class EMP implements RegionalizationMethod {
         double rookstartTime = System.currentTimeMillis()/ 1000.0;
         //System.out.println("Time for reading the file: " + (rookstartTime - startTime));
         SpatialGrid sg = new SpatialGrid(minX, minY, maxX, maxY);
-        sg.createIndex(45, fList);
-        sg.calculateContiguity(fList);
-
+        //sg.createIndex(45, fList);
+        //sg.calculateContiguity(fList);
+        HashMap<Integer, Set<Integer>> neighborMap = calculateNeighbors(geometryList);
+        sg.setNeighbors(neighborMap);
         double rookendTime = System.currentTimeMillis()/ 1000.0;
         System.out.println("Rook time: " + (rookendTime - rookstartTime));
 
@@ -1473,7 +1481,273 @@ public class EMP implements RegionalizationMethod {
             double constructionEnd = System.currentTimeMillis() / 1000.0;
             double constructionDuration = constructionEnd - constructionStart;
             //System.out.println("Time for construction phase:\n" + (constructionTime - rookendTime));
+            System.out.println("Construction time: " + constructionDuration);
+            int max_p = rc.getMax_p();
+            //System.out.println("MaxP: " + max_p);
+            Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
+        /*System.out.println("regionSpatialAttr after construction_phase:");
+        for(Map.Entry<Integer, Integer> entry: regionSpatialAttr.entrySet()){
+            Integer rid = entry.getKey();
+            Integer rval = entry.getValue();
+            System.out.print(rid + ": ");
+            System.out.print(rval + " ");
+            //System.out.println();
+        }*/
 
+            /*long totalWDS = Tabu.calculateWithinRegionDistance(rc.getRegionList(), distanceMatrix);
+            //System.out.println("totalWithinRegionDistance before tabu: \n" + totalWDS);
+            int tabuLength = 10;
+            int max_no_move = distAttr.size();
+            //checkLabels(rc.getLabels(), rc.getRegionList());
+
+            //System.out.println("Start tabu");
+
+            TabuReturn tr = Tabu.performTabu(rc.getLabels(), rc.getRegionList(), sg, Tabu.pdist((distAttr)), tabuLength, max_no_move, minAttr, maxAttr, sumAttr, avgAttr);
+            int[] labels = tr.labels;
+            //System.out.println(labels.length);
+            long WDSDifference = totalWDS - tr.WDS;
+            //int[] labels = SimulatedAnnealing.performSimulatedAnnealing(rc.getLabels(), rc.getRegionList(), sg, pdist((distAttr)), minAttr, maxAttr, sumAttr, avgAttr);
+            double endTime = System.currentTimeMillis()/ 1000.0;
+            //System.out.println("MaxP: " + max_p);
+            double heuristicDuration = endTime - constructionEnd;
+            //System.out.println("Time for tabu(s): \n" + (endTime - constructionTime));
+            // System.out.println("total time: \n" +(endTime - startTime));*/
+            int[] labels = rc.getLabels();
+            File f = new File(folderName +"/" + i + ".txt");
+            if(!f.exists()){
+                f.createNewFile();
+            }
+            int unassignedCount = 0;
+            Writer w = new FileWriter(f);
+            for( int j = 0; j < labels.length; j++){
+                w.write(labels[j] + "\n");
+                if(labels[j] < 1){
+                    unassignedCount++;
+                }
+            }
+            w.close();
+            //System.out.println("minTime: " + minTime);
+            //System.out.println("avgTime: " + avgTime);
+            //System.out.println("sumTime: " + sumTime);
+
+            System.out.println("Iteration: " + i);
+            System.out.println("p: "+ max_p);
+            System.out.println("Construction time: " + constructionDuration);
+            //System.out.println("Tabu search time: " + heuristicDuration);
+            //System.out.println("Heterogeneity score before Tabu: "  + totalWDS);
+            //System.out.println("Heterogeneity score after Tabu: " + tr.WDS);
+            System.out.println("Number of unassigned areas: " + unassignedCount + "\n");
+
+            //csvWriter.write(i + ", " + max_p + ", " + constructionDuration + ", " + heuristicDuration + ", " + (constructionDuration+heuristicDuration) + ", " + totalWDS + ", " + tr.WDS + ", " + WDSDifference + "," + unassignedCount +"," + minTime + "," + avgTime + "," + sumTime + "\n");
+            csvWriter.write(i + ", " + max_p + ", " + constructionDuration + ", " +  "," + unassignedCount +"," + minTime + "," + avgTime + "," + sumTime + "\n");
+            csvWriter.flush();
+            minTime = 0;
+            avgTime = 0;
+            sumTime = 0;
+
+        }
+        csvWriter.close();
+        //System.out.println("End of setipnput");
+
+    }
+
+    public static void  set_input(String fileName,
+                                  String minAttrName,
+                                  Double minAttrLow,
+                                  Double minAttrHigh,
+                                  String maxAttrName,
+                                  Double maxAttrLow,
+                                  Double maxAttrHigh,
+                                  String avgAttrName,
+                                  Double avgAttrLow,
+                                  Double avgAttrHigh,
+                                  String sumAttrName,
+                                  Double sumAttrLow,
+                                  Double sumAttrHigh,
+                                  Double countLow,
+                                  Double countHigh,
+                                  String distAttrName
+
+    ) throws Exception {
+        double startTime = System.currentTimeMillis()/ 1000.0;
+        File file = new File(fileName);
+        Map<String, Object> map = new HashMap<>();
+        map.put("url", file.toURI().toURL());
+
+        DataStore dataStore = DataStoreFinder.getDataStore(map);
+        String typeName = dataStore.getTypeNames()[0];
+
+        FeatureSource<SimpleFeatureType, SimpleFeature> source =
+                dataStore.getFeatureSource(typeName);
+        Filter filter = Filter.INCLUDE; // ECQL.toFilter("BBOX(THE_GEOM, 10,20,30,40)")
+        ArrayList<Long> minAttr = new ArrayList<>();
+        ArrayList<Long> maxAttr = new ArrayList<>();
+        ArrayList<Long> avgAttr = new ArrayList<>();
+        ArrayList<Long> sumAttr = new ArrayList<>();
+        ArrayList<Long> distAttr = new ArrayList<>();
+
+        ArrayList<SimpleFeature> fList = new ArrayList<>();
+        ArrayList<Integer> idList = new ArrayList<>();
+        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures(filter);
+        double minX = Double.POSITIVE_INFINITY, minY = Double.POSITIVE_INFINITY;
+        double maxX = - Double.POSITIVE_INFINITY, maxY = -Double.POSITIVE_INFINITY;
+        Double minAttrMin = Double.POSITIVE_INFINITY;
+        Double minAttrMax = -Double.POSITIVE_INFINITY;
+        Double maxAttrMax = -Double.POSITIVE_INFINITY;
+        Double maxAttrMin = Double.POSITIVE_INFINITY;
+        double sumMin = Double.POSITIVE_INFINITY;
+        int count = 0;
+        Double avgTotal = 0.0;
+        Double sumTotal = 0.0;
+        ArrayList<Geometry> geometryList = new ArrayList<>();
+        try (FeatureIterator<SimpleFeature> features = collection.features()) {
+            while (features.hasNext()) {
+                SimpleFeature feature = features.next();
+                //System.out.print(feature.getID());
+                //System.out.print(": ");
+
+                minAttr.add(Long.parseLong(feature.getAttribute(minAttrName).toString()));
+                maxAttr.add(Long.parseLong(feature.getAttribute(maxAttrName).toString()));
+                avgAttr.add(Long.parseLong(feature.getAttribute(avgAttrName).toString()));
+                sumAttr.add(Long.parseLong(feature.getAttribute(sumAttrName).toString()));
+                distAttr.add(Long.parseLong(feature.getAttribute(distAttrName).toString()));
+                fList.add(feature);
+                if (Long.parseLong(feature.getAttribute(sumAttrName).toString()) < sumMin){
+                    sumMin = Long.parseLong(feature.getAttribute(sumAttrName).toString());
+                }
+                if (Long.parseLong(feature.getAttribute(minAttrName).toString()) < minAttrMin){
+                    minAttrMin = Double.parseDouble(feature.getAttribute(minAttrName).toString());
+                }
+                if (Long.parseLong(feature.getAttribute(minAttrName).toString()) > minAttrMax){
+                    minAttrMax = Double.parseDouble(feature.getAttribute(minAttrName).toString());
+                }
+                if(Long.parseLong(feature.getAttribute(maxAttrName).toString()) > maxAttrMax){
+                    maxAttrMax = Double.parseDouble(feature.getAttribute(maxAttrName).toString());
+                }
+                if(Long.parseLong(feature.getAttribute(maxAttrName).toString()) < maxAttrMin){
+                    maxAttrMin = Double.parseDouble(feature.getAttribute(maxAttrName).toString());
+                }
+                count ++;
+                avgTotal += Double.parseDouble(feature.getAttribute(avgAttrName).toString());
+                sumTotal += Double.parseDouble(feature.getAttribute(sumAttrName).toString());
+                //System.out.println(feature.getID());
+                idList.add(Integer.parseInt(feature.getID().split("\\.")[1]) - 1);
+                //System.out.print(feature.getID());
+                //System.out.print(": ");
+                //fList.add(feature);
+                Geometry geometry = (Geometry) feature.getDefaultGeometry();
+                geometryList.add(geometry);
+                double cminx = geometry.getEnvelope().getCoordinates()[0].getX();
+                double cminy = geometry.getEnvelope().getCoordinates()[0].getY();
+                double cmaxx = geometry.getEnvelope().getCoordinates()[2].getX();
+                double cmaxy = geometry.getEnvelope().getCoordinates()[2].getY();
+                if (minX > cminx){
+                    minX = cminx;
+                }
+                if (minY > cminy){
+                    minY = cminy;
+                }
+                if (maxX < cmaxx){
+                    maxX = cmaxx;
+                }
+                if (maxY < cmaxy){
+                    maxY = cmaxy;
+                }
+
+                //idList.add(Integer.parseInt(feature.getID().split("\\.")[1]) - 1);
+            }
+            features.close();
+
+            //sg.printIndex();
+        }
+        dataStore.dispose();
+        avgTotal = avgTotal / count;
+
+
+        //Feasibility checking
+        // (1)The situation for AVG will change after removing infeasible areas
+        // (2) Even when avgTotal does not lie with in avgAttrMin and avgAttrMax, the algorithm will
+        if(minAttrMin > minAttrHigh|| minAttrMax < minAttrLow|| maxAttrMin > maxAttrHigh || maxAttrMax < maxAttrLow||  sumMin > sumAttrHigh || sumTotal < sumAttrLow || count < countLow){
+            System.out.println("The constraint settings are infeasible. The program will terminate immediately.");
+            System.exit(1);
+        }
+        if(minAttrMin > minAttrHigh){
+            System.out.println("There is no area satisfying the MIN <=. The program will terminate immediately.");
+            System.exit(1);
+        }else if(minAttrMax < minAttrLow){
+            System.out.println("There is no area satisfying the MIN >=. The program will terminate immediately.");
+            System.exit(1);
+        }
+
+        //System.out.println(minX + " " + minY + ", " + maxX + " " + maxY);
+        double rookstartTime = System.currentTimeMillis()/ 1000.0;
+        //System.out.println("Time for reading the file: " + (rookstartTime - startTime));
+        SpatialGrid sg = new SpatialGrid(minX, minY, maxX, maxY);
+        //sg.createIndex(45, fList);
+        //sg.calculateContiguity(fList);
+        HashMap<Integer, Set<Integer>> neighborMap = calculateNeighbors(geometryList);
+        sg.setNeighbors(neighborMap);
+        double rookendTime = System.currentTimeMillis()/ 1000.0;
+        System.out.println("Rook time: " + (rookendTime - rookstartTime));
+
+        double dataLoadTime = System.currentTimeMillis()/ 1000.0;
+        System.out.println("Input size: " + distAttr.size());
+        long [][] distanceMatrix = Tabu.pdist(distAttr);
+        Date t = new Date();
+
+        String fileNameSplit[] = fileName.split("/");
+        String mapName = fileNameSplit[fileNameSplit.length-1].split("\\.")[0];
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+
+        String timeStamp = df.format(t);
+        String folderName = "data/AlgorithmTesting/FaCT_" + mapName + "_MIN-" + minAttrLow + "-" + minAttrHigh + "_AVG-" + avgAttrLow + "-" + avgAttrHigh + "_SUM-" +sumAttrLow + "-" + sumAttrHigh + "-" + timeStamp;
+        File folder = new File(folderName);
+        folder.mkdirs();
+        File settingFile = new File(folderName + "/Settings.csv");
+        if(!settingFile.exists()){
+            settingFile.createNewFile();
+        }
+        Writer settingWriter = new FileWriter(settingFile);
+        settingWriter.write("Constraint, Attribute Name, Lower Bound, Upper Bound\n");
+        settingWriter.write("Min, " + minAttrName + ", " + minAttrLow + ", " + minAttrHigh + "\n");
+        settingWriter.write("Max, " + maxAttrName + ", " + maxAttrLow + ", " + maxAttrHigh + "\n");
+        settingWriter.write("Avg, " + avgAttrName + ", " + avgAttrLow + ", " + avgAttrHigh + "\n");
+        settingWriter.write("Sum, " + sumAttrName + ", " + sumAttrLow + ", " + sumAttrHigh + "\n");
+        settingWriter.write("Count, "  + ", " + countLow + ", " + countHigh + "\n");
+        settingWriter.write("Rand," + randFlag[0] + "," + randFlag[1] + "\n");
+        settingWriter.close();
+        File csvFile = new File(folderName + "/Result_" + mapName+"_"+ timeStamp + ".csv");
+        //System.out.println(csvFile);
+        if(!csvFile.exists()){
+            csvFile.createNewFile();
+        }
+        Writer csvWriter = new FileWriter(csvFile);
+        csvWriter.write("Iteration, Max P, Construction Time, Heuristic Time, Construction + Heuristic, Score Before Heuristic, Score After Heuristic, Score Difference，Unassigned areas\n");
+
+        //RegionCollection rc = construction_phase_gene(population, income, 1, sg, idList,4000,Double.POSITIVE_INFINITY);
+        for(int i = 0; i < numOfIts; i++){
+            double constructionStart = System.currentTimeMillis() / 1000.0;
+            RegionCollectionNew rc = construction_phase_generalized(idList, distAttr, sg,
+                    minAttr,
+                    minAttrLow,
+                    minAttrHigh,
+
+                    maxAttr,
+                    maxAttrLow,
+                    maxAttrHigh,
+
+                    avgAttr,
+                    avgAttrLow,
+                    avgAttrHigh,
+
+                    sumAttr,
+                    sumAttrLow,
+                    sumAttrHigh,
+                    countLow, countHigh);
+            double constructionEnd = System.currentTimeMillis() / 1000.0;
+            double constructionDuration = constructionEnd - constructionStart;
+            //System.out.println("Time for construction phase:\n" + (constructionTime - rookendTime));
+            System.out.println("Construction time: " + constructionDuration);
             int max_p = rc.getMax_p();
             //System.out.println("MaxP: " + max_p);
             Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
@@ -1539,6 +1813,37 @@ public class EMP implements RegionalizationMethod {
         csvWriter.close();
         //System.out.println("End of setipnput");
 
+    }
+
+    public static HashMap<Integer, Set<Integer>> calculateNeighbors(ArrayList<Geometry> polygons) {
+
+        HashMap<Integer, Set<Integer>> neighborMap = new HashMap<>();
+
+        for (int i = 0; i < polygons.size(); i++) {
+
+            neighborMap.put(i, new TreeSet<>());
+        }
+
+
+        for (int i = 0; i < polygons.size(); i++) {
+
+            for (int j = i + 1; j < polygons.size(); j++) {
+
+                if (polygons.get(i).intersects(polygons.get(j))) {
+
+                    Geometry intersection = polygons.get(i).intersection(polygons.get(j));
+
+                    if (intersection.getGeometryType() != "Point") {
+
+                        neighborMap.get(i).add(j);
+                        neighborMap.get(j).add(i);
+
+                    } // end if
+                } // end if
+            } // end for
+        } // end for
+
+        return neighborMap;
     }
 
 
