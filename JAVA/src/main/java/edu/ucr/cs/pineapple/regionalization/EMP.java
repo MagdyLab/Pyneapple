@@ -1,7 +1,7 @@
 package edu.ucr.cs.pineapple.regionalization;
 
-import edu.ucr.cs.pineapple.regionalization.EMPUtils.RegionCollectionNew;
-import edu.ucr.cs.pineapple.regionalization.EMPUtils.RegionNew;
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.RegionCollection;
+import edu.ucr.cs.pineapple.regionalization.EMPUtils.Region;
 import edu.ucr.cs.pineapple.regionalization.EMPUtils.Tabu;
 import edu.ucr.cs.pineapple.regionalization.EMPUtils.TabuReturn;
 import edu.ucr.cs.pineapple.utils.SpatialGrid;
@@ -36,7 +36,7 @@ public class EMP implements RegionalizationMethod {
     static double avgTime = 0;
     static double sumTime = 0;
 
-    RegionCollectionNew constructionPartition;
+    RegionCollection constructionPartition;
     TabuReturn finalPartition;
 
     @Override
@@ -100,35 +100,35 @@ public class EMP implements RegionalizationMethod {
 
     }
 
-    public static RegionCollectionNew construction_phase_generalized(ArrayList<Integer> idList,
-                                                                     ArrayList<Long> disAttr,
-                                                                     SpatialGrid r,
-                                                                     ArrayList<Long> minAttr,
-                                                                     Double minLowerBound,
-                                                                     Double minUpperBound,
+    public static RegionCollection construction_phase_generalized(ArrayList<Integer> idList,
+                                                                  ArrayList<Long> disAttr,
+                                                                  SpatialGrid r,
+                                                                  ArrayList<Long> minAttr,
+                                                                  Double minLowerBound,
+                                                                  Double minUpperBound,
 
-                                                                     ArrayList<Long> maxAttr,
-                                                                     Double maxLowerBound,
-                                                                     Double maxUpperBound,
+                                                                  ArrayList<Long> maxAttr,
+                                                                  Double maxLowerBound,
+                                                                  Double maxUpperBound,
 
-                                                                     ArrayList<Long> avgAttr,
-                                                                     Double avgLowerBound,
-                                                                     Double avgUpperBound,
+                                                                  ArrayList<Long> avgAttr,
+                                                                  Double avgLowerBound,
+                                                                  Double avgUpperBound,
 
-                                                                     ArrayList<Long> sumAttr,
-                                                                     Double sumLowerBound,
-                                                                     Double sumUpperBound,
+                                                                  ArrayList<Long> sumAttr,
+                                                                  Double sumLowerBound,
+                                                                  Double sumUpperBound,
 
-                                                                     Double countLowerBound,
-                                                                     Double countUpperBound){
+                                                                  Double countLowerBound,
+                                                                  Double countUpperBound){
         int maxIt = 100;
 
 
-        RegionNew.setRange(minLowerBound, minUpperBound, maxLowerBound, maxUpperBound, avgLowerBound, avgUpperBound, sumLowerBound, sumUpperBound, countLowerBound, countUpperBound);
+        Region.setRange(minLowerBound, minUpperBound, maxLowerBound, maxUpperBound, avgLowerBound, avgUpperBound, sumLowerBound, sumUpperBound, countLowerBound, countUpperBound);
 
         int max_p = 0;
 
-        RegionCollectionNew bestCollection = null;
+        RegionCollection bestCollection = null;
         for (int it = 0; it < maxIt  ; it++) {
             //System.out.println("i: " + i + " max_p: " + max_p);
             double minStart = System.currentTimeMillis()/ 1000.0;
@@ -170,7 +170,7 @@ public class EMP implements RegionalizationMethod {
             //List<Integer> enclave = new ArrayList<Integer>();
             //Map<Integer, List<Integer>> regionList = new HashMap<Integer, List<Integer>>();
             //Map<Integer, Integer> regionSpatialAttr = new HashMap<Integer, Integer>();
-            Map<Integer, RegionNew> regionList = new HashMap<Integer, RegionNew>();
+            Map<Integer, Region> regionList = new HashMap<Integer, Region>();
             List<Integer> unassignedLow = new ArrayList<Integer>();
             List<Integer> unassignedHigh = new ArrayList<Integer>();
             //Classify the seed-areas
@@ -181,7 +181,7 @@ public class EMP implements RegionalizationMethod {
                     unassignedHigh.add(arr_index);
                 } else {
                     cId = regionList.size() + 1;
-                    RegionNew newRegion = new RegionNew(cId);
+                    Region newRegion = new Region(cId);
                     newRegion.addArea(arr_index, minAttr.get(arr_index), maxAttr.get(arr_index), avgAttr.get(arr_index), sumAttr.get(arr_index), r);
                     regionList.put(cId, newRegion);
                     labels[arr_index] = cId;
@@ -220,7 +220,7 @@ public class EMP implements RegionalizationMethod {
                     if (removedLow.contains(lowArea)) {
                         continue;
                     }
-                    RegionNew tr = new RegionNew(-1);
+                    Region tr = new Region(-1);
                     removedLow.add(lowArea);
                     labels[lowArea] = -1;
                     tr.addArea(lowArea, minAttr.get(lowArea), maxAttr.get(lowArea), avgAttr.get(lowArea), sumAttr.get(lowArea), r);
@@ -306,7 +306,7 @@ public class EMP implements RegionalizationMethod {
                     if (removedHigh.contains(HighArea)) {
                         continue;
                     }
-                    RegionNew tr = new RegionNew(-1);
+                    Region tr = new Region(-1);
                     removedHigh.add(HighArea);
                     labels[HighArea] = -1;
                     tr.addArea(HighArea, minAttr.get(HighArea), maxAttr.get(HighArea), avgAttr.get(HighArea), sumAttr.get(HighArea), r);
@@ -385,7 +385,7 @@ public class EMP implements RegionalizationMethod {
                     System.out.print(labels[i] + " ");
                 }
                 System.out.println();
-                for (Map.Entry<Integer, RegionNew> e : regionList.entrySet()) {
+                for (Map.Entry<Integer, Region> e : regionList.entrySet()) {
 
                     System.out.println("Id after step2:" + e.getValue().getId());
                     System.out.println("Min:" + e.getValue().getMin());
@@ -531,8 +531,8 @@ public class EMP implements RegionalizationMethod {
                 Iterator<Integer> interUnassignedLow = unassignedLow.iterator();
                 while (interUnassignedLow.hasNext()) {
                     Integer lowarea = interUnassignedLow.next();
-                    List<RegionNew> tmpRegionList = new ArrayList<RegionNew>();
-                    RegionNew tryR = new RegionNew(-1);
+                    List<Region> tmpRegionList = new ArrayList<Region>();
+                    Region tryR = new Region(-1);
                     Double lowestAcceptLow = Double.POSITIVE_INFINITY;
                     //System.out.println(r.getNeighbors(lowarea));
                     List<Integer> neighborList = new ArrayList<>(r.getNeighbors(lowarea));
@@ -540,7 +540,7 @@ public class EMP implements RegionalizationMethod {
                     for (Integer neighborArea : neighborList) {
                         //System.out.print(labels[neighborArea] + " ");
                         if (labels[neighborArea] > 0) {
-                            RegionNew tmpR = regionList.get(labels[neighborArea]);
+                            Region tmpR = regionList.get(labels[neighborArea]);
                             //System.out.println("Safe");
                             //System.out.print("Error at " + neighborArea + " " + labels[neighborArea] + " ");
                             //System.out.println(tmpR.getId());
@@ -578,7 +578,7 @@ public class EMP implements RegionalizationMethod {
                         if(debug){
                             System.out.println("Number of unassignedLow at merge count " + mergeCountLow + " is: " + unassignedLow.size());
                         }
-                        RegionNew expandR = new RegionNew(-1);
+                        Region expandR = new Region(-1);
 
                         Double expandRacceptlowest = Double.POSITIVE_INFINITY;
                         //System.out.println("Neighbor Areas for " + lowarea + " " + tryR.getAreaNeighborSet());
@@ -606,7 +606,7 @@ public class EMP implements RegionalizationMethod {
                             labels[lowarea] = expandR.getId();
                             labels = tryR.updateId(expandR.getId(), labels);
                             interUnassignedLow.remove();
-                            for (RegionNew tr : tmpRegionList) {
+                            for (Region tr : tmpRegionList) {
 
                                 regionList.remove(tr.getId());
 
@@ -631,8 +631,8 @@ public class EMP implements RegionalizationMethod {
             Iterator<Integer> iterUnassignedHigh = unassignedHigh.iterator();
             while (iterUnassignedHigh.hasNext()) {
                 Integer highArea = iterUnassignedHigh.next();
-                List<RegionNew> tmpRegionList = new ArrayList<RegionNew>();
-                RegionNew tryR = new RegionNew(-1);
+                List<Region> tmpRegionList = new ArrayList<Region>();
+                Region tryR = new Region(-1);
                 Double highestAcceptHigh = -Double.POSITIVE_INFINITY;
 
                 List<Integer> neighborList = new ArrayList<>(r.getNeighbors(highArea));
@@ -668,7 +668,7 @@ public class EMP implements RegionalizationMethod {
                     if(debug){
                         System.out.println("Number of unassignedHigh at merge count " + mergeCountHigh + " is: " + unassignedHigh.size());
                     }
-                    RegionNew expandR = new RegionNew(-1);
+                    Region expandR = new Region(-1);
                     Double expandRacceptHighest = -Double.POSITIVE_INFINITY;
                     for (Integer lr : tryR.getRegionNeighborSet(labels)) {
                         if (lr > 0 && regionList.get(lr).getAcceptHigh() > expandRacceptHighest && !tmpRegionList.contains(regionList.get(lr))) {
@@ -686,7 +686,7 @@ public class EMP implements RegionalizationMethod {
                         labels[highArea] = expandR.getId();
                         labels = tryR.updateId(expandR.getId(), labels);
                         iterUnassignedHigh.remove();
-                        for (RegionNew tr : tmpRegionList) {
+                        for (Region tr : tmpRegionList) {
 
                             regionList.remove(tr.getId());
 
@@ -734,7 +734,7 @@ public class EMP implements RegionalizationMethod {
             }
 
             if (debug) {
-                for (Map.Entry<Integer, RegionNew> e : regionList.entrySet()) {
+                for (Map.Entry<Integer, Region> e : regionList.entrySet()) {
 
                     System.out.println("Id after step 3:" + e.getValue().getId());
                     System.out.println("Min:" + e.getValue().getMin());
@@ -755,8 +755,8 @@ public class EMP implements RegionalizationMethod {
             //Add one more step to resolve Min and Max (regions with single seed-area)
             List<Integer> notMin = new ArrayList<Integer>();
             List<Integer> notMax = new ArrayList<Integer>();
-            for (Map.Entry<Integer, RegionNew> regionEntry : regionList.entrySet()) {
-                RegionNew region = regionEntry.getValue();
+            for (Map.Entry<Integer, Region> regionEntry : regionList.entrySet()) {
+                Region region = regionEntry.getValue();
                 if(region.getMin() > minUpperBound){
                     notMin.add(region.getId());
                 }
@@ -768,7 +768,7 @@ public class EMP implements RegionalizationMethod {
                 System.out.println("Not min: " + notMin.size());
                 System.out.println(notMin);
                 for (Integer notMinId: notMin) {
-                    RegionNew notMinRegion = regionList.get(notMinId);
+                    Region notMinRegion = regionList.get(notMinId);
                     System.out.println("Not min ID:" + notMinRegion.getId());
                     System.out.println("Min:" + notMinRegion.getMin());
                     System.out.println("Max:" + notMinRegion.getMax());
@@ -783,7 +783,7 @@ public class EMP implements RegionalizationMethod {
                 System.out.println("Not max: " + notMax.size());
                 System.out.println(notMax);
                 for (Integer notMaxId: notMax) {
-                    RegionNew notMaxRegion = regionList.get(notMaxId);
+                    Region notMaxRegion = regionList.get(notMaxId);
                     System.out.println("Not max Id:" + notMaxRegion.getId());
                     System.out.println("Min:" + notMaxRegion.getMin());
                     System.out.println("Max:" + notMaxRegion.getMax());
@@ -817,7 +817,7 @@ public class EMP implements RegionalizationMethod {
                     for(Integer neighbor:regionNeighbor){
                         if(notMax.contains(neighbor)){
                             minMaxMerged = true;
-                            RegionNew mergedRegion = regionList.get(notMinRegion).mergeWith(regionList.get(neighbor), minAttr, maxAttr, avgAttr, sumAttr, r);
+                            Region mergedRegion = regionList.get(notMinRegion).mergeWith(regionList.get(neighbor), minAttr, maxAttr, avgAttr, sumAttr, r);
                             mergedRegion.updateId(notMinRegion, labels);
                             regionList.remove(notMinRegion);
                             regionList.remove(neighbor);
@@ -847,7 +847,7 @@ public class EMP implements RegionalizationMethod {
                         if(!notMin.contains(neighbor)){
                             //System.out.println("Merge notMin and notMax");
                             minMaxMerged = true;
-                            RegionNew mergedRegion = regionList.get(notMinRegion).mergeWith(regionList.get(neighbor), minAttr, maxAttr, avgAttr, sumAttr, r);
+                            Region mergedRegion = regionList.get(notMinRegion).mergeWith(regionList.get(neighbor), minAttr, maxAttr, avgAttr, sumAttr, r);
                             mergedRegion.updateId(neighbor, labels);
                             regionList.remove(notMinRegion);
                             regionList.remove(neighbor);
@@ -871,7 +871,7 @@ public class EMP implements RegionalizationMethod {
                     for(Integer neighbor:regionNeighbor){
                         if(!notMax.contains(neighbor)){
                             minMaxMerged = true;
-                            RegionNew mergedRegion = regionList.get(notMaxRegion).mergeWith(regionList.get(neighbor), minAttr, maxAttr, avgAttr, sumAttr, r);
+                            Region mergedRegion = regionList.get(notMaxRegion).mergeWith(regionList.get(neighbor), minAttr, maxAttr, avgAttr, sumAttr, r);
                             mergedRegion.updateId(neighbor, labels);
                             regionList.remove(notMaxRegion);
                             regionList.remove(neighbor);
@@ -889,7 +889,7 @@ public class EMP implements RegionalizationMethod {
                 System.out.println("Not min after merging Min Max: " + notMin.size());
                 System.out.println(notMin);
                 for (Integer notMinId: notMin) {
-                    RegionNew notMinRegion = regionList.get(notMinId);
+                    Region notMinRegion = regionList.get(notMinId);
                     System.out.println("Not min ID:" + notMinRegion.getId());
                     System.out.println("Min:" + notMinRegion.getMin());
                     System.out.println("Max:" + notMinRegion.getMax());
@@ -904,7 +904,7 @@ public class EMP implements RegionalizationMethod {
                 System.out.println("Not max after merging Min Max: " + notMax.size());
                 System.out.println(notMax);
                 for (Integer notMaxId: notMax) {
-                    RegionNew notMaxRegion = regionList.get(notMaxId);
+                    Region notMaxRegion = regionList.get(notMaxId);
                     System.out.println("Not max Id:" + notMaxRegion.getId());
                     System.out.println("Min:" + notMaxRegion.getMin());
                     System.out.println("Max:" + notMaxRegion.getMax());
@@ -929,13 +929,13 @@ public class EMP implements RegionalizationMethod {
             while (updated) {
                 //checkLabels(labels, regionList);
                 updated = false;
-                List<Map.Entry<Integer, RegionNew>> tmpList2 = new ArrayList<Map.Entry<Integer, RegionNew>>(regionList.entrySet());
+                List<Map.Entry<Integer, Region>> tmpList2 = new ArrayList<Map.Entry<Integer, Region>>(regionList.entrySet());
                 if(randFlag[1] >= 1){
                     Collections.shuffle(tmpList2);
                 }
 
-                for (Map.Entry<Integer, RegionNew> regionEntry : tmpList2) {
-                    RegionNew region = regionEntry.getValue();
+                for (Map.Entry<Integer, Region> regionEntry : tmpList2) {
+                    Region region = regionEntry.getValue();
                     if (region.getCount() < countLowerBound || region.getSum() < sumLowerBound) {
                         List<Integer> neighborList = new ArrayList<>(region.getAreaNeighborSet());
                         if(randFlag[1] <= 1){
@@ -1021,7 +1021,7 @@ public class EMP implements RegionalizationMethod {
             }
             //checkLabels(labels, regionList);
             List<Integer> idToBeRemoved = new ArrayList<Integer>();
-            for (Map.Entry<Integer, RegionNew> regionEntry : regionList.entrySet()) {
+            for (Map.Entry<Integer, Region> regionEntry : regionList.entrySet()) {
                 if (!regionEntry.getValue().satisfiable()) {
                     //idToBeRemoved.add(regionEntry.getValue().getId());
                     idToBeRemoved.add(regionEntry.getKey());
@@ -1062,7 +1062,7 @@ public class EMP implements RegionalizationMethod {
                         //idMerged.add(region);//之前为啥注释掉了?idMerged表示因为merge消失的
                         List<Integer> neighborRegions = new ArrayList<>(regionList.get(region).getRegionNeighborSet(labels));
 
-                        RegionNew newRegion = regionList.get(region);
+                        Region newRegion = regionList.get(region);
                         if(randFlag[1] >= 1){
                             Collections.shuffle(neighborRegions);
                         }
@@ -1117,7 +1117,7 @@ public class EMP implements RegionalizationMethod {
 
                     List<Integer> neighborRegions = new ArrayList<>(regionList.get(region).getRegionNeighborSet(labels));
 
-                    RegionNew newRegion = regionList.get(region);
+                    Region newRegion = regionList.get(region);
                     if(randFlag[1] >= 1){
                         Collections.shuffle(neighborRegions);
                     }
@@ -1169,7 +1169,7 @@ public class EMP implements RegionalizationMethod {
                 for (int i = 0; i < labels.length; i++) {
                     System.out.print(labels[i] + " ");
                 }
-                for (Map.Entry<Integer, RegionNew> e : regionList.entrySet()) {
+                for (Map.Entry<Integer, Region> e : regionList.entrySet()) {
                     System.out.println();
                     System.out.println("Id:" + e.getValue().getId());
                     System.out.println("Min:" + e.getValue().getMin());
@@ -1218,14 +1218,14 @@ public class EMP implements RegionalizationMethod {
             if(regionList.size() > max_p || (regionList.size() == max_p && unAssignedCount < min_unAssigned)){
                 max_p = regionList.size();
                 min_unAssigned = unAssignedCount;
-                bestCollection = new RegionCollectionNew(regionList.size(), labels, regionList);
+                bestCollection = new RegionCollection(regionList.size(), labels, regionList);
             }
 
         }
 
         if(debug){
-            Map<Integer, RegionNew> rcn = bestCollection.getRegionList();
-            for(RegionNew rn: rcn.values()){
+            Map<Integer, Region> rcn = bestCollection.getRegionList();
+            for(Region rn: rcn.values()){
                 if(!rn.satisfiable()){
                     System.out.println("Region " + rn.getId() + " not satisfiable!");
                     System.exit(125);
@@ -1257,7 +1257,7 @@ public class EMP implements RegionalizationMethod {
 
     }*/
 
-    public static void checkLabels(int[] labels, Map<Integer, RegionNew> regionList){
+    public static void checkLabels(int[] labels, Map<Integer, Region> regionList){
         boolean consistent = true;
         for(int i = 0; i < labels.length; i++){
             if (labels[i] > 0){
@@ -1267,8 +1267,8 @@ public class EMP implements RegionalizationMethod {
                 }
             }
         }
-        for(Map.Entry<Integer, RegionNew> mapEntry: regionList.entrySet()){
-            RegionNew region = mapEntry.getValue();
+        for(Map.Entry<Integer, Region> mapEntry: regionList.entrySet()){
+            Region region = mapEntry.getValue();
             for(Integer area: region.getAreaList()){
                 if(labels[area] != region.getId()){
                     System.out.println("Region " + region.getId() + " contains area " + area + " but labeled as in region " + labels[area]);
@@ -1461,7 +1461,7 @@ public class EMP implements RegionalizationMethod {
         //RegionCollection rc = construction_phase_gene(population, income, 1, sg, idList,4000,Double.POSITIVE_INFINITY);
         for(int i = 0; i < numOfIts; i++){
             double constructionStart = System.currentTimeMillis() / 1000.0;
-            RegionCollectionNew rc = construction_phase_generalized(idList, distAttr, sg,
+            RegionCollection rc = construction_phase_generalized(idList, distAttr, sg,
                     minAttr,
                     minAttrLow,
                     minAttrHigh,
@@ -1550,7 +1550,240 @@ public class EMP implements RegionalizationMethod {
         //System.out.println("End of setipnput");
 
     }
+    public static RegionCollection  set_shapefile_input(String fileName,
+                                  String minAttrName,
+                                  Double minAttrLow,
+                                  Double minAttrHigh,
+                                  String maxAttrName,
+                                  Double maxAttrLow,
+                                  Double maxAttrHigh,
+                                  String avgAttrName,
+                                  Double avgAttrLow,
+                                  Double avgAttrHigh,
+                                  String sumAttrName,
+                                  Double sumAttrLow,
+                                  Double sumAttrHigh,
+                                  Double countLow,
+                                  Double countHigh,
+                                  String distAttrName
 
+    ) throws Exception {
+        double startTime = System.currentTimeMillis()/ 1000.0;
+        File file = new File(fileName);
+        Map<String, Object> map = new HashMap<>();
+        map.put("url", file.toURI().toURL());
+
+        DataStore dataStore = DataStoreFinder.getDataStore(map);
+        String typeName = dataStore.getTypeNames()[0];
+
+        FeatureSource<SimpleFeatureType, SimpleFeature> source =
+                dataStore.getFeatureSource(typeName);
+        Filter filter = Filter.INCLUDE; // ECQL.toFilter("BBOX(THE_GEOM, 10,20,30,40)")
+        ArrayList<Long> minAttr = new ArrayList<>();
+        ArrayList<Long> maxAttr = new ArrayList<>();
+        ArrayList<Long> avgAttr = new ArrayList<>();
+        ArrayList<Long> sumAttr = new ArrayList<>();
+        ArrayList<Long> distAttr = new ArrayList<>();
+
+        ArrayList<SimpleFeature> fList = new ArrayList<>();
+        ArrayList<Integer> idList = new ArrayList<>();
+        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures(filter);
+        double minX = Double.POSITIVE_INFINITY, minY = Double.POSITIVE_INFINITY;
+        double maxX = - Double.POSITIVE_INFINITY, maxY = -Double.POSITIVE_INFINITY;
+        Double minAttrMin = Double.POSITIVE_INFINITY;
+        Double minAttrMax = -Double.POSITIVE_INFINITY;
+        Double maxAttrMax = -Double.POSITIVE_INFINITY;
+        Double maxAttrMin = Double.POSITIVE_INFINITY;
+        double sumMin = Double.POSITIVE_INFINITY;
+        int count = 0;
+        Double avgTotal = 0.0;
+        Double sumTotal = 0.0;
+        ArrayList<Geometry> geometryList = new ArrayList<>();
+        try (FeatureIterator<SimpleFeature> features = collection.features()) {
+            while (features.hasNext()) {
+                SimpleFeature feature = features.next();
+                //System.out.print(feature.getID());
+                //System.out.print(": ");
+
+                minAttr.add(Long.parseLong(feature.getAttribute(minAttrName).toString()));
+                maxAttr.add(Long.parseLong(feature.getAttribute(maxAttrName).toString()));
+                avgAttr.add(Long.parseLong(feature.getAttribute(avgAttrName).toString()));
+                sumAttr.add(Long.parseLong(feature.getAttribute(sumAttrName).toString()));
+                distAttr.add(Long.parseLong(feature.getAttribute(distAttrName).toString()));
+                fList.add(feature);
+                if (Long.parseLong(feature.getAttribute(sumAttrName).toString()) < sumMin){
+                    sumMin = Long.parseLong(feature.getAttribute(sumAttrName).toString());
+                }
+                /*if (Long.parseLong(feature.getAttribute(avgAttrName).toString()) < 0){
+                    System.out.println("AVG attribute contains negative value(s)");
+                    return;
+                }
+                if (Long.parseLong(feature.getAttribute(sumAttrName).toString()) < 0){
+                    System.out.println("SUM attribute contains negative value(s)");
+                    return;
+                }*/
+                if (Long.parseLong(feature.getAttribute(minAttrName).toString()) < minAttrMin){
+                    minAttrMin = Double.parseDouble(feature.getAttribute(minAttrName).toString());
+                }
+                if (Long.parseLong(feature.getAttribute(minAttrName).toString()) > minAttrMax){
+                    minAttrMax = Double.parseDouble(feature.getAttribute(minAttrName).toString());
+                }
+                if(Long.parseLong(feature.getAttribute(maxAttrName).toString()) > maxAttrMax){
+                    maxAttrMax = Double.parseDouble(feature.getAttribute(maxAttrName).toString());
+                }
+                if(Long.parseLong(feature.getAttribute(maxAttrName).toString()) < maxAttrMin){
+                    maxAttrMin = Double.parseDouble(feature.getAttribute(maxAttrName).toString());
+                }
+                count ++;
+                avgTotal += Double.parseDouble(feature.getAttribute(avgAttrName).toString());
+                sumTotal += Double.parseDouble(feature.getAttribute(sumAttrName).toString());
+                //System.out.println(feature.getID());
+                idList.add(Integer.parseInt(feature.getID().split("\\.")[1]) - 1);
+                //System.out.print(feature.getID());
+                //System.out.print(": ");
+                //fList.add(feature);
+                Geometry geometry = (Geometry) feature.getDefaultGeometry();
+                geometryList.add(geometry);
+                double cminx = geometry.getEnvelope().getCoordinates()[0].getX();
+                double cminy = geometry.getEnvelope().getCoordinates()[0].getY();
+                double cmaxx = geometry.getEnvelope().getCoordinates()[2].getX();
+                double cmaxy = geometry.getEnvelope().getCoordinates()[2].getY();
+                if (minX > cminx){
+                    minX = cminx;
+                }
+                if (minY > cminy){
+                    minY = cminy;
+                }
+                if (maxX < cmaxx){
+                    maxX = cmaxx;
+                }
+                if (maxY < cmaxy){
+                    maxY = cmaxy;
+                }
+
+                //idList.add(Integer.parseInt(feature.getID().split("\\.")[1]) - 1);
+            }
+            features.close();
+
+            //sg.printIndex();
+        }
+        dataStore.dispose();
+        avgTotal = avgTotal / count;
+
+
+        //Feasibility checking
+        // (1)The situation for AVG will change after removing infeasible areas
+        // (2) Even when avgTotal does not lie with in avgAttrMin and avgAttrMax, the algorithm will
+        if(minAttrMin > minAttrHigh|| minAttrMax < minAttrLow|| maxAttrMin > maxAttrHigh || maxAttrMax < maxAttrLow||  sumMin > sumAttrHigh || sumTotal < sumAttrLow || count < countLow){
+            System.out.println("The constraint settings are infeasible. The program will terminate immediately.");
+            System.exit(1);
+        }
+        if(minAttrMin > minAttrHigh){
+            System.out.println("There is no area satisfying the MIN <=. The program will terminate immediately.");
+            System.exit(1);
+        }else if(minAttrMax < minAttrLow){
+            System.out.println("There is no area satisfying the MIN >=. The program will terminate immediately.");
+            System.exit(1);
+        }
+
+        //System.out.println(minX + " " + minY + ", " + maxX + " " + maxY);
+        double rookstartTime = System.currentTimeMillis()/ 1000.0;
+        //System.out.println("Time for reading the file: " + (rookstartTime - startTime));
+        SpatialGrid sg = new SpatialGrid(minX, minY, maxX, maxY);
+        //sg.createIndex(45, fList);
+        //sg.calculateContiguity(fList);
+        HashMap<Integer, Set<Integer>> neighborMap = calculateNeighbors(geometryList);
+        sg.setNeighbors(neighborMap);
+        double rookendTime = System.currentTimeMillis()/ 1000.0;
+        System.out.println("Rook time: " + (rookendTime - rookstartTime));
+
+        double dataLoadTime = System.currentTimeMillis()/ 1000.0;
+        System.out.println("Input size: " + distAttr.size());
+        long [][] distanceMatrix = Tabu.pdist(distAttr);
+        Date t = new Date();
+
+        String fileNameSplit[] = fileName.split("/");
+        String mapName = fileNameSplit[fileNameSplit.length-1].split("\\.")[0];
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+
+        String timeStamp = df.format(t);
+        String folderName = "data/AlgorithmTesting/FaCT_" + mapName + "_MIN-" + minAttrLow + "-" + minAttrHigh + "_AVG-" + avgAttrLow + "-" + avgAttrHigh + "_SUM-" +sumAttrLow + "-" + sumAttrHigh + "-" + timeStamp;
+        File folder = new File(folderName);
+        folder.mkdirs();
+        File settingFile = new File(folderName + "/Settings.csv");
+        if(!settingFile.exists()){
+            settingFile.createNewFile();
+        }
+
+        double constructionStart = System.currentTimeMillis() / 1000.0;
+        RegionCollection rc = construction_phase_generalized(idList, distAttr, sg,
+                minAttr,
+                minAttrLow,
+                minAttrHigh,
+
+                maxAttr,
+                maxAttrLow,
+                maxAttrHigh,
+
+                avgAttr,
+                avgAttrLow,
+                avgAttrHigh,
+
+                sumAttr,
+                sumAttrLow,
+                sumAttrHigh,
+                countLow, countHigh);
+        double constructionEnd = System.currentTimeMillis() / 1000.0;
+        double constructionDuration = constructionEnd - constructionStart;
+        //System.out.println("Time for construction phase:\n" + (constructionTime - rookendTime));
+        System.out.println("Construction time: " + constructionDuration);
+        int max_p = rc.getMax_p();
+        //System.out.println("MaxP: " + max_p);
+        Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
+    /*System.out.println("regionSpatialAttr after construction_phase:");
+    for(Map.Entry<Integer, Integer> entry: regionSpatialAttr.entrySet()){
+        Integer rid = entry.getKey();
+        Integer rval = entry.getValue();
+        System.out.print(rid + ": ");
+        System.out.print(rval + " ");
+        //System.out.println();
+    }*/
+
+        long totalWDS = Tabu.calculateWithinRegionDistance(rc.getRegionList(), distanceMatrix);
+        //System.out.println("totalWithinRegionDistance before tabu: \n" + totalWDS);
+        int tabuLength = 10;
+        int max_no_move = distAttr.size();
+        //checkLabels(rc.getLabels(), rc.getRegionList());
+
+        //System.out.println("Start tabu");
+
+        TabuReturn tr = Tabu.performTabu(rc.getLabels(), rc.getRegionList(), sg, Tabu.pdist((distAttr)), tabuLength, max_no_move, minAttr, maxAttr, sumAttr, avgAttr);
+        int[] labels = tr.labels;
+        //System.out.println(labels.length);
+        long WDSDifference = totalWDS - tr.WDS;
+        //int[] labels = SimulatedAnnealing.performSimulatedAnnealing(rc.getLabels(), rc.getRegionList(), sg, pdist((distAttr)), minAttr, maxAttr, sumAttr, avgAttr);
+        double endTime = System.currentTimeMillis()/ 1000.0;
+        //System.out.println("MaxP: " + max_p);
+        double heuristicDuration = endTime - constructionEnd;
+        //System.out.println("Time for tabu(s): \n" + (endTime - constructionTime));
+        // System.out.println("total time: \n" +(endTime - startTime));
+        int unassignedCount = 0;
+        for( int j = 0; j < labels.length; j++){
+            if(labels[j] < 1){
+                unassignedCount++;
+            }
+        }
+        //System.out.println("minTime: " + minTime);
+        //System.out.println("avgTime: " + avgTime);
+        //System.out.println("sumTime: " + sumTime);
+
+        RegionCollection finalRC = new RegionCollection();
+        finalRC.setMax_p(rc.getMax_p());
+        finalRC.setLabels(tr.labels);
+        finalRC.setUnassignedCount(unassignedCount);
+        return finalRC;
+
+    }
     public static void  set_input(String fileName,
                                   String minAttrName,
                                   Double minAttrLow,
@@ -1614,6 +1847,14 @@ public class EMP implements RegionalizationMethod {
                 fList.add(feature);
                 if (Long.parseLong(feature.getAttribute(sumAttrName).toString()) < sumMin){
                     sumMin = Long.parseLong(feature.getAttribute(sumAttrName).toString());
+                }
+                if (Long.parseLong(feature.getAttribute(avgAttrName).toString()) < 0){
+                    System.out.println("AVG attribute contains negative value(s)");
+                    return;
+                }
+                if (Long.parseLong(feature.getAttribute(sumAttrName).toString()) < 0){
+                    System.out.println("SUM attribute contains negative value(s)");
+                    return;
                 }
                 if (Long.parseLong(feature.getAttribute(minAttrName).toString()) < minAttrMin){
                     minAttrMin = Double.parseDouble(feature.getAttribute(minAttrName).toString());
@@ -1727,7 +1968,7 @@ public class EMP implements RegionalizationMethod {
         //RegionCollection rc = construction_phase_gene(population, income, 1, sg, idList,4000,Double.POSITIVE_INFINITY);
         for(int i = 0; i < numOfIts; i++){
             double constructionStart = System.currentTimeMillis() / 1000.0;
-            RegionCollectionNew rc = construction_phase_generalized(idList, distAttr, sg,
+            RegionCollection rc = construction_phase_generalized(idList, distAttr, sg,
                     minAttr,
                     minAttrLow,
                     minAttrHigh,
@@ -1811,7 +2052,9 @@ public class EMP implements RegionalizationMethod {
 
         }
         csvWriter.close();
-        //System.out.println("End of setipnput");
+
+        if(debug)
+            System.out.println("End of setipnput");
 
     }
 
