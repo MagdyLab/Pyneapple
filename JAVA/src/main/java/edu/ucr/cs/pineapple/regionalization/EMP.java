@@ -1702,18 +1702,6 @@ public class EMP implements RegionalizationMethod {
         long [][] distanceMatrix = Tabu.pdist(distAttr);
         Date t = new Date();
 
-        String fileNameSplit[] = fileName.split("/");
-        String mapName = fileNameSplit[fileNameSplit.length-1].split("\\.")[0];
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-
-        String timeStamp = df.format(t);
-        String folderName = "data/AlgorithmTesting/FaCT_" + mapName + "_MIN-" + minAttrLow + "-" + minAttrHigh + "_AVG-" + avgAttrLow + "-" + avgAttrHigh + "_SUM-" +sumAttrLow + "-" + sumAttrHigh + "-" + timeStamp;
-        File folder = new File(folderName);
-        folder.mkdirs();
-        File settingFile = new File(folderName + "/Settings.csv");
-        if(!settingFile.exists()){
-            settingFile.createNewFile();
-        }
 
         double constructionStart = System.currentTimeMillis() / 1000.0;
         RegionCollection rc = construction_phase_generalized(idList, distAttr, sg,
