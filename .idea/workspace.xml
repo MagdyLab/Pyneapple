@@ -114,6 +114,10 @@
       <change afterPath="$PROJECT_DIR$/JAVA/.idea/modules.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/JAVA/.idea/uiDesigner.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/JAVA/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JAVA/data/AlgorithmTesting/FaCT_LACity_MIN--Infinity-Infinity_AVG--Infinity-Infinity_SUM--Infinity-Infinity-2022-04-26_08-40-55/Settings.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JAVA/data/AlgorithmTesting/FaCT_LACity_MIN--Infinity-Infinity_AVG--Infinity-Infinity_SUM--Infinity-Infinity-2022-04-26_08-40-56/Settings.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JAVA/data/AlgorithmTesting/FaCT_LACity_MIN--Infinity-Infinity_AVG--Infinity-Infinity_SUM-10000.0-Infinity-2022-04-26_08-41-01/Settings.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JAVA/data/AlgorithmTesting/FaCT_LACity_MIN-1000.0-Infinity_AVG-1500.0-3500.0_SUM-10000.0-Infinity-2022-04-26_08-40-58/Settings.csv" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/JAVA/emp.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/JAVA/src/main/java/edu/ucr/cs/pineapple/regionalization/EMPUtils/EMPExperiments.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/JAVA/src/main/java/edu/ucr/cs/pineapple/regionalization/EMPUtils/GMaxPTabu.java" afterDir="false" />
@@ -123,7 +127,9 @@
       <change afterPath="$PROJECT_DIR$/JAVA/src/main/java/edu/ucr/cs/pineapple/regionalization/EMPUtils/Tabu.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/JAVA/src/main/java/edu/ucr/cs/pineapple/regionalization/EMPUtils/TabuReturn.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/JAVA/src/main/java/edu/ucr/cs/pineapple/utils/RookWithGeometry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/JAVA/src/main/java/edu/ucr/cs/pineapple/utils/ShapefileReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVA/src/main/java/edu/ucr/cs/pineapple/regionalization/EMP.java" beforeDir="false" afterPath="$PROJECT_DIR$/JAVA/src/main/java/edu/ucr/cs/pineapple/regionalization/EMP.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JAVA/src/test/java/edu/ucr/cs/pineapple/regionalization/EMPTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/JAVA/src/test/java/edu/ucr/cs/pineapple/regionalization/EMPTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
