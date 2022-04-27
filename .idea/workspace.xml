@@ -10,6 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3a69871-8bab-4f60-a339-bfab1e2c54ab" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Python/Notebooks/.ipynb_checkpoints/EMPTests-checkpoint.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Python/Notebooks/EMPTests.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Python/regionalization/testprint.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/EMP-checkpoint.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/EMPTest-checkpoint.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/SMP-checkpoint.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/EMP.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/EMPTest.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/Pineapple.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/SMP.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/Untitled.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/_init_.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/regionalization/_init_.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/regionalization/emp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/regionalization/smp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/regionalization/testprint.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/weight/_init_.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notebooks/weight/rook.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,12 +50,15 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="22qYjZKMFiRvan5KuT7XIlYaMRY" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -157,6 +179,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1650987045758">

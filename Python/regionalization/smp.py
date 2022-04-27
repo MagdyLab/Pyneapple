@@ -1,5 +1,10 @@
-
-
+import jpype
+import array
+import numpy as np
+import geopandas
+import pandas
+from jpype import java
+from jpype import javax
 def smp(df, w, attrs_name, threshold_name, threshold, maxItr = 100, lengthTabu = 100, t = 1, convSA = 90, alpha = 0.9, nRows = 2, nColumns = 2, cores = 4, random = 0):
     """The max-p-regions involves the aggregation of n areas into an unknown maximum number of
     homogeneous regions, while ensuring that each region is contiguous and satisfies a minimum

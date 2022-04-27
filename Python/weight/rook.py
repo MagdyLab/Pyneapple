@@ -1,3 +1,8 @@
+import jpype
+import array
+from jpype import java
+from jpype import javax
+
 def from_dataframe(df):
     gcolumn = df['geometry'].to_list()
     gArrayList = jpype.java.util.ArrayList()
