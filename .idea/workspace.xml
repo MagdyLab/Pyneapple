@@ -10,26 +10,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3a69871-8bab-4f60-a339-bfab1e2c54ab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Python/Notebooks/.ipynb_checkpoints/EMPTests-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Python/Notebooks/EMPTests.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Python/regionalization/testprint.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/EMP-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/EMPTest-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/SMP-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/EMP.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/EMPTest.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/Pineapple.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/SMP.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/Untitled.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/_init_.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/regionalization/_init_.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/regionalization/emp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/regionalization/smp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/regionalization/testprint.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/weight/_init_.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/weight/rook.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/BoundsFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/DataPartition.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMP.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/EMPExperiments.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/GMaxPTabu.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/Move.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/Region.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/RegionCollection.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/Tabu.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/TabuReturn.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EnclavesAssignmentThread.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/GrowPartitionThread.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/GrowRegionsThread.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/Move.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/Partition.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/Region.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/RegionalizationMethod.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/SMPP$ParallelMovableUnitsSearch.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/SMPP.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/SMPPPythonInterface.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/utils/RookWithGeometry.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/utils/ShapefileReader.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/utils/SpatialGrid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Pineapple.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Pineapple.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JAVA/src/test/java/edu/ucr/cs/pineapple/regionalization/EMPTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/JAVA/src/test/java/edu/ucr/cs/pineapple/regionalization/EMPTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/EMP.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/EMP.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/EMPTest.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/EMPTest.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +91,7 @@
       <recent name="C:\Users\50476\Documents\GitHub\Pineapple\src\main\java\edu\ucr\cs\pineapple\regionalization" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.EMPExperiments">
+  <component name="RunManager" selected="JUnit.All in Pineapple">
     <configuration name="EMP" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.ucr.cs" />
       <module name="Pineapple" />
@@ -122,6 +131,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="All in Pineapple" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Pineapple" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="FaCT.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/FaCT_jar/FaCT.jar" />
       <method v="2" />
@@ -131,11 +148,13 @@
       <item itemvalue="Application.EMPExperiments" />
       <item itemvalue="Application.EMPGateway" />
       <item itemvalue="JAR Application.FaCT.jar" />
+      <item itemvalue="JUnit.All in Pineapple" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.EMP" />
+        <item itemvalue="JUnit.All in Pineapple" />
         <item itemvalue="Application.EMPExperiments" />
+        <item itemvalue="Application.EMP" />
         <item itemvalue="JAR Application.FaCT.jar" />
         <item itemvalue="Application.EMPGateway" />
       </list>
@@ -192,13 +211,29 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="689" y="302" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1650987044877" />
-    <state x="1177" y="263" key="FileChooserDialogImpl" timestamp="1650987110927">
+    <state x="1177" y="263" key="FileChooserDialogImpl" timestamp="1652294130564">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1177" y="263" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1650987110927" />
-    <state x="122" y="188" key="SettingsEditor" timestamp="1650987102287">
+    <state x="1177" y="263" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1652294130564" />
+    <state width="1877" height="264" key="GridCell.Tab.0.bottom" timestamp="1652294187885">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="122" y="188" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1650987102287" />
+    <state width="1877" height="264" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1652294187885" />
+    <state width="1877" height="264" key="GridCell.Tab.0.center" timestamp="1652294187884">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="264" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1652294187884" />
+    <state width="1877" height="264" key="GridCell.Tab.0.left" timestamp="1652294187884">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="264" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1652294187884" />
+    <state width="1877" height="264" key="GridCell.Tab.0.right" timestamp="1652294187884">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="264" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1652294187884" />
+    <state x="122" y="188" key="SettingsEditor" timestamp="1652294135538">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="122" y="188" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1652294135538" />
   </component>
 </project>

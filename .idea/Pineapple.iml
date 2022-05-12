@@ -3,9 +3,9 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
-    <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/target" />
+    <content url="file://$MODULE_DIR$/JAVA">
+      <sourceFolder url="file://$MODULE_DIR$/JAVA/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/JAVA/src/main/java" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -105,5 +105,6 @@
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.4" level="project" />
     <orderEntry type="library" name="Maven: net.sf.py4j:py4j:0.10.9.3" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:4.11" level="project" />
   </component>
 </module>
