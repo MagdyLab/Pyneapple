@@ -2,8 +2,8 @@ Pineapple
  -Docs
 
 EMP
- -Unit tests
- -Docs
+ -Unit tests - done
+ -Docs - notebook added
 
 SMP
  -Unit tests
