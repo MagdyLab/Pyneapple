@@ -1,0 +1,4 @@
+jpype
+numpy
+geopandas
+pandas
