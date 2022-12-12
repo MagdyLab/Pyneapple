@@ -12,11 +12,9 @@
 
 
 import jpype
-import pysal
 import geopandas
 import libpysal
-from shapely.geometry import Polygon
-from shapely.geometry import Point
+
 
 """
 
@@ -74,7 +72,7 @@ def GSLO(
     None:
         if no feasible partition is found
     """
-    jpype.startJVM()
+    #jpype.startJVM()
     neighborHashMap = jpype.java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = jpype.java.util.TreeSet()
@@ -99,17 +97,19 @@ def GSLO(
     result = PRUC.execute_GSLO(jpype.JInt(p), jpype.JLong(threshold), jpype.JBoolean(has_island), jpype.JInt(lo_iter),
                                neighborHashMap, extAttr, sAttr, x_centroids, y_centroids)
 
+    results = [None, None]
     if len(result) == 2:
         hetero = float(result[0])
         l = list(result[1])
-        return hetero, l
-    else:
-        return None
 
-'''
-gdf = geopandas.read_file('DataFile/5K/5K.shp')
-w = libpysal.weights.Rook.from_shapefile('DataFile/5K/5K.shp')
+        results = [hetero, l]
 
-print(GSLO(gdf, w, 'ALAND', 'AWATER', 100000, 10, True, gdf.shape[0]))
+    jpype.shutdownJVM()
+    return results
+
+
+gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
+print("gdf read")
+w = libpysal.weights.Queen.from_dataframe(gdf)
+print(GSLO(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10, True, gdf.shape[0]))
 jpype.shutdownJVM()
-'''
