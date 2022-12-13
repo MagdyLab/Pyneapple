@@ -14,18 +14,18 @@
 import jpype
 import geopandas
 import libpysal
-
-
+import os
+import sys
 """
 
-GSLO algorithm in python-java hybrid implementation
+The heuristic algorithm for the PRUC problem in python-java hybrid implementation
 source: Yongyi Liu, Ahmed R. Mahmood, Amr Magdy, Sergio Rey, "PRUC : P-Regions with User-Defined Constraint", PVLDB, 15(3)
 
 """
-import os
 
 
-def GSLO(
+
+def pruc(
         gdf,
         w,
         sim_attr,
@@ -72,7 +72,13 @@ def GSLO(
     None:
         if no feasible partition is found
     """
-    #jpype.startJVM()
+
+    if not jpype.isJVMStarted():
+        print("starting jvm")
+        path = os.path.split(os.path.abspath(__file__))[0] + "\prucjava"
+        jpype.startJVM(jpype.getDefaultJVMPath(), "-ea", classpath = path)
+    else:
+        print("jvm already started")
     neighborHashMap = jpype.java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = jpype.java.util.TreeSet()
@@ -97,19 +103,24 @@ def GSLO(
     result = PRUC.execute_GSLO(jpype.JInt(p), jpype.JLong(threshold), jpype.JBoolean(has_island), jpype.JInt(lo_iter),
                                neighborHashMap, extAttr, sAttr, x_centroids, y_centroids)
 
-    results = [None, None]
+    results = None
     if len(result) == 2:
         hetero = float(result[0])
         l = list(result[1])
 
         results = [hetero, l]
 
-    jpype.shutdownJVM()
+    #jpype.shutdownJVM()
     return results
 
 
-gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
-print("gdf read")
-w = libpysal.weights.Queen.from_dataframe(gdf)
-print(GSLO(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10, True, gdf.shape[0]))
-jpype.shutdownJVM()
+#print(os.path.split(os.path.abspath(__file__))[0] + "\prucjava")
+#import os 
+#print(os.getcwd())
+#print(type(os.getcwd()))
+
+#print(os.getcwd() == r"C:\githubProject\Pineapple\Pineapple\region")
+#print(os.getcwd())
+#gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
+#w = libpysal.weights.Queen.from_dataframe(gdf)
+#print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10, True, gdf.shape[0]))
