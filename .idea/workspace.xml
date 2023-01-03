@@ -10,35 +10,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3a69871-8bab-4f60-a339-bfab1e2c54ab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/BoundsFilter.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/DataPartition.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMP.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPTest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/EMPExperiments.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/GMaxPTabu.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/Move.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/Region.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/RegionCollection.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/Tabu.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EMPUtils/TabuReturn.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/EnclavesAssignmentThread.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/GrowPartitionThread.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/GrowRegionsThread.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/Move.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/Partition.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/Region.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/RegionalizationMethod.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/SMPP$ParallelMovableUnitsSearch.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/SMPP.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/regionalization/SMPPPythonInterface.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/utils/RookWithGeometry.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/utils/ShapefileReader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/edu/ucr/cs/pineapple/utils/SpatialGrid.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Pineapple.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Pineapple.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pineapple/region/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JAVA/src/test/java/edu/ucr/cs/pineapple/regionalization/EMPTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/JAVA/src/test/java/edu/ucr/cs/pineapple/regionalization/EMPTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/EMP.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/EMP.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/EMPTest.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/EMPTest.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Area.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Area.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/EnclavesAssignment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/EnclavesAssignment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/GlobalSearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/GlobalSearch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/IndirectFlowPush.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/IndirectFlowPush.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/InterregionUpdate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/InterregionUpdate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/LocalOptimization$ParallelMovableUnitsSearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/LocalOptimization.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/LocalOptimization.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Move.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Move.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Region.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Region.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/RegionGrowth.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/RegionGrowth.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Seed.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Seed.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/SeedIdentification$ConnectedComponent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/SeedIdentification.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/SeedIdentification.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Tarjan.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Tarjan.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Test.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/pruc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Area.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Area.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/EnclavesAssignment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/EnclavesAssignment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/GlobalSearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/GlobalSearch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/IndirectFlowPush.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/IndirectFlowPush.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/InterregionUpdate.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/InterregionUpdate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/LocalOptimization$ParallelMovableUnitsSearch.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/LocalOptimization.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/LocalOptimization.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Move.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Move.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Region.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Region.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/RegionGrowth.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/RegionGrowth.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Seed.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Seed.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/SeedIdentification$ConnectedComponent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/SeedIdentification.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/SeedIdentification.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Tarjan.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Tarjan.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Test.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/testpy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pineapple/testspyder.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/pruc.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/pruc.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,18 +101,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/edu/ucr/cs/pineapple" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/JAVA" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\50476\Documents\GitHub\Pineapple\Pineapple\JAVA\src\main\java\edu\ucr\cs\pineapple\utils" />
@@ -91,20 +119,7 @@
       <recent name="C:\Users\50476\Documents\GitHub\Pineapple\src\main\java\edu\ucr\cs\pineapple\regionalization" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in Pineapple">
-    <configuration name="EMP" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.ucr.cs" />
-      <module name="Pineapple" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.ucr.cs.pineapple.regionalization.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration name="EMPExperiments" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.ucr.emp.EMPExperiments" />
       <module name="Pineapple" />
@@ -131,6 +146,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EMP" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.ucr.cs" />
+      <module name="Pineapple" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucr.cs.pineapple.regionalization.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in Pineapple" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Pineapple" />
       <option name="PACKAGE_NAME" value="" />
@@ -143,22 +171,6 @@
       <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/FaCT_jar/FaCT.jar" />
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Application.EMP" />
-      <item itemvalue="Application.EMPExperiments" />
-      <item itemvalue="Application.EMPGateway" />
-      <item itemvalue="JAR Application.FaCT.jar" />
-      <item itemvalue="JUnit.All in Pineapple" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.All in Pineapple" />
-        <item itemvalue="Application.EMPExperiments" />
-        <item itemvalue="Application.EMP" />
-        <item itemvalue="JAR Application.FaCT.jar" />
-        <item itemvalue="Application.EMPGateway" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -172,7 +184,7 @@
       </list>
     </option>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -191,9 +203,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
