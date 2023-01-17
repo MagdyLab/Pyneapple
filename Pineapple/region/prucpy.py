@@ -15,6 +15,7 @@ import jpype
 import geopandas
 import libpysal
 import os
+import re
 import sys
 """
 
@@ -72,7 +73,53 @@ def pruc(
     None:
         if no feasible partition is found
     """
-
+    if not isinstance(gdf, geopandas.GeoDataFrame):
+        raise Exception("gdf must be a GeoDataFrame object")
+    
+    if not isinstance(w, libpysal.weights.W):
+        raise Exception("w must be a libpysal.weights.W object")
+    
+    if sim_attr not in gdf.columns:
+        raise Exception("similarity attribute not in the attribute list")
+    else:
+        for val in gdf[sim_attr]:           
+            pattern = re.compile(r'^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$')
+            result = pattern.match(str(val))
+            if not result:
+                raise Exception("the values under the similarity attribute must be numerical values")
+            
+    
+    if ext_attr not in gdf.columns:
+        raise Exception("extensive attribute not in the attribute list")
+    else:
+        for val in gdf[ext_attr]:
+            pattern = re.compile(r'^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$')
+            result = pattern.match(str(val))
+            if not result:
+                raise Exception("the values under the extensive attribute must be numerical values")
+    
+    if not isinstance(p, int):
+        raise Exception("the number of regions must be an integer")
+    else:
+        if p <= 0:
+            raise Exception("the number of regions must be positive")
+    
+    if not isinstance(threshold, int) and not isinstance(threshold, float):
+        raise Exception("threshold must be a numerical value")
+    else:
+        if threshold < 0:
+            raise Exception("threshold must be non-negative")
+    
+    if not isinstance(has_island, bool):
+        raise Exception("has_island must be a bool value")
+    
+    if not isinstance(lo_iter , int):
+        raise Exception("lo_iter must be an integer")
+    else:
+        if lo_iter < 0:
+            raise Exception("lo_iter must be non-negative")
+    
+    
     if not jpype.isJVMStarted():
         print("starting jvm")
         path = os.path.split(os.path.abspath(__file__))[0] + "\prucjava"
@@ -114,13 +161,8 @@ def pruc(
     return results
 
 
-#print(os.path.split(os.path.abspath(__file__))[0] + "\prucjava")
-#import os 
-#print(os.getcwd())
-#print(type(os.getcwd()))
 
-#print(os.getcwd() == r"C:\githubProject\Pineapple\Pineapple\region")
-#print(os.getcwd())
-#gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
-#w = libpysal.weights.Queen.from_dataframe(gdf)
-#print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10, True, gdf.shape[0]))
+gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
+w = libpysal.weights.Queen.from_dataframe(gdf)
+print(gdf.columns)
+print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10, True, gdf.shape[0]))

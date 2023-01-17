@@ -9,72 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3a69871-8bab-4f60-a339-bfab1e2c54ab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Pineapple/region/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Area.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Area.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/EnclavesAssignment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/EnclavesAssignment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/GlobalSearch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/GlobalSearch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/IndirectFlowPush.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/IndirectFlowPush.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/InterregionUpdate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/InterregionUpdate.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/LocalOptimization$ParallelMovableUnitsSearch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/LocalOptimization.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/LocalOptimization.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Move.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Move.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Region.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Region.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/RegionGrowth.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/RegionGrowth.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Seed.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Seed.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/SeedIdentification$ConnectedComponent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/SeedIdentification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/SeedIdentification.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Tarjan.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Tarjan.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Test.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/Test.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/pruc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Area.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Area.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/EnclavesAssignment.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/EnclavesAssignment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/GlobalSearch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/GlobalSearch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/IndirectFlowPush.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/IndirectFlowPush.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/InterregionUpdate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/InterregionUpdate.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/LocalOptimization$ParallelMovableUnitsSearch.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/LocalOptimization.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/LocalOptimization.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Move.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Move.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Region.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Region.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/RegionGrowth.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/RegionGrowth.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Seed.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Seed.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/SeedIdentification$ConnectedComponent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/SeedIdentification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/SeedIdentification.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Tarjan.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Tarjan.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Test.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/test/Test.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/region/pruc/testpy.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pineapple/testspyder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/pruc.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/pruc.ipynb" afterDir="false" />
-    </list>
+    <list default="true" id="f3a69871-8bab-4f60-a339-bfab1e2c54ab" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
