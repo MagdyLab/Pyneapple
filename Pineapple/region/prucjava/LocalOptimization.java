@@ -17,11 +17,12 @@ public class LocalOptimization {
     private ArrayList<Area> all_areas;
     private ArrayList<Area> best_area_label;
     private Region[] regions;
-    private long threshold;
+    private double threshold;
     private final int tabu_len = 100; //length of the tabu list to avoid repetitive moves
     private long total_time;
-    private long best_hetero;
+    private double best_hetero;
     private GlobalSearch sol;
+    private int num_thread;
 
     /**
      *
@@ -33,7 +34,7 @@ public class LocalOptimization {
      * @param threshold The value of the user-defined constraint
      *
      */
-    public LocalOptimization(GlobalSearch sol , int max_no_improve , double alpha, ArrayList<Area> all_areas , Region[] regions , long threshold) throws CloneNotSupportedException, InterruptedException {
+    public LocalOptimization(GlobalSearch sol , int max_no_improve , double alpha, ArrayList<Area> all_areas , Region[] regions , double threshold, int num_thread) throws CloneNotSupportedException, InterruptedException {
         this.max_no_improve = max_no_improve;
         this.alpha = alpha;
         this.all_areas = all_areas;
@@ -41,6 +42,7 @@ public class LocalOptimization {
         this.threshold = threshold;
         tabu_list = new ArrayList<>();
         this.sol = sol;
+        this.num_thread = num_thread;
         heuristic();
     }
 
@@ -68,11 +70,12 @@ public class LocalOptimization {
         ArrayList<Area> movable_units = new ArrayList<>();
         int no_improving_move = 0;
 
-        long optimal_hetero = Region.get_all_region_hetero(regions);
+        double optimal_hetero = Region.get_all_region_hetero(regions);
 
 
         while(no_improving_move < max_no_improve)
         {
+            //System.out.println("one iteration");
             if(movable_units.size() == 0)
             {
                 movable_units = parallel_search_movable_units();
@@ -90,12 +93,13 @@ public class LocalOptimization {
             Area area_to_move = (Area)results[0];
             Region donor = regions[area_to_move.get_associated_region_index()];
             Region receiver = (Region)results[1];
-            long optimal_hetero_decre = (long)results[2];
-
+            double optimal_hetero_decre = (double)results[2];
+            //System.out.println("the receiver is " + receiver + " donor is " + donor + " result len is " + results.length + " , "  +results[1] + " , " + results[2]);
 
             boolean move_flag;
 
             //suggesting the move increase the heterogeneity of the current partition
+            //System.out.println("optimal hetero is " + optimal_hetero);
             if(optimal_hetero_decre > 0)
             {
 
@@ -106,12 +110,14 @@ public class LocalOptimization {
                 }
 
                 move_flag = true;
+                //System.out.println("the donor is " + donor);
+                //System.out.println("the receiver  is " + receiver);
                 donor.remove_area_in_region(area_to_move);
                 receiver.add_area_to_region(area_to_move);
-
+                //System.out.println("movable unit size " + movable_units.size() + " " + area_to_move.get_geo_index() + " moved from " + donor.get_region_index() + " to " + receiver.get_region_index());
                 movable_units.remove(area_to_move);
 
-                long total_hetero = Region.get_all_region_hetero(regions);
+                double total_hetero = Region.get_all_region_hetero(regions);
 
                 //suggesting the move increase the heterogeneity of the best partition
                 if(total_hetero < optimal_hetero)
@@ -133,7 +139,7 @@ public class LocalOptimization {
             else
             {
                 no_improving_move ++;
-                double random_num = Math.random();
+                double random_num = new Random(Test.seed).nextDouble();
                 double Boltzmann = Math.pow(Math.E , (optimal_hetero_decre / temperature));
                 //double Boltzmann = Math.pow(Math.E , (  - ((double)(Region.get_all_region_hetero(regions) - optimal_hetero)/optimal_hetero) / temperature) );
                 //double Boltzmann = Math.pow(Math.E , ((optimal_hetero_decre) / temperature));
@@ -193,7 +199,8 @@ public class LocalOptimization {
     //to the region with maximum heterogeneity decrease
     public Object[] greedy_find(ArrayList<Area> movable_units)
     {
-        Area area = movable_units.get(new Random().nextInt(movable_units.size()));
+        //System.out.print(movable_units.size() + " | ");
+        Area area = movable_units.get(new Random(Test.seed).nextInt(movable_units.size()));
 
 
         int current_r_index = area.get_associated_region_index();
@@ -225,12 +232,15 @@ public class LocalOptimization {
             return new Object[]{null};
         }
 
-        long optimal_hetero_decre = Long.MIN_VALUE;
+        double optimal_hetero_decre = Double.NEGATIVE_INFINITY;
         Region best_region = null;
         for(Region r : region_neighbors)
         {
             Region belonging_region = regions[area.get_associated_region_index()];
-            long hetero_decre = belonging_region.compute_hetero_decre(area) - r.compute_hetero_incre(area);
+            double hetero_decre = belonging_region.compute_hetero_decre(area) - r.compute_hetero_incre(area);
+            //System.out.println("hetero decre is " + hetero_decre);
+            //System.out.println("optimal hetero decre is " + optimal_hetero_decre);
+            //System.out.println(hetero_decre > optimal_hetero_decre);
             if(hetero_decre > optimal_hetero_decre)
             {
                 optimal_hetero_decre = hetero_decre;
@@ -238,6 +248,8 @@ public class LocalOptimization {
             }
 
         }
+
+        //System.out.println("area " + area + " best region " + best_region + " optiaml hetero" + optimal_hetero_decre + " region neigh size " + region_neighbors.size() );
         return new Object[]{area , best_region , optimal_hetero_decre};
 
 
@@ -250,7 +262,7 @@ public class LocalOptimization {
     public ArrayList<Area> parallel_search_movable_units() {
         ArrayList<Area> movable_units = new ArrayList<>();
         ReentrantLock lock = new ReentrantLock();
-        ExecutorService threadPool = Executors.newFixedThreadPool(4);
+        ExecutorService threadPool = Executors.newFixedThreadPool(num_thread);
         ArrayList<ParallelMovableUnitsSearch> tasks = new ArrayList<>();
         for (Region region : regions) {
             tasks.add(new ParallelMovableUnitsSearch(region, movable_units, lock));
@@ -274,7 +286,7 @@ public class LocalOptimization {
         return total_time;
     }
 
-    public long getBest_hetero()
+    public double getBest_hetero()
     {
         return best_hetero;
     }

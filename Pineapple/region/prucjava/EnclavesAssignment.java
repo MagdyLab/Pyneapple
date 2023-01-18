@@ -84,9 +84,9 @@ public class EnclavesAssignment {
 
 
         Region optimal_region = null;
-        long optimal_hetero_incre = Long.MAX_VALUE;
+        double optimal_hetero_incre = Double.MAX_VALUE;
         for (Region current_region : complete_region_neighs) {
-            long hetero_incre = current_region.compute_hetero_incre(e);
+            double hetero_incre = current_region.compute_hetero_incre(e);
             if (hetero_incre < optimal_hetero_incre) {
                 optimal_hetero_incre = hetero_incre;
                 optimal_region = current_region;

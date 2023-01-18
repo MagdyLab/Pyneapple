@@ -9,7 +9,7 @@ import java.util.Comparator;
 public class RegionGrowth {
     private Seed seed;
     private Region[] regions;
-    private long threshold;
+    private double threshold;
     private ArrayList<Area> all_areas;
     private int p;
 
@@ -19,7 +19,7 @@ public class RegionGrowth {
      * @param threshold The value on the user-defined constraint
      * @param all_areas The input areas
      */
-    public RegionGrowth(Seed seed , long threshold , ArrayList<Area> all_areas)
+    public RegionGrowth(Seed seed , double threshold , ArrayList<Area> all_areas)
     {
         this.seed = seed;
         this.threshold = threshold;
@@ -34,7 +34,7 @@ public class RegionGrowth {
      */
     public Region[] grow_region_robust()
     {
-        Comparator<Region> r_comparator = Comparator.comparingLong(Region::get_region_extensive_attr);
+        Comparator<Region> r_comparator = Comparator.comparingDouble(Region::get_region_extensive_attr);
 
         for(int i = 0 ; i < regions.length ; i++)
         {

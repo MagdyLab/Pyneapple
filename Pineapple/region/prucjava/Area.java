@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class Area implements Cloneable , Serializable {
 
     private int index;
-    private long sim_attr;
-    private long extensive_attr;
+    private double sim_attr;
+    private double extensive_attr;
     private double[] centroid;
     private ArrayList<Integer> neigh_area_index;
     private int associate_region_index;
@@ -21,7 +21,7 @@ public class Area implements Cloneable , Serializable {
      * @param sim_attr the similarity attribute
      * @param extensive_attr the extensive attribute
      */
-    public Area(int index , long sim_attr, long extensive_attr , double[] centroid)
+    public Area(int index , double sim_attr, double extensive_attr , double[] centroid)
     {
         this.index = index;
         this.sim_attr = sim_attr;
@@ -68,12 +68,12 @@ public class Area implements Cloneable , Serializable {
 
     public int get_geo_index() { return index; }
 
-    public long get_internal_attr()
+    public double get_internal_attr()
     {
         return sim_attr;
     }
 
-    public long get_extensive_attr()
+    public double get_extensive_attr()
     {
         return extensive_attr;
     }
@@ -99,7 +99,7 @@ public class Area implements Cloneable , Serializable {
     public double[] get_centroid() { return centroid; }
 
 
-    public long compute_hetero(Area neigh_area) {
+    public double compute_hetero(Area neigh_area) {
         return Math.abs(sim_attr - neigh_area.get_internal_attr());
     }
 

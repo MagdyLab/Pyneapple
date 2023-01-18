@@ -45,6 +45,7 @@ public class Seed implements Cloneable{
      */
     private void select_initial_seeds(ArrayList<Area> areas_set , int seed_size)
     {
+
         int[] seed_index = choose_random_num(areas_set.size() , seed_size);
         for (int current_index : seed_index) {
             seeds.add(areas_set.get(current_index));
@@ -61,6 +62,7 @@ public class Seed implements Cloneable{
      */
     private int[] choose_random_num(int max , int n)
     {
+
         int len = max;
         int[] source = new int[len];
         for (int i = 0; i < len; i++)
@@ -68,7 +70,7 @@ public class Seed implements Cloneable{
             source[i] = i;
         }
         int[] result = new int[n];
-        Random rd = new Random(System.currentTimeMillis());
+        Random rd = new Random(Test.seed);
         int index;
         for (int i = 0; i < result.length; i++)
         {
@@ -113,8 +115,8 @@ public class Seed implements Cloneable{
      */
     public void random_replacement()
     {
-        Area area_in_seed = seeds.get(new Random(System.nanoTime()).nextInt(seeds.size()));
-        Area area_not_in_seed = not_seeds.get(new Random(System.nanoTime()).nextInt(not_seeds.size()));
+        Area area_in_seed = seeds.get(new Random(Test.seed).nextInt(seeds.size()));
+        Area area_not_in_seed = not_seeds.get(new Random(Test.seed).nextInt(not_seeds.size()));
         replace_area(area_in_seed , area_not_in_seed);
 
         double current_min_dist = compute_min_dist();

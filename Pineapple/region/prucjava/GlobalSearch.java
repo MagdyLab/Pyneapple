@@ -26,30 +26,16 @@ public class GlobalSearch {
      * @param threshold the value on the user-defined constraint
      * @param detect_island whether or not the input dataset includes island
      */
-    public GlobalSearch(ArrayList<Area> all_areas, int p, int selection_max_iter, long threshold , boolean detect_island) throws InterruptedException {
+    public GlobalSearch(ArrayList<Area> all_areas, int p, int selection_max_iter, double threshold) throws InterruptedException {
         long start = System.currentTimeMillis();
 
         this.all_areas = all_areas;
 
 
         long seeding_start = System.nanoTime();
-        if(!detect_island)
-        {
-            if(selection_max_iter >= 0)
-            {
-                seed = new SeedIdentification(all_areas , p , selection_max_iter , false , false).getBest_seed();
-            }
 
-            else
-            {
-                seed = new SeedIdentification(all_areas , p , selection_max_iter , true , false).getBest_seed();
-            }
-        }
+        seed = new SeedIdentification(all_areas , p , selection_max_iter).getBest_seed();
 
-        else
-        {
-            seed = new SeedIdentification(all_areas , p , selection_max_iter , false , true).getBest_seed();
-        }
 
         long seeding_end = System.nanoTime();
         this.seed_time = seeding_end - seeding_start;
@@ -170,6 +156,8 @@ public class GlobalSearch {
     {
         return seed.get_min_dist();
     }
+
+    public Seed getSeed(){return seed;}
 
 
 }
