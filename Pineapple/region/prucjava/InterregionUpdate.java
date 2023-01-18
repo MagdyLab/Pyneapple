@@ -50,9 +50,9 @@ public class InterregionUpdate {
      */
     private void inter_regional_move(){
         int iter = 0;
-        Comparator<Region> regionComparator = Comparator.comparingLong(Region::get_region_extensive_attr);
+        Comparator<Region> regionComparator = Comparator.comparingDouble(Region::get_region_extensive_attr);
 
-        Comparator<Area> areaComparator = Comparator.comparingLong(Area::get_extensive_attr);
+        Comparator<Area> areaComparator = Comparator.comparingDouble(Area::get_extensive_attr);
 
         while(incomplete_regions.size() != 0)
         {

@@ -17,6 +17,7 @@ import libpysal
 import os
 import re
 import sys
+import datetime
 """
 
 The heuristic algorithm for the PRUC problem in python-java hybrid implementation
@@ -33,8 +34,9 @@ def pruc(
         ext_attr,
         threshold,
         p,
-        has_island,
-        lo_iter,
+        lo_iter = 1000,
+        seed = datetime.datetime.now().strftime("%Y%m%d%H%M%S"),
+        num_thread = os.cpu_count()
 ):
     """
     Parameters
@@ -55,13 +57,20 @@ def pruc(
 
     p : int
         The number of regions
-
-    has_island : bool
-        Whether or not the input data include island, default is false
+        Default is set to the size of the dataset
 
     lo_iter : int
         The number of iterations in local optimization
-
+        Default is 1000
+    
+    seed : int
+        The seed for randomness
+        Default is set to the current time
+    
+    num_thread : int
+        The number of thread used in the local optimization
+        Default is set to os.cpu_count()
+        
     Returns
     ----------
     (hetero , label):
@@ -98,34 +107,23 @@ def pruc(
             if not result:
                 raise Exception("the values under the extensive attribute must be numerical values")
     
-    if not isinstance(p, int):
-        raise Exception("the number of regions must be an integer")
-    else:
-        if p <= 0:
-            raise Exception("the number of regions must be positive")
+    if (not isinstance(p, int)) or (p <= 0) :
+        raise Exception("the number of regions must be positive integer")
+        
     
-    if not isinstance(threshold, int) and not isinstance(threshold, float):
-        raise Exception("threshold must be a numerical value")
-    else:
-        if threshold < 0:
-            raise Exception("threshold must be non-negative")
+    if (not isinstance(threshold, int) and not isinstance(threshold, float)) or (threshold < 0):
+        raise Exception("threshold must be non-negative")
     
-    if not isinstance(has_island, bool):
-        raise Exception("has_island must be a bool value")
     
-    if not isinstance(lo_iter , int):
-        raise Exception("lo_iter must be an integer")
-    else:
-        if lo_iter < 0:
-            raise Exception("lo_iter must be non-negative")
+    if (not isinstance(lo_iter , int)) or (lo_iter < 0):
+        raise Exception("lo_iter must be non-negative integers")
     
     
     if not jpype.isJVMStarted():
-        print("starting jvm")
+        #print("starting jvm")
         path = os.path.split(os.path.abspath(__file__))[0] + "\prucjava"
         jpype.startJVM(jpype.getDefaultJVMPath(), "-ea", classpath = path)
-    else:
-        print("jvm already started")
+
     neighborHashMap = jpype.java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = jpype.java.util.TreeSet()
@@ -138,17 +136,19 @@ def pruc(
     extAttr = jpype.java.util.ArrayList()
     x_centroids = jpype.java.util.ArrayList()
     y_centroids = jpype.java.util.ArrayList()
-
+    
+    
     for i in range(0, gdf.shape[0]):
-        sAttr.add(jpype.JLong(gdf[sim_attr][i]))
-        extAttr.add(jpype.JLong(gdf[ext_attr][i]))
+        sAttr.add(jpype.JDouble(gdf[sim_attr][i]))
+        extAttr.add(jpype.JDouble(gdf[ext_attr][i]))
         idList.add(jpype.JInt(i))
         x_centroids.add(jpype.JDouble(gdf['geometry'][i].centroid.x))
         y_centroids.add(jpype.JDouble(gdf['geometry'][i].centroid.y))
-
+    
+   
     PRUC = jpype.JClass('Test')()
-    result = PRUC.execute_GSLO(jpype.JInt(p), jpype.JLong(threshold), jpype.JBoolean(has_island), jpype.JInt(lo_iter),
-                               neighborHashMap, extAttr, sAttr, x_centroids, y_centroids)
+    result = PRUC.execute_GSLO(jpype.JInt(p), jpype.JDouble(threshold), jpype.JInt(lo_iter),
+                               neighborHashMap, extAttr, sAttr, x_centroids, y_centroids, jpype.JLong(seed), jpype.JInt(num_thread))
 
     results = None
     if len(result) == 2:
@@ -162,7 +162,7 @@ def pruc(
 
 
 
-gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
-w = libpysal.weights.Queen.from_dataframe(gdf)
-print(gdf.columns)
-print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10, True, gdf.shape[0]))
+#gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
+#w = libpysal.weights.Queen.from_dataframe(gdf)
+#print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10))
+#print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10,  gdf.shape[0], 2023117, 1))

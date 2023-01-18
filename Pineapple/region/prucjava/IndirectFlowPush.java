@@ -9,7 +9,7 @@ import java.util.Comparator;
  */
 public class IndirectFlowPush {
     private Region[] regions;
-    private long threshold;
+    private double threshold;
     private ArrayList<Area> all_areas;
     ArrayList<Region>[] neighbor_regions;
     ArrayList<ArrayList<Area>>[] neighbor_region_areas;
@@ -31,7 +31,7 @@ public class IndirectFlowPush {
      * @param all_areas is the input areas
      */
 
-    public IndirectFlowPush(Region[] regions , long threshold , ArrayList<Area> all_areas)
+    public IndirectFlowPush(Region[] regions , double threshold , ArrayList<Area> all_areas)
     {
         this.regions = regions;
         this.threshold = threshold;
@@ -52,7 +52,7 @@ public class IndirectFlowPush {
     public void flow_pushing()
     {
         initialize_neighbor(); //build the neighboring relations on the region level
-        Comparator<Region> regionComparator = Comparator.comparingLong(o -> o.get_region_extensive_attr());
+        Comparator<Region> regionComparator = Comparator.comparingDouble(o -> o.get_region_extensive_attr());
         for(Region r : regions)
         {
             if(!r.is_region_complete())

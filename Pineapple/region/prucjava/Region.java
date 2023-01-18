@@ -11,13 +11,13 @@ public class Region {
     private ArrayList<Area> areas_on_margin;
     private int region_id;
     private boolean region_complete;
-    private long threshold;
-    public long region_extensive_attr;
-    private long region_heterogeneity;
+    private double threshold;
+    public double region_extensive_attr;
+    private double region_heterogeneity;
     private ArrayList<Area> neigh_areas;
 
 
-    public Region(int region_id , Area g , long threshold , ArrayList<Area> all_areas)
+    public Region(int region_id , Area g , double threshold , ArrayList<Area> all_areas)
     {
         areas_in_region = new ArrayList<>();
         areas_on_margin = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Region {
         }
     }
 
-    public Region(ArrayList<Area> areas_in_region , long threshold , long hetero , long total_extensive_attribute)
+    public Region(ArrayList<Area> areas_in_region , double threshold , double hetero , double total_extensive_attribute)
     {
         if(hetero > 0 && total_extensive_attribute > 0)
         {
@@ -113,7 +113,7 @@ public class Region {
         {
             this.region_complete = true;
         }
-        long incre = compute_hetero_incre(area);
+        double incre = compute_hetero_incre(area);
         region_heterogeneity += incre;
 
 
@@ -211,7 +211,7 @@ public class Region {
         {
             this.region_complete = false;
         }
-        long decre = compute_hetero_decre(area);
+        double decre = compute_hetero_decre(area);
         region_heterogeneity -= decre;
 
 
@@ -259,9 +259,9 @@ public class Region {
 
     }
 
-    public long compute_hetero_incre(Area area)
+    public double compute_hetero_incre(Area area)
     {
-        long hetero_incre = 0;
+        double hetero_incre = 0;
         for (Area current_area : areas_in_region) {
             hetero_incre += Math.abs(area.get_internal_attr() - current_area.get_internal_attr());
         }
@@ -282,9 +282,9 @@ public class Region {
     }
 
 
-    public long compute_hetero_decre(Area area)
+    public double compute_hetero_decre(Area area)
     {
-        long hetero_decre = 0;
+        double hetero_decre = 0;
         for(Area current_area : areas_in_region){
             if(current_area == area)
             {
@@ -356,7 +356,7 @@ public class Region {
 
     public int get_region_size() {return areas_in_region.size();}
 
-    public long getThreshold() {return threshold;}
+    public double getThreshold() {return threshold;}
 
 
     public int get_region_index() { return region_id; }
@@ -373,20 +373,20 @@ public class Region {
 
     public ArrayList<Area> get_areas_in_region() {return areas_in_region; }
 
-    public long get_region_extensive_attr()
+    public double get_region_extensive_attr()
     {
         return region_extensive_attr;
     }
 
-    public long get_region_hetero()
+    public double get_region_hetero()
     {
         return region_heterogeneity;
     }
 
 
-    public static long get_all_region_hetero(Region[] regions)
+    public static double get_all_region_hetero(Region[] regions)
     {
-        long total_hetero = 0;
+        double total_hetero = 0;
         for(Region r : regions)
         {
             total_hetero += r.get_region_hetero();
@@ -406,7 +406,7 @@ public class Region {
         return false;
     }
 
-    public static Region[] construct_region_from_areas(ArrayList<Area> all_areas , Seed seed , long threshold)
+    public static Region[] construct_region_from_areas(ArrayList<Area> all_areas , Seed seed , double threshold)
     {
         Region[] regions = new Region[seed.get_seeds().size()];
         for(int i = 0 ; i < regions.length ; i++)
@@ -433,25 +433,25 @@ public class Region {
 
 
 
-    public static void test_result_correctness(Region[] regions , ArrayList<Area> all_areas , long threshold , boolean PRUC)
+    public static void test_result_correctness(Region[] regions , ArrayList<Area> all_areas , double threshold , boolean PRUC)
     {
         if(regions == null)
         {
             return;
         }
-        long total_ex_accurate = 0;
+        double total_ex_accurate = 0;
         for(Area area : all_areas)
         {
             total_ex_accurate += area.get_extensive_attr();
         }
 
-        long test_ex = 0L;
+        double test_ex = 0;
         int total_size = 0;
-        long total_hetero = 0L;
+        double total_hetero = 0;
 
         for(Region r : regions)
         {
-            long r_ex = 0L;
+            double r_ex = 0;
             ArrayList<Area> areas_in_r = r.get_areas_in_region();
             for(Area area : areas_in_r)
             {
@@ -461,6 +461,8 @@ public class Region {
             if(r_ex != r.get_region_extensive_attr())
             {
                 System.out.println("the accumalted extensive attribute does not equal to the region extensive attribute");
+                System.out.println("verified value is " + r_ex);
+                System.out.println("the stored value is " + r.get_region_extensive_attr());
             }
 
 
@@ -474,7 +476,7 @@ public class Region {
                 System.out.println("smaller than threshold");
             }
 
-            long r_hetero = 0;
+            double r_hetero = 0;
             for(int i = 0 ; i < r.get_areas_in_region().size() ; i++)
             {
                 for(int j = i + 1 ; j < r.get_areas_in_region().size() ; j++)
@@ -511,6 +513,8 @@ public class Region {
         if(test_ex != total_ex_accurate)
         {
             System.out.println("total ex not match");
+            System.out.println("total ex = " + test_ex);
+            System.out.println("total ex accurate is " + total_ex_accurate);
         }
 
         if(total_size != all_areas.size())

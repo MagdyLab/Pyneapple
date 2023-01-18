@@ -23,23 +23,19 @@ public class SeedIdentification {
      * @param kmeanspp whether or not to use the k-mean ++ seeding
      * @param detect_island whether or not to consider island areas in the dataset
      */
-    public SeedIdentification(ArrayList<Area> all_areas , int seed_num , int max_iter , boolean kmeanspp , boolean detect_island) {
+    public SeedIdentification(ArrayList<Area> all_areas , int seed_num , int max_iter) {
         this.all_geoareas = all_areas;
+
+        boolean detect_island = !(find_connected_component(all_areas.get(0)).size() == all_areas.size());
         if(!detect_island)
         {
-            if(!kmeanspp)
-            {
-                this.best_seed = naive_seed_selection(all_areas , seed_num , max_iter);
-            }
-
-            else
-            {
-                this.best_seed = kmeanspp(all_areas , seed_num);
-            }
+            System.out.println("no island seeding");
+            this.best_seed = naive_seed_selection(all_areas , seed_num , max_iter);
         }
 
         else
         {
+            System.out.println("island seeding");
             this.best_seed = island_seeding(all_areas , seed_num , max_iter);
         }
     }
@@ -55,14 +51,14 @@ public class SeedIdentification {
     public Seed island_seeding(ArrayList<Area> all_areas , int s_num , int maxiter)
     {
         ArrayList<ConnectedComponent> ccs = new ArrayList<>();
-        Comparator<ConnectedComponent> cc_comparator = Comparator.comparingLong(ConnectedComponent::getTotal_ext);
+        Comparator<ConnectedComponent> cc_comparator = Comparator.comparingDouble(ConnectedComponent::getTotal_ext);
 
         ArrayList<Area> unvisited = (ArrayList<Area>) (all_areas.clone());
         while(unvisited.size() > 0)
         {
-            Area a = unvisited.get(new Random().nextInt(unvisited.size()));
+            Area a = unvisited.get(new Random(Test.seed).nextInt(unvisited.size()));
             ArrayList<Area> visited = find_connected_component(a);
-            long cc_ext = 0;
+            double cc_ext = 0;
             for(Area cc_a : visited)
             {
                 cc_ext += cc_a.get_extensive_attr();
@@ -73,7 +69,7 @@ public class SeedIdentification {
 
         ccs.sort(cc_comparator);
 
-        long total_ext = 0;
+        double total_ext = 0;
         for(ConnectedComponent cc : ccs)
         {
             total_ext += cc.getTotal_ext();
@@ -145,7 +141,7 @@ public class SeedIdentification {
 
     public Seed kmeanspp(ArrayList<Area> all_areas , int s_num)
     {
-        Area init_area = all_areas.get(new Random().nextInt(all_areas.size()));
+        Area init_area = all_areas.get(new Random(Test.seed).nextInt(all_areas.size()));
         ArrayList<Area> seeded_areas = new ArrayList<>();
         seeded_areas.add(init_area);
         while(seeded_areas.size() < s_num)
@@ -157,7 +153,7 @@ public class SeedIdentification {
             {
                 if(!seeded_areas.contains(a))
                 {
-                    double min_dist_to_seed = Long.MAX_VALUE;
+                    double min_dist_to_seed = Double.MAX_VALUE;
                     for(Area seed_a :seeded_areas)
                     {
                         double dist = a.compute_dist(seed_a);
@@ -172,7 +168,7 @@ public class SeedIdentification {
                 }
             }
 
-            double random_num = new Random().nextDouble();
+            double random_num = new Random(Test.seed).nextDouble();
             double accu = 0;
             Area selected_area = null;
             for(int i = 0 ; i < unseeded_areas.size() ; i++)
@@ -207,8 +203,8 @@ public class SeedIdentification {
 
     static class ConnectedComponent{
         ArrayList<Area> areas_in_cc;
-        long total_ext;
-        public ConnectedComponent(ArrayList<Area> areas , long total_e)
+        double total_ext;
+        public ConnectedComponent(ArrayList<Area> areas , double total_e)
         {
             areas_in_cc = areas;
             total_ext = total_e;
@@ -219,7 +215,7 @@ public class SeedIdentification {
             return areas_in_cc;
         }
 
-        public long getTotal_ext()
+        public double getTotal_ext()
         {
             return total_ext;
         }
