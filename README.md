@@ -5,9 +5,11 @@ The library for scalable and enriched max-p regionalization.
 
 ## Modules
 
-###PRUC
-###SMP
-###EMP
+######PRUC
+
+######SMP
+
+######EMP
 
 ## How to use
 
