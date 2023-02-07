@@ -7,14 +7,18 @@ The library for scalable and enriched max-p regionalization.
 
 ### PRUC
 
-#### SMP
+### SMP
 
-###### EMP
+### EMP
+The three-phase greedy algorithm for solving the enriched max-p-regions problem.
 
 ## How to use
 
-###EMP
-The implementation of the FaCT algorithm has been packaged into the EMP.jar package. It is assumed that the data required for the experiments is in the directory ./data. To run the experiments, use the command:
+### EMP
+
+To 
+
+The implementation of the EMP algorithm has been packaged into the EMP.jar package. It is assumed that the data required for the experiments is in the directory ./data. To run the experiments, use the command:
 ```
 java -jar EMP.java
 ```
