@@ -1,18 +1,22 @@
 # Pineapple
-
+====================================
 
 Pineapple is an open-source Python library for scalable and enriched spatial data analysis. The regionalization module provides the algorithm for the enriched p-regions problem, the scalable max-p-regions solution, and the enriched max-p-regions problem solution. The spatial regression module provides the scalable Multi-scale Geographically Weighted Regression method. It is under development for the inclusion of newly proposed algorithms for scalable spatial analysis methods.
 
 ## Modules
 
-### pineapple.regionalization.pruc
 
-### SMP
+### - pineapple.regionalization.pruc
 
-### EMP
+### - pineapple.regionalization.smp
+
+### - pineapple.regionalization.emp
 The three-phase greedy algorithm for solving the enriched max-p-regions problem.
 
-## How to use
+
+## Example Notebooks
+- [PRUC](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/pruc.ipynb)
+- [SMP] (/notebooks/SMP.ipynb)
 
 ### EMP
 
