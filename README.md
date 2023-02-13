@@ -29,6 +29,10 @@ The three-phase greedy algorithm for solving the enriched max-p-regions problem.
 - libpysal
 - matplotlib
 
+## Java
+
+## Instructions
+
 ### EMP
 
 The implementation of the EMP algorithm has been packaged into the EMP.jar package. It is assumed that the data required for the experiments is in the directory ./data. To run the experiments, use the command:
