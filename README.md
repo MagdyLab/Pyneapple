@@ -10,6 +10,7 @@ Pineapple is an open-source Python library for scalable and enriched spatial dat
 - pineapple.regionalization.smp
 
 - pineapple.regionalization.emp
+
 The three-phase greedy algorithm for solving the enriched max-p-regions problem.
 
 
