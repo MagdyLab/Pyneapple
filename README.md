@@ -23,7 +23,7 @@ The three-phase greedy algorithm for solving the enriched max-p-regions problem.
 
 ### Python
 - [JPype](https://jpype.readthedocs.io/en/latest/)
-- numpy
+- [`numpy`](https://numpy.org/devdocs/)
 - geopandas
 - pandas
 - libpysal
