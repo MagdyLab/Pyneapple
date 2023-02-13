@@ -16,11 +16,11 @@ The three-phase greedy algorithm for solving the enriched max-p-regions problem.
 
 ## Example Notebooks
 - [PRUC](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/pruc.ipynb)
-- [SMP] (/notebooks/SMP.ipynb)
+- [SMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/SMP.ipynb)
+- [EMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/max-p-enriched.ipynb)
 
 ### EMP
 
-To 
 
 The implementation of the EMP algorithm has been packaged into the EMP.jar package. It is assumed that the data required for the experiments is in the directory ./data. To run the experiments, use the command:
 ```
