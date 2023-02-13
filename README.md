@@ -22,14 +22,15 @@ The three-phase greedy algorithm for solving the enriched max-p-regions problem.
 ## Requirements
 
 ### Python
-- jpype
+- [JPype](https://jpype.readthedocs.io/en/latest/)
 - numpy
 - geopandas
 - pandas
 - libpysal
 - matplotlib
 
-## Java
+### Java
+- [JPype](https://jpype.readthedocs.io/en/latest/)
 
 ## Instructions
 
