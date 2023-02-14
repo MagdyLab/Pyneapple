@@ -14,9 +14,10 @@ Max-P Regionalization with Enriched Constraints
 
 
 ## Examples
--[PRUC](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/pruc.ipynb)
--[SMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/SMP.ipynb)
--[EMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/max-p-enriched.ipynb)
+- [PRUC](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/pruc.ipynb)
+- [SMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/SMP.ipynb)
+- [EMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/max-p-enriched.ipynb)
+
 All examples can be run interactively by launching this repository as a [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pysal/spopt/main) or opened using Jupyter Notebook.
 
 ## Requirements
@@ -37,14 +38,19 @@ All examples can be run interactively by launching this repository as a [![Binde
 
 
 ## Installation
-
+<!--- Not on pip or conda yet --->
 To get started, please make sure that [`Java`](https://www.java.com/) is installed and the environment variables are cofigured. 
 
 You can download the source distribution (.tar.gz) and decompress it to your selected destination. Open a command shell and navigate to the decompressed folder. Type:
 ```
 $ pip install .
 ```
+## Contribute
+
+**Pineapple** is under active development and contributors are welcome.
+
+If you have any suggestions, feature requests, or bug reports, please open new [issues](https://github.com/pysal/PACKAGE_NAME/issues) on GitHub. To submit patches, please open a [pull request](https://github.com/YunfanKang/Pineapple/pulls). Once your changes get merged, you’ll automatically be added to the [Contributors List](https://github.com/YunfanKang/Pineapple/graphs/contributors).
 
 ## Support
-If you are having trouble, please [create an issue](https://github.com/YunfanKang/Pineapple/issues), [start a discussion](https://github.com/YunfanKang/Pineapple/discussions).
-[//]: <>, or talk to us in the [gitter room](https://gitter.im/YunfanKang/Pineapple).
+If you are having trouble, please [create an issue](https://github.com/YunfanKang/Pineapple/issues), or [start a discussion](https://github.com/YunfanKang/Pineapple/discussions).
+<!---, or talk to us in the [gitter room](https://gitter.im/YunfanKang/Pineapple).--->
