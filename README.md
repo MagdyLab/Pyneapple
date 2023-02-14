@@ -6,12 +6,11 @@ Pineapple is an open-source Python library for scalable and enriched spatial dat
 
 
 - pineapple.regionalization.pruc
-
+P-regions with user-defined constraint
 - pineapple.regionalization.smp
-
+Scalable max-P regionalization
 - pineapple.regionalization.emp
-
-The three-phase greedy algorithm for solving the enriched max-p-regions problem.
+Max-P Regionalization with Enriched Constraints
 
 
 ## Example Notebooks
@@ -19,15 +18,19 @@ The three-phase greedy algorithm for solving the enriched max-p-regions problem.
 - [SMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/SMP.ipynb)
 - [EMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/max-p-enriched.ipynb)
 
+## Installation
+
 ## Requirements
 
 ### Python
-- [JPype](https://jpype.readthedocs.io/en/latest/)
+- [`JPype`](https://jpype.readthedocs.io/en/latest/)
 - [`numpy`](https://numpy.org/devdocs/)
-- geopandas
-- pandas
-- libpysal
-- matplotlib
+- [`geopandas`](https://geopandas.org/en/stable/)
+- [`pandas`](https://pandas.pydata.org/)
+
+### Notebook
+- [`libpysal`](https://github.com/pysal/libpysal)
+- [`matplotlib`](https://matplotlib.org/)
 
 ### Java
 - [JPype](https://jpype.readthedocs.io/en/latest/)
