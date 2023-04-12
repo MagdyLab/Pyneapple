@@ -18,7 +18,7 @@ Max-P Regionalization with Enriched Constraints
 - [SMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/SMP.ipynb)
 - [EMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/max-p-enriched.ipynb)
 
-All examples can be run interactively by launching this repository as a [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/pysal/spopt/main) or opened using Jupyter Notebook.
+All examples can be run interactively by launching this repository as a [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/YunfanKang/Pineapple/HEAD) or opened using Jupyter Notebook.
 
 ## Requirements
 
