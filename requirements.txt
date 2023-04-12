@@ -2,3 +2,5 @@ jpype
 numpy
 geopandas
 pandas
+libpysal
+matplotlib
