@@ -13,3 +13,4 @@ dependencies:
   - pandas
   - libpysal
   - matplotlib
+  - openjdk=8
