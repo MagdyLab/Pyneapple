@@ -4,4 +4,3 @@ geopandas
 pandas
 libpysal
 matplotlib
-openjdk==8
