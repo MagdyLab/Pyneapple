@@ -4,3 +4,4 @@ geopandas
 pandas
 libpysal
 matplotlib
+java-jdk
