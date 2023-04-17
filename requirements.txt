@@ -1,6 +1,0 @@
-jpype1
-numpy
-geopandas
-pandas
-libpysal
-matplotlib
