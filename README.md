@@ -1,24 +1,24 @@
-# `Pineapple`
+# `Pyneapple`
 
-**Pineapple** is an open-source Python library for scalable and enriched spatial data analysis. The regionalization module provides the algorithm for the enriched p-regions problem, the scalable max-p-regions solution, and the enriched max-p-regions problem solution. The spatial regression module provides the scalable Multi-scale Geographically Weighted Regression method. It is under development for the inclusion of newly proposed algorithms for scalable spatial analysis methods.
+**Pyneapple** is an open-source Python library for scalable and enriched spatial data analysis. The regionalization module provides the algorithm for the enriched p-regions problem, the scalable max-p-regions solution, and the enriched max-p-regions problem solution. The spatial regression module provides the scalable Multi-scale Geographically Weighted Regression method. It is under development for the inclusion of newly proposed algorithms for scalable spatial analysis methods.
 
 ## Modules
 
 
-- pineapple.regionalization.pruc
+- pyneapple.regionalization.pruc
 P-regions with user-defined constraint
-- pineapple.regionalization.smp
+- pyneapple.regionalization.smp
 Scalable max-P regionalization
-- pineapple.regionalization.emp
+- pyneapple.regionalization.emp
 Max-P Regionalization with Enriched Constraints
 
 
 ## Examples
-- [PRUC](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/pruc.ipynb)
-- [SMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/smpp.ipynb)
-- [EMP](https://github.com/YunfanKang/Pineapple/blob/main/notebooks/max-p-enriched.ipynb)
+- [PRUC](https://github.com/YunfanKang/Pyneapple/blob/main/notebooks/pruc.ipynb)
+- [SMP](https://github.com/YunfanKang/Pyneapple/blob/main/notebooks/smpp.ipynb)
+- [EMP](https://github.com/YunfanKang/Pyneapple/blob/main/notebooks/max-p-enriched.ipynb)
 
-All examples can be run interactively by launching this repository as a [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/YunfanKang/Pineapple/HEAD) or opened using Jupyter Notebook.
+All examples can be run interactively by launching this repository as a [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/YunfanKang/Pyneapple/HEAD) or opened using Jupyter Notebook.
 
 ## Requirements
 
@@ -47,10 +47,10 @@ $ pip install .
 ```
 ## Contribute
 
-**Pineapple** is under active development and contributors are welcome.
+**Pyneapple** is under active development and contributors are welcome.
 
-If you have any suggestions, feature requests, or bug reports, please open new [issues](https://github.com/pysal/PACKAGE_NAME/issues) on GitHub. To submit patches, please open a [pull request](https://github.com/YunfanKang/Pineapple/pulls). Once your changes get merged, you’ll automatically be added to the [Contributors List](https://github.com/YunfanKang/Pineapple/graphs/contributors).
+If you have any suggestions, feature requests, or bug reports, please open new [issues](https://github.com/pysal/PACKAGE_NAME/issues) on GitHub. To submit patches, please open a [pull request](https://github.com/YunfanKang/Pyneapple/pulls). Once your changes get merged, you’ll automatically be added to the [Contributors List](https://github.com/YunfanKang/Pyneapple/graphs/contributors).
 
 ## Support
-If you are having trouble, please [create an issue](https://github.com/YunfanKang/Pineapple/issues), or [start a discussion](https://github.com/YunfanKang/Pineapple/discussions).
-<!---, or talk to us in the [gitter room](https://gitter.im/YunfanKang/Pineapple).--->
+If you are having trouble, please [create an issue](https://github.com/YunfanKang/Pyneapple/issues), or [start a discussion](https://github.com/YunfanKang/Pyneapple/discussions).
+<!---, or talk to us in the [gitter room](https://gitter.im/YunfanKang/Pyneapple).--->
