@@ -10,16 +10,6 @@ def _get_requirements_from_files(groups_files):
 
     return groups_reqlist
 
-setup(
-   name='Pyneapple',
-   version='0.0.1',
-   description='Scalable and expressive spatial analysis',
-   author='Yunfan Kang',
-   author_email='ykang040@ucr.edu',
-   packages=['Pyneapple'],  #same as name
-   install_requires=['wheel', 'bar', 'greek'], #external packages as dependencies
-)
-
 def setup_package():
    _groups_files = {
       "base": "requirements.txt",
