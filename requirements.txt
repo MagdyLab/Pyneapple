@@ -1,0 +1,10 @@
+pip
+numpy
+scipy
+jpype1
+numpy
+geopandas
+pandas
+libpysal
+matplotlib
+install-jdk
