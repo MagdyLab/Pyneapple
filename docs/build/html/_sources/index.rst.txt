@@ -12,7 +12,7 @@ Pyneapple is an open-source Python library for scalable and enriched spatial dat
    :maxdepth: 2
    :caption: Contents:
 
-
+   modules
 
 Indices and tables
 ==================

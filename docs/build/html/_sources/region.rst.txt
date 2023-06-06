@@ -1,0 +1,10 @@
+region package
+==============
+
+Module contents
+---------------
+
+.. automodule:: region
+   :members:
+   :undoc-members:
+   :show-inheritance:
