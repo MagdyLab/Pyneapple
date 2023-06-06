@@ -1,0 +1,27 @@
+Java:
+
+J1, Merge the code to the package. Make sure the project compiles. All algorithms should compile to a single .jar file for the python APIs.
+	a. Algorithm to edu.ucr.cs.pyneapple.regionalization. The class should implement the RegionalizationMethod interface and override the interface functions
+	b. Utilities classes to edu.ucr.cs.pyneapple.utils
+	c. Test cases to test\java\edu\ucr\cs\pyneapple\regionalization. Please make sure the test cases follow the junit.framework.TestCase format.
+J2, Write javadoc documentation for the public functions
+
+Python:
+P1, Confirm the documentation of the Python APIs and move the files to the corresponding directory
+	a. The .py files for the python APIs should be under Pyneapple/Python/regionalization
+	b. The test cases in Pyneapple/Python/tests, the file name should be test_xxx.py
+P2, Make sure the functions can be called by regionalization.xxx when the module is imported. 
+	Make sure that the notebooks under /notebooks can run online in the binder environment. The packages should be imported as pyneapple.regionalization.xxx
+	If the binder takes too long to load, please try to run the notebook after installing the package after installing the package by running
+	pip install .
+	at the root directory or
+	pip install git+https://github.com/MagdyLab/Pyneapple.git@main
+
+
+Hussah: J1, J2, P1
+
+Yunfan: J2, P2
+
+Yongyi: J1, J2, P1
+
+
