@@ -39,9 +39,13 @@ All examples can be run interactively by launching this repository as a [![Binde
 
 ## Installation
 <!--- Not on pip or conda yet --->
-To get started, please make sure that [`Java`](https://www.java.com/) is installed and the environment variables are cofigured. 
+<!--- To get started, please make sure that [`Java`](https://www.java.com/) is installed and the environment variables are cofigured. --->
+You can try to install the package using the following command:
+```
+$ pip install git+https://github.com/MagdyLab/Pyneapple.git@main
+```
 
-You can download the source distribution (.tar.gz) and decompress it to your selected destination. Open a command shell and navigate to the decompressed folder. Type:
+You can also download the source distribution (.tar.gz) and decompress it to your selected destination. Open a command shell and navigate to the decompressed folder. Type:
 ```
 $ pip install .
 ```
