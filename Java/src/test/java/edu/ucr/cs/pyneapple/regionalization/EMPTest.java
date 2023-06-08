@@ -3,6 +3,8 @@ package edu.ucr.cs.pyneapple.regionalization;
 import edu.ucr.cs.pyneapple.utils.ShapefileReader;
 import junit.framework.TestCase;
 
+import java.util.Arrays;
+
 public class EMPTest extends TestCase {
     static String normalDataset = "data/LACity/LACity.shp";
     static String negativeDataset = "data/LACity_negative_attr/LACity.shp";
@@ -102,12 +104,13 @@ public class EMPTest extends TestCase {
      * The test case for the getRegionList() interface. An array storing the region lable of each area should be printed out.
      * @throws Exception
      */
-    public void test_getRegionList() throws Exception {
+    public void test_getRegionLabels() throws Exception {
         ShapefileReader sr = new ShapefileReader(normalDataset, "pop_16up", "unemployed", "employed", "pop2010", "households");
         EMP emp = new EMP();
-        emp.execute_regionalization(sr.getNeighborMap(), sr.getDistAttr(), sr.getSumAttr(), (long) 20000);
-        System.out.println(emp.getRegionList());
+        //emp.execute_regionalization(sr.getNeighborMap(), sr.getDistAttr(), sr.getSumAttr(), (long) 20000);
+        System.out.println(Arrays.toString(emp.getRegionLabels()));
     }
+
 
 
 

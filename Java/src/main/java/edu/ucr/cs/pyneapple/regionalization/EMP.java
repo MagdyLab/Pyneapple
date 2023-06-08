@@ -22,6 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
+/**
+ * EMP implements the algorithm for solving the Expressive Max-p Regions problem
+ * @Author Yunfan Kang
+ */
 public class EMP implements RegionalizationMethod {
     static boolean debug = false;
     static boolean labelCheck = true;
@@ -30,7 +34,6 @@ public class EMP implements RegionalizationMethod {
     static int rand[] = {0, 1, 2};
     static String rands[] = {"S", "R", "B"};
     static int mergeLimit = 3;
-    static String testName = "RandWithMergeLimit";
 
     static double minTime = 0;
     static double avgTime = 0;
@@ -39,35 +42,82 @@ public class EMP implements RegionalizationMethod {
     RegionCollection constructionPartition;
     TabuReturn finalPartition;
 
+    /**
+     * Returns the number of regions. The function should be called after the regionalization analysis is initialized by invoking execute_regionalization(), otherwise returns -1.
+     * @return the number of regions. -1 if the region partition is not initialized.
+     */
     @Override
     public int getP() {
-        return constructionPartition.getMax_p();
+        try{
+            return constructionPartition.getMax_p();
+        }catch(NullPointerException e){
+            System.out.println("The regionalization is not performed, set p = -1");
+            return -1;
+        }
     }
 
+    /**
+     * Returns the region lael of each area. The function should be called after the regionalization analysis is initialized by invoking execute_regionalization(), otherwise returns {-1}.
+     * @return an array for the region label of each area. {-1} if the region partition is not initialized.
+     */
     @Override
-    public int[] getRegionList() {
-        return finalPartition.labels;
+    public int[] getRegionLabels() {
+        try{
+            return finalPartition.labels;
+        }catch(NullPointerException e){
+            System.out.println("The regionalization is not performed, set region list to be {-1}");
+            return new int[]{-1};
+        }
+
     }
+
+    /**
+     * Implements the execute_regionalization function of the RegionalizationMethod interface. The function performs the max-p regionalization.
+     * @param neighborSet A hashmap. The key is the area id of each area. The value is the set of id of the neighbor areas of the given area.
+     * @param disAttr The list of dissimilarity attributes
+     * @param sumAttr The list of attributes for the summation constraint.
+     * @param threshold The lower-bound threshold for the max-p regions
+     */
     @Override
-    public void execute_regionalization(Map<Integer, Set<Integer>> neighbor,
+    public void execute_regionalization(Map<Integer, Set<Integer>> neighborSet,
                                         ArrayList<Long> disAttr,
                                         ArrayList<Long> sumAttr,
-                                        Long thresholdLong){
+                                        Long threshold){
         int tabuLength = 100;
-        Double threshold = thresholdLong.doubleValue();
+        Double thresholdDouble = threshold.doubleValue();
         int max_no_move = disAttr.size();
         SpatialGrid sg = new SpatialGrid();
-        sg.setNeighbors(neighbor);
+        sg.setNeighbors(neighborSet);
         ArrayList idList = new ArrayList<Integer>();
         for(int i = 0 ; i < disAttr.size(); i++){
             idList.add(i);
         }
-        constructionPartition = construction_phase_generalized(idList, disAttr, sg, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, threshold, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+        constructionPartition = construction_phase_generalized(idList, disAttr, sg, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, thresholdDouble, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
         finalPartition = Tabu.performTabu(constructionPartition.getLabels(), constructionPartition.getRegionList(), sg, Tabu.pdist((disAttr)), tabuLength, max_no_move, sumAttr, sumAttr, sumAttr, sumAttr);
 
     }
 
-    public void execute_regionalization(Map<Integer, Set<Integer>> neighbor,
+    /**
+     * Performs the expressive regionalization. The results can be accessed through the get functions.
+     * @param neighborSet A hashmap. The key is the area id of each area. The value is the set of id of the neighbor areas of the given area.
+     * @param disAttr The list of dissimilarity attributes
+     * @param minAttr The list of attributes values of areas for the min constraint.
+     * @param minLowerBound The lower bound of the min constraint
+     * @param minUpperBound The upper bound of the min constraint
+     * @param maxAttr The list of attributes values of areas for the max constraint.
+     * @param maxLowerBound The lower bound of the max constraint
+     * @param maxUpperBound The upper bound of the max constraint
+     * @param avgAttr The list of attributes values of areas for the avg constraint.
+     * @param avgLowerBound The lower bound of the avg constraint
+     * @param avgUpperBound The upper bound of the avg constraint
+     * @param sumAttr The list of attributes values of areas for the summation constraint.
+     * @param sumLowerBound The lower bound of the sum constraint
+     * @param sumUpperBound The upper bound of the sum constraint
+     * @param countLowerBound The lower bound of the count constraint
+     * @param countUpperBound The upper bound of the count constraint
+     */
+    //Method overloading
+    public void execute_regionalization(Map<Integer, Set<Integer>> neighborSet,
                                         ArrayList<Long> disAttr,
                                         ArrayList<Long> minAttr,
                                         Double minLowerBound,
@@ -90,7 +140,7 @@ public class EMP implements RegionalizationMethod {
         int tabuLength = 100;
         int max_no_move = disAttr.size();
         SpatialGrid sg = new SpatialGrid();
-        sg.setNeighbors(neighbor);
+        sg.setNeighbors(neighborSet);
         ArrayList idList = new ArrayList<Integer>();
         for(int i = 0 ; i < disAttr.size(); i++){
             idList.add(i);
