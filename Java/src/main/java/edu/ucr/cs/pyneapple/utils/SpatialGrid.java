@@ -40,6 +40,38 @@ public class SpatialGrid{
         grid_area = new HashMap<Integer, Set<Integer>>();
         area_grid = new HashMap<Integer, Set<Integer>>();
     }
+
+    public static HashMap<Integer, Set<Integer>> calculateNeighbors(ArrayList<Geometry> polygons) {
+
+        HashMap<Integer, Set<Integer>> neighborMap = new HashMap<>();
+
+        for (int i = 0; i < polygons.size(); i++) {
+
+            neighborMap.put(i, new TreeSet<>());
+        }
+
+
+        for (int i = 0; i < polygons.size(); i++) {
+
+            for (int j = i + 1; j < polygons.size(); j++) {
+
+                if (polygons.get(i).intersects(polygons.get(j))) {
+
+                    Geometry intersection = polygons.get(i).intersection(polygons.get(j));
+
+                    if (intersection.getGeometryType() != "Point") {
+
+                        neighborMap.get(i).add(j);
+                        neighborMap.get(j).add(i);
+
+                    } // end if
+                } // end if
+            } // end for
+        } // end for
+
+        return neighborMap;
+    }
+
     public void creatreIndexWithGeometry(int n, List<Geometry> polygons){
         this.minX = Double.POSITIVE_INFINITY;
         this.minY = Double.POSITIVE_INFINITY;
@@ -294,6 +326,7 @@ public class SpatialGrid{
     public void setNeighbors(Map<Integer, Set<Integer>> n){
         this.RookNeighbors = n;
     }
+
     public static void main(String args[]) throws IOException {
         File file = new File("data/merged_noisland.shp");
         Map<String, Object> map = new HashMap<>();

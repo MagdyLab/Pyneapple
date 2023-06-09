@@ -94,10 +94,10 @@ public class Region {
             areaList.remove(id);
             areaNeighborSet.add(id);
             this.areaNeighborSet.clear();
-            //System.out.println("Sum before removal： " + this.sum);
+            //System.out.println("Sum before removal " + this.sum);
             this.sum = this.sum - sumAttr.get(id);
             //System.out.println("Area sum attr: " + sumAttr.get(id));
-           // System.out.println("Sum after removal： " + this.sum);
+           // System.out.println("Sum after removal " + this.sum);
             this.average = (this.average * numOfAreas - avgAttr.get(id)) / (numOfAreas - 1);
             numOfAreas --;
             double oldMin = this.min;

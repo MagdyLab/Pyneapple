@@ -298,7 +298,7 @@ public class Tabu {
                             leftAreas.add(i);
                         }
                         leftAreas.remove(pasi);
-                        //如果region只有一个Area？改了removable之后应该不会发生
+                        //removable detects if there is only one area in the region
                         if(leftAreas.size() == 0)
                             continue;
                         List<Integer> connectedNeighbor = new ArrayList<Integer>();

@@ -24,16 +24,16 @@ import java.util.*;
 
 /**
  * EMP implements the algorithm for solving the Expressive Max-p Regions problem
- * @Author Yunfan Kang
  */
 public class EMP implements RegionalizationMethod {
     static boolean debug = false;
-    static boolean labelCheck = true;
-    static int numOfIts = 3;
+    static boolean labelCheck = false;
+    static int numOfIts;
+    static int mergeLimit;
     static int randFlag[] = {1,1};
     static int rand[] = {0, 1, 2};
     static String rands[] = {"S", "R", "B"};
-    static int mergeLimit = 3;
+
 
     static double minTime = 0;
     static double avgTime = 0;
@@ -42,6 +42,23 @@ public class EMP implements RegionalizationMethod {
     RegionCollection constructionPartition;
     TabuReturn finalPartition;
 
+    /**
+     * The default constructor of EMP. The default number of iterations for the construction phase is set to 10 and the limit of merge attempts is set to be 3
+     */
+    public EMP(){
+        numOfIts = 10;
+        mergeLimit = 3;
+    }
+
+    /**
+     * The constructor of EMP that sets the number of iterations and the limit of merge attempts.
+     * @param its The number of iterations. The best result of all iterations is saved.
+     * @param merges The limit of merge attempts when combining regions for the non-monitonic constraints. A small value tries to avoid growing oversized regions but more areas may remain unassigned.
+     */
+    public EMP(int its, int merges){
+        numOfIts = its;
+        mergeLimit = merges;
+    }
     /**
      * Returns the number of regions. The function should be called after the regionalization analysis is initialized by invoking execute_regionalization(), otherwise returns -1.
      * @return the number of regions. -1 if the region partition is not initialized.
@@ -150,7 +167,7 @@ public class EMP implements RegionalizationMethod {
 
     }
 
-    public static RegionCollection construction_phase_generalized(ArrayList<Integer> idList,
+    RegionCollection construction_phase_generalized(ArrayList<Integer> idList,
                                                                   ArrayList<Long> disAttr,
                                                                   SpatialGrid r,
                                                                   ArrayList<Long> minAttr,
@@ -1046,7 +1063,6 @@ public class EMP implements RegionalizationMethod {
                             if (region.removable(area, minAttr, maxAttr, avgAttr, sumAttr, r)) {
                                 List<Integer> neighborList = new ArrayList<>(r.getNeighbors(area));
                                 for (Integer neighbor : neighborList) {
-                                    //存在未分配的area？- sumUpper, 一部分被移除的是0 -> 改成-2
                                     if (labels[neighbor] > 0 && labels[neighbor] != labels[area] && regionList.get(labels[neighbor]).acceptable(area, minAttr, maxAttr, avgAttr, sumAttr)) {
                                         regionList.get(labels[neighbor]).addArea(area, minAttr.get(area), maxAttr.get(area), avgAttr.get(area), sumAttr.get(area), r);
                                         region.removeArea(area, minAttr, maxAttr, avgAttr, sumAttr, r);
@@ -1109,7 +1125,6 @@ public class EMP implements RegionalizationMethod {
                     if (!idMerged.contains(region) && !regionList.get(region).satisfiable() && (regionList.get(region).getCount() < countLowerBound || regionList.get(region).getSum() < sumLowerBound)) {
                         List<Integer> regionMerged = new ArrayList<Integer>();
                         regionMerged.add(region);
-                        //idMerged.add(region);//之前为啥注释掉了?idMerged表示因为merge消失的
                         List<Integer> neighborRegions = new ArrayList<>(regionList.get(region).getRegionNeighborSet(labels));
 
                         Region newRegion = regionList.get(region);
@@ -1307,7 +1322,7 @@ public class EMP implements RegionalizationMethod {
 
     }*/
 
-    public static void checkLabels(int[] labels, Map<Integer, Region> regionList){
+    static void checkLabels(int[] labels, Map<Integer, Region> regionList){
         boolean consistent = true;
         for(int i = 0; i < labels.length; i++){
             if (labels[i] > 0){
@@ -1335,7 +1350,7 @@ public class EMP implements RegionalizationMethod {
 
 
     }
-    public static void  set_input_construct(String fileName,
+    void  set_input_construct(String fileName,
                                   String minAttrName,
                                   Double minAttrLow,
                                   Double minAttrHigh,
@@ -1469,7 +1484,7 @@ public class EMP implements RegionalizationMethod {
         SpatialGrid sg = new SpatialGrid(minX, minY, maxX, maxY);
         //sg.createIndex(45, fList);
         //sg.calculateContiguity(fList);
-        HashMap<Integer, Set<Integer>> neighborMap = calculateNeighbors(geometryList);
+        HashMap<Integer, Set<Integer>> neighborMap = SpatialGrid.calculateNeighbors(geometryList);
         sg.setNeighbors(neighborMap);
         double rookendTime = System.currentTimeMillis()/ 1000.0;
         System.out.println("Rook time: " + (rookendTime - rookstartTime));
@@ -1600,7 +1615,7 @@ public class EMP implements RegionalizationMethod {
         //System.out.println("End of setipnput");
 
     }
-    public static RegionCollection  set_shapefile_input(String fileName,
+    RegionCollection  set_shapefile_input(String fileName,
                                   String minAttrName,
                                   Double minAttrLow,
                                   Double minAttrHigh,
@@ -1742,7 +1757,7 @@ public class EMP implements RegionalizationMethod {
         SpatialGrid sg = new SpatialGrid(minX, minY, maxX, maxY);
         //sg.createIndex(45, fList);
         //sg.calculateContiguity(fList);
-        HashMap<Integer, Set<Integer>> neighborMap = calculateNeighbors(geometryList);
+        HashMap<Integer, Set<Integer>> neighborMap = SpatialGrid.calculateNeighbors(geometryList);
         sg.setNeighbors(neighborMap);
         double rookendTime = System.currentTimeMillis()/ 1000.0;
         System.out.println("Rook time: " + (rookendTime - rookstartTime));
@@ -1822,7 +1837,7 @@ public class EMP implements RegionalizationMethod {
         return finalRC;
 
     }
-    public static void  set_input(String fileName,
+    void  set_input(String fileName,
                                   String minAttrName,
                                   Double minAttrLow,
                                   Double minAttrHigh,
@@ -1964,7 +1979,7 @@ public class EMP implements RegionalizationMethod {
         SpatialGrid sg = new SpatialGrid(minX, minY, maxX, maxY);
         //sg.createIndex(45, fList);
         //sg.calculateContiguity(fList);
-        HashMap<Integer, Set<Integer>> neighborMap = calculateNeighbors(geometryList);
+        HashMap<Integer, Set<Integer>> neighborMap = SpatialGrid.calculateNeighbors(geometryList);
         sg.setNeighbors(neighborMap);
         double rookendTime = System.currentTimeMillis()/ 1000.0;
         System.out.println("Rook time: " + (rookendTime - rookstartTime));
@@ -2095,38 +2110,6 @@ public class EMP implements RegionalizationMethod {
             System.out.println("End of setipnput");
 
     }
-
-    public static HashMap<Integer, Set<Integer>> calculateNeighbors(ArrayList<Geometry> polygons) {
-
-        HashMap<Integer, Set<Integer>> neighborMap = new HashMap<>();
-
-        for (int i = 0; i < polygons.size(); i++) {
-
-            neighborMap.put(i, new TreeSet<>());
-        }
-
-
-        for (int i = 0; i < polygons.size(); i++) {
-
-            for (int j = i + 1; j < polygons.size(); j++) {
-
-                if (polygons.get(i).intersects(polygons.get(j))) {
-
-                    Geometry intersection = polygons.get(i).intersection(polygons.get(j));
-
-                    if (intersection.getGeometryType() != "Point") {
-
-                        neighborMap.get(i).add(j);
-                        neighborMap.get(j).add(i);
-
-                    } // end if
-                } // end if
-            } // end for
-        } // end for
-
-        return neighborMap;
-    }
-
 
 
 }

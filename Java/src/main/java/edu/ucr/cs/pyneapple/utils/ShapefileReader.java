@@ -1,6 +1,5 @@
 package edu.ucr.cs.pyneapple.utils;
 
-import edu.ucr.cs.pyneapple.regionalization.EMP;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;
@@ -145,7 +144,7 @@ public class ShapefileReader {
         //SpatialGrid sg = new SpatialGrid(minX, minY, maxX, maxY);
         //sg.createIndex(45, fList);
         //sg.calculateContiguity(fList);
-        neighborMap = EMP.calculateNeighbors(geometryList);
+        neighborMap = SpatialGrid.calculateNeighbors(geometryList);
         //sg.setNeighbors(neighborMap);
     }
     public ArrayList<Long> getMinAttr(){return this.minAttr;}

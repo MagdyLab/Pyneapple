@@ -5,6 +5,9 @@ import junit.framework.TestCase;
 
 import java.util.Arrays;
 
+/**
+ * The test cases for EMP
+ */
 public class EMPTest extends TestCase {
     static String normalDataset = "data/LACity/LACity.shp";
     static String negativeDataset = "data/LACity_negative_attr/LACity.shp";
@@ -17,7 +20,8 @@ public class EMPTest extends TestCase {
      * @throws Exception
      */
     public void test_set_input() throws Exception {
-        EMP.set_input(negativeDataset,
+        EMP emp = new EMP();
+        emp.set_input(negativeDataset,
                 "pop_16up",
                 -Double.POSITIVE_INFINITY,
                 Double.POSITIVE_INFINITY,
@@ -34,7 +38,7 @@ public class EMPTest extends TestCase {
                 Double.POSITIVE_INFINITY,
                 "households"
         );
-        EMP.set_input(normalDataset,
+        emp.set_input(normalDataset,
                 "pop_16up",
                 -Double.POSITIVE_INFINITY,
                 Double.POSITIVE_INFINITY,

@@ -29,10 +29,6 @@ public class GMaxPTabu {
         // }
         //int[] tList = {1000, 5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000};
         int[] tList = {10000};
-        /*for(int i = 0; i < tList.length; i++){
-            System.out.println(tList[i]+ "： ");
-            set_input(tList[i]);
-        }*/
         for(int i = 0; i < 1; i++){
             set_input("data/experiment/without_island/SouthCal/SouthCal_noisland.shp",
                     "pop_16up",
@@ -823,7 +819,7 @@ public class GMaxPTabu {
                             if (region.removable(area, minAttr, maxAttr, avgAttr, sumAttr, r)) {
                                 List<Integer> neighborList = new ArrayList<>(r.getNeighbors(area));
                                 for (Integer neighbor : neighborList) {
-                                    //存在未分配的area？- sumUpper, 一部分被移除的是0 -> 改成-2
+                                    //infeasible areas are labled as -2
                                     if (labels[neighbor] > 0 && regionList.get(labels[neighbor]).acceptable(area, minAttr, maxAttr, avgAttr, sumAttr)) {
                                         regionList.get(labels[neighbor]).addArea(area, minAttr.get(area), maxAttr.get(area), avgAttr.get(area), sumAttr.get(area), r);
                                         region.removeArea(area, minAttr, maxAttr, avgAttr, sumAttr, r);
@@ -886,7 +882,6 @@ public class GMaxPTabu {
                     if (!idMerged.contains(region) && !regionList.get(region).satisfiable() && (regionList.get(region).getCount() < countLowerBound || regionList.get(region).getSum() < sumLowerBound)) {
                         List<Integer> regionMerged = new ArrayList<Integer>();
                         regionMerged.add(region);
-                        //idMerged.add(region);//之前为啥注释掉了?idMerged表示因为merge消失的
                         List<Integer> neighborRegions = new ArrayList<>(regionList.get(region).getRegionNeighborSet(labels));
 
                         Region newRegion = regionList.get(region);

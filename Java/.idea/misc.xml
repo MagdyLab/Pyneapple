@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="F:/Downloads/javadoc" />
+    <option name="OPTION_SCOPE" value="public" />
+    <option name="OTHER_OPTIONS" value="-encoding utf8 -docencoding utf8 -charset utf8" />
+    <option name="OPTION_INCLUDE_LIBS" value="true" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
@@ -7,5 +13,5 @@
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="11.0.4" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="20" project-jdk-type="JavaSDK" />
 </project>
