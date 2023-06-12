@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The class for representing a region for the EMP problem
+ */
 public class Region {
     static boolean debug = false;
     static double minLowerBound, minUpperBound, maxLowerBound, maxUpperBound, avgLowerBound, avgUpperBound, sumLowerBound, sumUpperBound, countLowerBound, countUpperBound;
@@ -16,6 +19,20 @@ public class Region {
     double average, max, min, sum;
     double acceptLow, acceptHigh;
     Set<Integer> areaNeighborSet;
+
+    /**
+     * Set the constraint thresholds for the regions
+     * @param minLowerBound the lower bound of the min constraint
+     * @param minUpperBound the upper bound of the min constraint
+     * @param maxLowerBound the lower bound of the max constraint
+     * @param maxUpperBound the upper bound of the max constraint
+     * @param avgLowerBound the lower bound of the avg constraint
+     * @param avgUpperBound the upper bound of the avg constraint
+     * @param sumLowerBound the lower bound of the sum constraint
+     * @param sumUpperBound the upper bound of the sum constraint
+     * @param countLowerBound the lower bound of the count constraint
+     * @param countUpperBound the upper bound of the count constraint
+     */
     public static void setRange(Double minLowerBound,
                                 Double minUpperBound,
                                 Double maxLowerBound,
@@ -37,6 +54,11 @@ public class Region {
         Region.countLowerBound = countLowerBound;
         Region.countUpperBound = countUpperBound;
     }
+
+    /**
+     * The default constructor for the Region class. An empty region is initialized with the given region id.
+     * @param id The region id
+     */
     //Set<Integer>
     public Region(int id){
         numOfAreas = 0;
@@ -50,6 +72,17 @@ public class Region {
         this.min = Double.POSITIVE_INFINITY;
         this.sum = 0;
     }
+
+    /**
+     * Add an area to the region and update the attribute values of the region
+     * @param id The id of the area
+     * @param minAttrVal the MIN attribute value of the area
+     * @param maxAttrVal the MAX attribute value of the area
+     * @param avgAttrVal the AVG attribute value of the area
+     * @param sumAttrVal the SUM attribute value of the area
+     * @param sg The spatial grid object for the area set
+     * @return true if the area is successfully added
+     */
     public boolean addArea(Integer id, long minAttrVal, long maxAttrVal, long avgAttrVal, long sumAttrVal, SpatialGrid sg){
         if (areaList.contains(id)){
             if(debug){
@@ -86,6 +119,17 @@ public class Region {
         }
 
     }
+
+    /**
+     * Remove the area from the region and update the attribute values of the region
+     * @param id The id of the area
+     * @param minAttr The list of min attribute values
+     * @param maxAttr The list of max attribute values
+     * @param avgAttr The list of avg attribute values
+     * @param sumAttr The list of sum attribute values
+     * @param sg sg The spatial grid object for the area set
+     * @return true if the area is successfully removed
+     */
     public boolean removeArea(Integer id, ArrayList<Long> minAttr, ArrayList<Long> maxAttr, ArrayList<Long> avgAttr,  ArrayList<Long> sumAttr, SpatialGrid sg){
         if (!areaList.contains(id)){
             System.out.println("Area to be removed is not in the region: area Id " + id + " region Id " + this.getId());
@@ -120,13 +164,34 @@ public class Region {
             return true;
         }
     }
+
+    /**
+     * Get the avg attribute value of the region
+     * @return the avg attribute value of the region
+     */
     public double getAverage(){
         return this.average;
     }
+
+    /**
+     * Get the sum attribute value of the region
+     * @return the sum attribute value of the region
+     */
     public double getSum(){return this.sum;}
+
+    /**
+     * Get the neighbor areas of the region
+     * @return the neighbor areas of the region
+     */
     public Set<Integer> getAreaNeighborSet(){
         return areaNeighborSet;
     }
+
+    /**
+     * Get the set of the neighbor region ids
+     * @param labels the labels of all the areas
+     * @return the set of the neighbor region ids
+     */
     public Set<Integer> getRegionNeighborSet(int[] labels){
         Set <Integer> regionNeighborSet = new HashSet<Integer>();
         for(Integer a: this.areaNeighborSet){
@@ -136,6 +201,13 @@ public class Region {
         }
         return regionNeighborSet;
     }
+
+    /**
+     * Update the id of the region
+     * @param newId the new region id
+     * @param labels the labels of all areas
+     * @return the updated labels of all areas
+     */
     public int[] updateId(int newId, int[] labels){
         this.id = newId;
         for(Integer i: areaList){
@@ -147,28 +219,71 @@ public class Region {
         }
         return labels;
     }
+
+    /**
+     * Get the list of areas that the region contains
+     * @return the list of areas
+     */
     public List<Integer> getAreaList(){
         return this.areaList;
     }
+
+    /**
+     * Get the lower bound of the acceptable avg attribute value
+     * @return the lower bound of the acceptable avg attribute value
+     */
     public double getAcceptLow(){
         return this.acceptLow;
     }
+
+    /**
+     * Get the upper bound of the acceptable avg attribute value
+     * @return the upper bound of the acceptable avg attribute value
+     */
     public double getAcceptHigh(){
         return this.acceptHigh;
     }
 
+    /**
+     * Get the id of the region
+     * @return the id of the region
+     */
     public int getId() {
         return this.id;
     }
+
+    /**
+     * Get the min attribute value of the region
+     * @return the min attribute value of the region
+     */
     public double getMin(){
         return this.min;
     }
+
+    /**
+     * Get the max attribute value of the region
+     * @return the max attribute value of the region
+     */
     public double getMax(){
         return this.max;
     }
+
+    /**
+     * Get the count attribute value of the region
+     * @return the count attribute value of the region
+     */
     public int getCount(){
         return this.numOfAreas;
     }
+
+    /** Determin if an area can be added to a region
+     * @param area the area id
+     * @param minAttr The list of min attribute values
+     * @param maxAttr The list of max attribute values
+     * @param avgAttr The list of avg attribute values
+     * @param sumAttr The list of sum attribute values
+     * @return true if the area can be added safely
+     */
     public boolean acceptable(Integer area, ArrayList<Long> minAttr, ArrayList <Long> maxAttr, ArrayList<Long> avgAttr, ArrayList<Long> sumAttr){
         if(this.numOfAreas + 1 <= countUpperBound){
             if(this.sum + sumAttr.get(area) <= sumUpperBound){
@@ -207,6 +322,16 @@ public class Region {
         return false;
     }
 
+    /**
+     * Check if an area can be safely removed from the region
+     * @param area the id of the area
+     * @param minAttr The list of min attribute values
+     * @param maxAttr The list of max attribute values
+     * @param avgAttr The list of avg attribute values
+     * @param sumAttr The list of sum attribute values
+     * @param sg The spatial grid object for the area set
+     * @return true if the area can be safely removed
+     */
     public boolean removable(Integer area, ArrayList<Long> minAttr, ArrayList <Long> maxAttr, ArrayList<Long> avgAttr, ArrayList<Long> sumAttr, SpatialGrid sg){
         if(!areaList.contains(area)){
             System.out.println("Area " + area + " not removable because area not in the list of " + this.getId());
@@ -279,6 +404,16 @@ public class Region {
 
     }
 
+    /**
+     * Merge the region with the given region
+     * @param expandR The region to be merged with the current region
+     * @param minAttr The list of min attribute values
+     * @param maxAttr The list of max attribute values
+     * @param avgAttr The list of avg attribute values
+     * @param sumAttr The list of sum attribute values
+     * @param sg  The spatial grid object for the area set
+     * @return the region after the merge
+     */
     public Region mergeWith(Region expandR, ArrayList<Long> minAttr, ArrayList<Long> maxAttr, ArrayList<Long> avgAttr, ArrayList<Long> sumAttr, SpatialGrid sg) {
         if(expandR == null){
             System.out.println("Error, region to be merged is NULL! " + this.getId());
@@ -297,6 +432,11 @@ public class Region {
         return tmpR;
 
     }
+
+    /**
+     * Check if the region satisfies the constraints
+     * @return True if the region satisfies the constraints
+     */
     public boolean satisfiable(){
         return(this.min <= minUpperBound &&
                 this.min >= minLowerBound &&

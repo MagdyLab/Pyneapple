@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The utility class for reading the shapefile and loading the attributes for the EMP problem
+ */
 public class ShapefileReader {
     private ArrayList<Long> minAttr;
     private ArrayList<Long> maxAttr;
@@ -24,6 +27,17 @@ public class ShapefileReader {
     private ArrayList<Long> sumAttr;
     private ArrayList<Long> distAttr;
     private Map<Integer, Set<Integer>> neighborMap;
+
+    /**
+     * Construct a reader to read the attributes from the shapefile
+     * @param directory directory to the shapefile
+     * @param minAttrName the name of the min attribute
+     * @param maxAttrName the name of the max attribute
+     * @param avgAttrName the name of the avg attribute
+     * @param sumAttrName the name of the sum attribute
+     * @param distAttrName the name of the dissimilarity attribute
+     * @throws IOException exception when file not found
+     */
     public ShapefileReader(String directory, String minAttrName, String maxAttrName, String avgAttrName, String sumAttrName, String distAttrName) throws IOException {
         File file = new File(directory);
         Map<String, Object> map = new HashMap<>();
@@ -147,18 +161,45 @@ public class ShapefileReader {
         neighborMap = SpatialGrid.calculateNeighbors(geometryList);
         //sg.setNeighbors(neighborMap);
     }
+
+    /**
+     * Get the list of min attribute values
+     * @return the list of min attribute values
+     */
     public ArrayList<Long> getMinAttr(){return this.minAttr;}
+
+    /**
+     * Get the list of max attribute values
+     * @return the list of max attribute values
+     */
     public ArrayList<Long> getMaxAttr(){return this.maxAttr;}
+
+    /**
+     * Get the list of avg attribute values
+     * @return the list of avg attribute values
+     */
     public ArrayList<Long> getAvgAttr(){return this.avgAttr;}
 
+    /**
+     * Get the list of sum attribute values
+     * @return the list of sum attribute values
+     */
     public ArrayList<Long> getSumAttr() {
         return sumAttr;
     }
 
+    /**
+     * Get the list of dissimilarity attribute values
+     * @return the list of dissimilarity attribute values
+     */
     public ArrayList<Long> getDistAttr() {
         return distAttr;
     }
 
+    /**
+     * Get the set of neighbor areas for each area
+     * @return a map with the area id as the key and the set of neighbor areas as the value
+     */
     public Map<Integer, Set<Integer>> getNeighborMap() {
         return neighborMap;
     }

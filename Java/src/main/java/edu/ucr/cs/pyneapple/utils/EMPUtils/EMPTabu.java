@@ -1,16 +1,37 @@
 package edu.ucr.cs.pyneapple.utils.EMPUtils;
 
 import edu.ucr.cs.pyneapple.utils.SpatialGrid;
-//import edu.ucr.cs.pineapple.regionalization.EMPUtils.GMaxPTabu;
-
+import edu.ucr.cs.pyneapple.regionalization.EMP;
 import java.util.*;
 
-public class Tabu {
+/**
+ * The tabu search algorithm for the EMP
+ */
+public class EMPTabu {
     static boolean debug = false;
+
+    /**
+     * The default constructor for the EMPTabu class. The functions should be all static so the constructor is not actually used.
+     */
+    public EMPTabu(){}
+    /**
+     * Perform tabu search for the initial solution constructed in the construction phase
+     * @param initLabels the initial region labels
+     * @param integerRegionMap the initial region maps
+     * @param r the spatial grid for the area set
+     * @param dissimMatrix the pairwise dissimilarity matrix
+     * @param tabuLength the length of the tabu list
+     * @param max_no_move the maximum number of moves for the tabu search
+     * @param minAttr the list of min attribute values
+     * @param maxAttr the list of max attribute values
+     * @param avgAttr the list of avg attribute values
+     * @param sumAttr the list of sum attribute values
+     * @return the partition after the tabu search
+     */
     public static TabuReturn performTabu(int[] initLabels,
-                                    Map<Integer, Region> initRegionList,
+                                    Map<Integer, Region> integerRegionMap,
                                     SpatialGrid r,
-                                    long[][] distanceMatrix,
+                                    long[][] dissimMatrix,
                                     int tabuLength,
                                     int max_no_move,
                                     ArrayList<Long> minAttr,
@@ -41,23 +62,23 @@ public class Tabu {
         //potentialMove
         int[] labels = Arrays.copyOf(initLabels, initLabels.length);
         int[] bestLabels = Arrays.copyOf(initLabels, initLabels.length);
-        Map<Integer, Region> regionList = initRegionList;
+        Map<Integer, Region> regionList = integerRegionMap;
         //Map<Integer, Integer> regionSpatialAttrs = initRegionSpatialAttr;
-        long withinRegionDistance = calculateWithinRegionDistance(initRegionList, distanceMatrix);
+        long withinRegionDistance = calculateWithinRegionDistance(integerRegionMap, dissimMatrix);
         long bestWDS = withinRegionDistance;
 
         while (ni_move_ct <= max_no_move){
             //System.out.println("Move count " + ni_move_ct);
             edu.ucr.cs.pyneapple.utils.EMPUtils.Move potentialMove = null;
             if(debug){
-                GMaxPTabu.checkLabels(labels, regionList);
+                EMP.checkLabels(labels, regionList);
                 System.out.println(ni_move_ct + " vs " + max_no_move);
             }
 
             if (make_move_flag || potentialAreas.size() == 0){
-                potentialAreas = pickMoveAreaNew(labels, initRegionList,
+                potentialAreas = pickMoveAreaNew(labels, integerRegionMap,
                         r,
-                        distanceMatrix,
+                        dissimMatrix,
                         minAttr, maxAttr, avgAttr, sumAttr);
                 Double maxDiff = -Double.POSITIVE_INFINITY;
                 if(debug){
@@ -68,12 +89,12 @@ public class Tabu {
                     Set<Integer> poaNeighbor = r.getNeighbors(poa);
                     int lostDistance = 0;
                     try{
-                        for(Integer rn: initRegionList.get(donorRegion).getAreaList()){
-                            lostDistance += distanceMatrix[poa][rn];
+                        for(Integer rn: integerRegionMap.get(donorRegion).getAreaList()){
+                            lostDistance += dissimMatrix[poa][rn];
                         }
                     }catch(Exception e){
                         System.out.println("Error when getting the arealist for the donor region: " + donorRegion);
-                        GMaxPTabu.checkLabels(labels, regionList);
+                        EMP.checkLabels(labels, regionList);
                     }
 
                     for (Integer poan: poaNeighbor){
@@ -86,8 +107,8 @@ public class Tabu {
                             }
                             int addedDistance = 0;
                             //System.out.println(recipientRegion + " from " + donorRegion);
-                            //RegionNew tmpR = initRegionList.get(recipientRegion);
-                            List<Integer> tmp = initRegionList
+                            //RegionNew tmpR = integerRegionMap.get(recipientRegion);
+                            List<Integer> tmp = integerRegionMap
                                     .get(recipientRegion)
                                     .getAreaList();
                             if(debug){
@@ -97,11 +118,11 @@ public class Tabu {
                             }
 
                             for(Integer rn: tmp){
-                                addedDistance += distanceMatrix[poa][rn];
+                                addedDistance += dissimMatrix[poa][rn];
                             }
                             int diff = lostDistance - addedDistance;
                             if(diff > maxDiff){
-                                if(initRegionList.get(recipientRegion).acceptable(poa, minAttr, maxAttr, avgAttr, sumAttr)){
+                                if(integerRegionMap.get(recipientRegion).acceptable(poa, minAttr, maxAttr, avgAttr, sumAttr)){
                                     maxDiff = diff / 1.0;
                                     potentialMove = new edu.ucr.cs.pyneapple.utils.EMPUtils.Move(poa, donorRegion, recipientRegion);
                                     //potentialMove = new Move(poa, recipientRegion, donorRegion);
@@ -263,9 +284,21 @@ public class Tabu {
         return tr;
     }
 
-    public static List<Integer> pickMoveAreaNew(int[] labels, Map<Integer, Region> regionList, SpatialGrid r, long[][] distanceMatrix, ArrayList<Long> minAttr, ArrayList<Long> maxAttr, ArrayList<Long> avgAttr, ArrayList<Long> sumAttr){
+    /**
+     * Pick the areas that can be moved between regions
+     * @param labels the region label of the areas
+     * @param regionMap the region maps (id to region)
+     * @param r the spatial grid of the area set
+     * @param dissimMatrix the dissim matrix
+     * @param minAttr the list of min attribute values of the areas
+     * @param maxAttr the list of max attribute values of the areas
+     * @param avgAttr the list of avg attribute values of the areas
+     * @param sumAttr the list of sum attribute values of the areas
+     * @return the list of areas that can be moved between regions
+     */
+    public static List<Integer> pickMoveAreaNew(int[] labels, Map<Integer, Region> regionMap, SpatialGrid r, long[][] dissimMatrix, ArrayList<Long> minAttr, ArrayList<Long> maxAttr, ArrayList<Long> avgAttr, ArrayList<Long> sumAttr){
         List<Integer> potentialAreas = new ArrayList<Integer>();
-        for(Map.Entry<Integer, Region> e: regionList.entrySet()){
+        for(Map.Entry<Integer, Region> e: regionMap.entrySet()){
             List<Integer> rla = e.getValue().getAreaList();
             List<Integer> pas_indices = new ArrayList<Integer>();
 
@@ -342,82 +375,21 @@ public class Tabu {
         return potentialAreas;
     }
 
-    public static List<Integer> pickMoveArea(int[] labels, Map<Integer, Region> regionLists, Map<Integer, Integer> regionSpatialAttrs, List<Integer> spatially_extensive_attr, SpatialGrid r, int[][] distanceMatrix, int threshold){
-        List<Integer> potentialAreas = new ArrayList<Integer>();
-        for(Map.Entry<Integer, Integer> e: regionSpatialAttrs.entrySet()){
-            List<Integer> rla = regionLists.get(e.getKey()).getAreaList();
-            List<Integer> pas_indices = new ArrayList<Integer>();
-
-            for(int i = 0; i < rla.size(); i++){
-                if (e.getValue() - spatially_extensive_attr.get(rla.get(i)) > threshold)
-                    pas_indices.add(i);
-            }
-            if (pas_indices.size() > 0){
-                for(Integer pasi: pas_indices){
-                    Set<Integer> pasin = r.getNeighbors(rla.get(pasi));
-                    boolean neighborFromAnotherR = false;
-                    for(Integer a: pasin){
-                        if(neighborFromAnotherR)
-                            break;
-                        if(labels[a] != labels[rla.get(pasi)]){
-                            neighborFromAnotherR = true;
-                        }
-                    }
-                    if(neighborFromAnotherR){
-                        List<Integer> leftAreas = new ArrayList<Integer>();
-                        for(Integer i: rla){
-                            leftAreas.add(i);
-                        }
-                        leftAreas.remove(pasi);
-                        List<Integer> connectedNeighbor = new ArrayList<Integer>();
-                        boolean[] visited =new boolean[leftAreas.size()];
-                        for(Integer i: r.getNeighbors(leftAreas.get(0))){
-                            connectedNeighbor.add(i);
-                        }
-                        visited[0] = true;
-                        boolean grow = true;
-                        while (grow){
-                            grow = false;
-                            for(int i = 1; i < leftAreas.size(); i++){
-                                if(visited[i] == false && connectedNeighbor.contains(leftAreas.get(i))){
-                                    visited[i] = true;
-                                    for(Integer j: r.getNeighbors(leftAreas.get(i))){
-                                        connectedNeighbor.add(j);
-                                    }
-                                    grow = true;
-                                }
-                            }
-                        }
-                        boolean onecc = true;
-                        for(int i = 0; i < visited.length; i++){
-                            if(visited[i] == false){
-                                onecc = false;
-                            }
-                        }
-                        if (onecc){
-                            potentialAreas.add(rla.get(pasi));
-                        }
-
-
-                    }
-                }
-            }else{
-                continue;
-            }
-
-
-        }
-        return potentialAreas;
-    }
-    public static long calculateWithinRegionDistance(Map<Integer, Region> regionList, long[][] distanceMatrix){
+    /**
+     * Compute the total within region dissimilarity
+     * @param regionMap the region map
+     * @param dissimMatrix the matrix for the pairwise dissimilarity
+     * @return a long value for the total within region dissimilarity
+     */
+    public static long calculateWithinRegionDistance(Map<Integer, Region> regionMap, long[][] dissimMatrix){
         long totalWithinRegionDistance = 0;
-        System.out.println(regionList.size());
-        for(Map.Entry<Integer, Region> entry: regionList.entrySet()){
+        System.out.println(regionMap.size());
+        for(Map.Entry<Integer, Region> entry: regionMap.entrySet()){
             long regionDistance = 0;
             //System.out.println( entry.getValue().getAreaList().size());
             for(Integer i: entry.getValue().getAreaList()){
                 for(Integer j:entry.getValue().getAreaList()){
-                    regionDistance += distanceMatrix[i][j];
+                    regionDistance += dissimMatrix[i][j];
 
                 }
             }
@@ -427,6 +399,11 @@ public class Tabu {
         return totalWithinRegionDistance;
     }
 
+    /**
+     * Computing the dissimilarity matrix
+     * @param attr the disimilarity attribute values
+     * @return an nxn matrix with entry i,j being the absolutute difference of the dissimilarity attribute of area i and j.
+     */
     public static long[][] pdist(ArrayList<Long> attr){
         int attr_size = attr.size();
         long [][] distanceMatrix = new long[attr_size][attr_size];

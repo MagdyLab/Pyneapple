@@ -14,10 +14,14 @@ public class EMPTest extends TestCase {
     static EMP emp;
 
     /**
+     * The default constructor for the EMPTest class. The test cases should be all static so the constructor is not actually used.
+     */
+    public EMPTest(){}
+    /**
      *The test case for the function that takes the shapefile and constraints to perform the regionalization.
      * The attributes of the dataset are supposed to be non-negative.
      * Exceptions will be thrown when the file is not available or the attributes contains negative values.
-     * @throws Exception
+     * @throws Exception Exceptions are raised when the file is failed to load, or wrong attribute name.
      */
     public void test_set_input() throws Exception {
         EMP emp = new EMP();
@@ -59,7 +63,7 @@ public class EMPTest extends TestCase {
 
     /**
      * The test case for the EMP interface when dealing with only the max-p-regions configuration
-     * @throws Exception
+     * @throws Exception Exception when the shapefile cannot be loaded or the attributes of the corresponding name does not exist in the shapefile.
      */
     public void test_execute_regionalization_maxp() throws Exception {
         ShapefileReader sr = new ShapefileReader(normalDataset, "pop_16up", "unemployed", "employed", "pop2010", "households");
@@ -69,7 +73,7 @@ public class EMPTest extends TestCase {
 
     /**
      * The test case for EMP with enriched constraint configuration.
-     * @throws Exception
+     * @throws Exception Exception when the shapefile cannot be loaded or the attributes of the corresponding name does not exist in the shapefile.
      */
     public void test_execute_regionalization_enriched() throws Exception {
         ShapefileReader sr = new ShapefileReader(normalDataset, "pop_16up", "unemployed", "employed", "pop2010", "households");
@@ -94,7 +98,7 @@ public class EMPTest extends TestCase {
 
     /**
      * The test case for the getP() interface. The function should print the P value after the regionalization computation.
-     * @throws Exception
+     * @throws Exception Exception when the shapefile cannot be loaded or the attributes of the corresponding name does not exist in the shapefile.
      */
     public void test_getP() throws Exception {
         ShapefileReader sr = new ShapefileReader(normalDataset, "pop_16up", "unemployed", "employed", "pop2010", "households");
@@ -106,7 +110,7 @@ public class EMPTest extends TestCase {
 
     /**
      * The test case for the getRegionList() interface. An array storing the region lable of each area should be printed out.
-     * @throws Exception
+     * @throws Exception Exception when the shapefile cannot be loaded or the attributes of the corresponding name does not exist in the shapefile.
      */
     public void test_getRegionLabels() throws Exception {
         ShapefileReader sr = new ShapefileReader(normalDataset, "pop_16up", "unemployed", "employed", "pop2010", "households");

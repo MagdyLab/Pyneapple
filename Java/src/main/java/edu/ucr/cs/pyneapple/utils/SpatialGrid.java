@@ -18,12 +18,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
+/**
+ * The utility class for indexing the areas and computing the conguity relationship of the areas
+ */
 public class SpatialGrid{
 
     double minX, minY, maxX, maxY;
     private Map<Integer, Set<Integer>> grid_area;
     private Map<Integer, Set<Integer>> area_grid;
     Map<Integer, Set<Integer>> RookNeighbors;
+
+    /**
+     * The construction that initializes a bounding box that bounds the whole area set based on the coordinate of the four corners.
+     * @param minx The minimum x coordinate.
+     * @param miny The minimum y coordinate.
+     * @param maxx The maximum x coordinate.
+     * @param maxy The maximum y coordinate.
+     */
     public SpatialGrid(double minx, double miny, double maxx, double maxy){
         minX = minx;
         minY = miny;
@@ -32,6 +43,10 @@ public class SpatialGrid{
         grid_area = new HashMap<Integer, Set<Integer>>();
         area_grid = new HashMap<Integer, Set<Integer>>();
     }
+
+    /**
+     * The default constructor that initializes an empty spatial grid bounding box.
+     */
     public SpatialGrid(){
         minX = -1;
         minY = -1;
@@ -41,6 +56,11 @@ public class SpatialGrid{
         area_grid = new HashMap<Integer, Set<Integer>>();
     }
 
+    /**
+     * Compute the set of neighbors for each area
+     * @param polygons The geometry polygons of each area
+     * @return A hash map with the id of the areas as the key and the set of their neighbor areas as the value.
+     */
     public static HashMap<Integer, Set<Integer>> calculateNeighbors(ArrayList<Geometry> polygons) {
 
         HashMap<Integer, Set<Integer>> neighborMap = new HashMap<>();
@@ -72,7 +92,7 @@ public class SpatialGrid{
         return neighborMap;
     }
 
-    public void creatreIndexWithGeometry(int n, List<Geometry> polygons){
+    void creatreIndexWithGeometry(int n, List<Geometry> polygons){
         this.minX = Double.POSITIVE_INFINITY;
         this.minY = Double.POSITIVE_INFINITY;
         this.maxX = - Double.POSITIVE_INFINITY;
@@ -140,7 +160,7 @@ public class SpatialGrid{
         }
 
     }
-    public void createIndex(int n,List<SimpleFeature> fList){
+    void createIndex(int n,List<SimpleFeature> fList){
         double widthStep = (maxX - minX) / n;
         double heightStep = (maxY - minY) / n;
         int listLength = fList.size();
@@ -185,7 +205,7 @@ public class SpatialGrid{
         }
 
     }
-    public void RookWithGeometry(List<Geometry> geometries){
+    void RookWithGeometry(List<Geometry> geometries){
         creatreIndexWithGeometry(45, geometries);
         RookNeighbors = new HashMap<Integer, Set<Integer>>();
         int listLength = geometries.size();
@@ -225,7 +245,7 @@ public class SpatialGrid{
         }
     }
 
-    public static ArrayList<List> RookWithGeometryNoGrid(ArrayList<Geometry> polygons) {
+    static ArrayList<List> RookWithGeometryNoGrid(ArrayList<Geometry> polygons) {
 
         ArrayList<List> neighbors = new ArrayList<>();
 
@@ -256,7 +276,7 @@ public class SpatialGrid{
         return neighbors;
     }
 
-    public void calculateContiguity(List<SimpleFeature> fList){
+    void calculateContiguity(List<SimpleFeature> fList){
         RookNeighbors = new HashMap<Integer, Set<Integer>>();
         int listLength = fList.size();
         for(int i = 0; i < listLength; i++){
@@ -294,6 +314,12 @@ public class SpatialGrid{
             }
         }
     }
+
+    /**
+     * Get the set of neighbor areas for the given area
+     * @param id the id of the area
+     * @return the set of neighbor areas for the given area
+     */
     public Set<Integer> getNeighbors(Integer id){
 
         if(RookNeighbors.containsKey(id)){
@@ -304,7 +330,7 @@ public class SpatialGrid{
 
     }
 
-    public void printIndex(){
+    void printIndex(){
         System.out.println("Grid-Area:");
         for(Map.Entry<Integer, Set<Integer>> entry: grid_area.entrySet()){
             System.out.print(entry.getKey() + ": ");
@@ -323,83 +349,12 @@ public class SpatialGrid{
         }
 
     }
+
+    /**
+     * Set the neighbor map
+     * @param n the new neighborhood relationship map
+     */
     public void setNeighbors(Map<Integer, Set<Integer>> n){
         this.RookNeighbors = n;
-    }
-
-    public static void main(String args[]) throws IOException {
-        File file = new File("data/merged_noisland.shp");
-        Map<String, Object> map = new HashMap<>();
-        map.put("url", file.toURI().toURL());
-
-        DataStore dataStore = DataStoreFinder.getDataStore(map);
-        String typeName = dataStore.getTypeNames()[0];
-
-        FeatureSource<SimpleFeatureType, SimpleFeature> source =
-                dataStore.getFeatureSource(typeName);
-        Filter filter = Filter.INCLUDE; // ECQL.toFilter("BBOX(THE_GEOM, 10,20,30,40)")
-        ArrayList<SimpleFeature> fList = new ArrayList<>();
-        ArrayList<Integer> idList = new ArrayList<>();
-        FeatureCollection<SimpleFeatureType, SimpleFeature> collection = source.getFeatures(filter);
-        double minX = Double.POSITIVE_INFINITY, minY = Double.POSITIVE_INFINITY;
-        double maxX = - Double.POSITIVE_INFINITY, maxY = -Double.POSITIVE_INFINITY;
-        int minXA = -1, minYA = -1, maxXA = -1, maxYA = -1;
-        try (FeatureIterator<SimpleFeature> features = collection.features()) {
-            while (features.hasNext()) {
-                SimpleFeature feature = features.next();
-                int id = Integer.parseInt(feature.getID().split("\\.")[1]) - 1;
-                //System.out.print(feature.getID());
-                //System.out.print(": ");
-                fList.add(feature);
-                Geometry geometry = (Geometry) feature.getDefaultGeometry();
-                double cminx = geometry.getEnvelope().getCoordinates()[0].getX();
-                double cminy = geometry.getEnvelope().getCoordinates()[0].getY();
-                double cmaxx = geometry.getEnvelope().getCoordinates()[2].getX();
-                double cmaxy = geometry.getEnvelope().getCoordinates()[2].getY();
-                if (minX > cminx){
-                    minX = cminx;
-                    minXA = id;
-                }
-                if (minY > cminy){
-                    minY = cminy;
-                    minYA = id;
-                }
-                if (maxX < cmaxx){
-                    maxX = cmaxx;
-                    maxXA = id;
-                }
-                if (maxY < cmaxy){
-                    maxY = cmaxy;
-                    maxYA = id;
-                }
-                idList.add(Integer.parseInt(feature.getID().split("\\.")[1]) - 1);
-            }
-
-            Geometry g1309 = (Geometry) fList.get(1309).getDefaultGeometry();
-            Geometry g1302 = (Geometry) fList.get(1302).getDefaultGeometry();
-            Geometry intersection = g1309.intersection(g1302);
-            System.out.println(intersection.getClass().getName());
-            //System.out.println(fList.get(1309).getAttribute("geoid"));
-            //System.out.println(fList.get(1302).getAttribute("geoid"));
-            //System.out.println(minXA + " " + minYA + ", " + maxXA + " " + maxYA);
-            long startTime = System.currentTimeMillis();
-            SpatialGrid sg = new SpatialGrid(minX, minY, maxX, maxY);
-            sg.createIndex(50, fList);
-            sg.calculateContiguity(fList);
-            long endTime = System.currentTimeMillis();
-            /*System.out.println("Rook time: " + (endTime - startTime));
-            for(int i = 0; i < fList.size(); i++){
-                System.out.println(sg.getNeighbors(i));
-                //arr[i] = i;
-            }*/
-            FileWriter fw = new FileWriter("SG.txt", true);
-            PrintWriter out = new PrintWriter(fw);
-            for(int i = 0; i < fList.size(); i++){
-                out.println(sg.getNeighbors(i));
-                //arr[i] = i;
-            }
-            out.close();
-            //sg.printIndex();
-        }
     }
 }

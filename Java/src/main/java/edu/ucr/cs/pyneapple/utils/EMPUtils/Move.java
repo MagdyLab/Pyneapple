@@ -1,6 +1,9 @@
 package edu.ucr.cs.pyneapple.utils.EMPUtils;
 
-public class Move {
+/**
+ * The class that represent a move of the tabu search
+ */
+class Move {
     public Integer area;
     public Integer donorRegion;
     public Integer recipientRegion;
