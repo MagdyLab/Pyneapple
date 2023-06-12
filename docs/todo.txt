@@ -20,7 +20,7 @@ P2, Make sure the functions can be called by regionalization.xxx when the module
 
 Hussah: J1, J2, P1
 
-Yunfan: J2, P2
+Yunfan: P2
 
 Yongyi: J1, J2, P1
 
