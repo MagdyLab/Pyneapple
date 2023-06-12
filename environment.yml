@@ -14,5 +14,4 @@ dependencies:
   - libpysal
   - matplotlib
   - openjdk=8
-  - pip:
-    - git+https://github.com/MagdyLab/Pyneapple.git@main
+  
