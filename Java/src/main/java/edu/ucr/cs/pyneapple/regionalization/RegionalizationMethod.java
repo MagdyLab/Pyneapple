@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The interface for defining the regionalization methods. The regionalization algorithms partition a set of areas in to regions. The result contains the total number of regions (p value) and the region label of each area.
+ */
 public interface RegionalizationMethod{
     /**
      * This method formulates the execute_regionalization method for the regionalization algorithms.
@@ -14,13 +17,11 @@ public interface RegionalizationMethod{
      * @param disAttr The list of dissimilarity attributes
      * @param sumAttr The list of attributes for the summation constraint.
      * @param threshold The lower-bound threshold for the sum constraint
-     * @throws ParseException
-     * @throws IOException
      */
     public void execute_regionalization(Map<Integer, Set<Integer>> neighborSet,
                                                ArrayList<Long> disAttr,
                                                ArrayList<Long> sumAttr,
-                                               Long threshold) throws ParseException, IOException;
+                                               Long threshold);
 
     /**
      * The method for getting the number of regions
@@ -30,7 +31,7 @@ public interface RegionalizationMethod{
 
     /**
      * The method returns the region label of the areas.
-     * @return
+     * @return the region label of the areas
      */
     public int[] getRegionLabels();
 }

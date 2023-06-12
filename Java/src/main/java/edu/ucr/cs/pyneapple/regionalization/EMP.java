@@ -2,7 +2,7 @@ package edu.ucr.cs.pyneapple.regionalization;
 
 import edu.ucr.cs.pyneapple.utils.EMPUtils.RegionCollection;
 import edu.ucr.cs.pyneapple.utils.EMPUtils.Region;
-import edu.ucr.cs.pyneapple.utils.EMPUtils.Tabu;
+import edu.ucr.cs.pyneapple.utils.EMPUtils.EMPTabu;
 import edu.ucr.cs.pyneapple.utils.EMPUtils.TabuReturn;
 import edu.ucr.cs.pyneapple.utils.SpatialGrid;
 import org.geotools.data.DataStore;
@@ -110,7 +110,7 @@ public class EMP implements RegionalizationMethod {
             idList.add(i);
         }
         constructionPartition = construction_phase_generalized(idList, disAttr, sg, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, sumAttr, thresholdDouble, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
-        finalPartition = Tabu.performTabu(constructionPartition.getLabels(), constructionPartition.getRegionList(), sg, Tabu.pdist((disAttr)), tabuLength, max_no_move, sumAttr, sumAttr, sumAttr, sumAttr);
+        finalPartition = EMPTabu.performTabu(constructionPartition.getLabels(), constructionPartition.getRegionMap(), sg, EMPTabu.pdist((disAttr)), tabuLength, max_no_move, sumAttr, sumAttr, sumAttr, sumAttr);
 
     }
 
@@ -163,7 +163,7 @@ public class EMP implements RegionalizationMethod {
             idList.add(i);
         }
         constructionPartition = construction_phase_generalized(idList, disAttr, sg, minAttr, minLowerBound, minUpperBound, maxAttr, maxLowerBound, maxUpperBound, avgAttr, avgLowerBound, avgUpperBound, sumAttr, sumLowerBound, sumUpperBound, countLowerBound, countUpperBound);
-        finalPartition = Tabu.performTabu(constructionPartition.getLabels(), constructionPartition.getRegionList(), sg, Tabu.pdist((disAttr)), tabuLength, max_no_move, minAttr, maxAttr, sumAttr, avgAttr);
+        finalPartition = EMPTabu.performTabu(constructionPartition.getLabels(), constructionPartition.getRegionMap(), sg, EMPTabu.pdist((disAttr)), tabuLength, max_no_move, minAttr, maxAttr, sumAttr, avgAttr);
 
     }
 
@@ -1289,7 +1289,7 @@ public class EMP implements RegionalizationMethod {
         }
 
         if(debug){
-            Map<Integer, Region> rcn = bestCollection.getRegionList();
+            Map<Integer, Region> rcn = bestCollection.getRegionMap();
             for(Region rn: rcn.values()){
                 if(!rn.satisfiable()){
                     System.out.println("Region " + rn.getId() + " not satisfiable!");
@@ -1322,17 +1322,22 @@ public class EMP implements RegionalizationMethod {
 
     }*/
 
-    static void checkLabels(int[] labels, Map<Integer, Region> regionList){
+    /**
+     * Checks if the regions labels of the areas accord to the area list of each region
+     * @param labels the region label of the areas
+     * @param regionMap A map whose key is the region id and the value is the region
+     */
+    static public void checkLabels(int[] labels, Map<Integer, Region> regionMap){
         boolean consistent = true;
         for(int i = 0; i < labels.length; i++){
             if (labels[i] > 0){
-                if(!regionList.get(labels[i]).getAreaList().contains(i)){
+                if(!regionMap.get(labels[i]).getAreaList().contains(i)){
                     System.out.println("Area " + i + " not in region " + labels[i]);
                     consistent = false;
                 }
             }
         }
-        for(Map.Entry<Integer, Region> mapEntry: regionList.entrySet()){
+        for(Map.Entry<Integer, Region> mapEntry: regionMap.entrySet()){
             Region region = mapEntry.getValue();
             for(Integer area: region.getAreaList()){
                 if(labels[area] != region.getId()){
@@ -1491,7 +1496,7 @@ public class EMP implements RegionalizationMethod {
 
         double dataLoadTime = System.currentTimeMillis()/ 1000.0;
         System.out.println("Input size: " + distAttr.size());
-        long [][] distanceMatrix = Tabu.pdist(distAttr);
+        long [][] distanceMatrix = EMPTabu.pdist(distAttr);
         Date t = new Date();
 
         String fileNameSplit[] = fileName.split("/");
@@ -1549,7 +1554,7 @@ public class EMP implements RegionalizationMethod {
             System.out.println("Construction time: " + constructionDuration);
             int max_p = rc.getMax_p();
             //System.out.println("MaxP: " + max_p);
-            Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
+            //Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
         /*System.out.println("regionSpatialAttr after construction_phase:");
         for(Map.Entry<Integer, Integer> entry: regionSpatialAttr.entrySet()){
             Integer rid = entry.getKey();
@@ -1764,7 +1769,7 @@ public class EMP implements RegionalizationMethod {
 
         double dataLoadTime = System.currentTimeMillis()/ 1000.0;
         System.out.println("Input size: " + distAttr.size());
-        long [][] distanceMatrix = Tabu.pdist(distAttr);
+        long [][] distanceMatrix = EMPTabu.pdist(distAttr);
         Date t = new Date();
 
 
@@ -1792,7 +1797,7 @@ public class EMP implements RegionalizationMethod {
         System.out.println("Construction time: " + constructionDuration);
         int max_p = rc.getMax_p();
         //System.out.println("MaxP: " + max_p);
-        Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
+        //Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
     /*System.out.println("regionSpatialAttr after construction_phase:");
     for(Map.Entry<Integer, Integer> entry: regionSpatialAttr.entrySet()){
         Integer rid = entry.getKey();
@@ -1802,7 +1807,7 @@ public class EMP implements RegionalizationMethod {
         //System.out.println();
     }*/
 
-        long totalWDS = Tabu.calculateWithinRegionDistance(rc.getRegionList(), distanceMatrix);
+        long totalWDS = EMPTabu.calculateWithinRegionDistance(rc.getRegionMap(), distanceMatrix);
         //System.out.println("totalWithinRegionDistance before tabu: \n" + totalWDS);
         int tabuLength = 10;
         int max_no_move = distAttr.size();
@@ -1810,7 +1815,7 @@ public class EMP implements RegionalizationMethod {
 
         //System.out.println("Start tabu");
 
-        TabuReturn tr = Tabu.performTabu(rc.getLabels(), rc.getRegionList(), sg, Tabu.pdist((distAttr)), tabuLength, max_no_move, minAttr, maxAttr, sumAttr, avgAttr);
+        TabuReturn tr = EMPTabu.performTabu(rc.getLabels(), rc.getRegionMap(), sg, EMPTabu.pdist((distAttr)), tabuLength, max_no_move, minAttr, maxAttr, sumAttr, avgAttr);
         int[] labels = tr.labels;
         //System.out.println(labels.length);
         long WDSDifference = totalWDS - tr.WDS;
@@ -1986,7 +1991,7 @@ public class EMP implements RegionalizationMethod {
 
         double dataLoadTime = System.currentTimeMillis()/ 1000.0;
         System.out.println("Input size: " + distAttr.size());
-        long [][] distanceMatrix = Tabu.pdist(distAttr);
+        long [][] distanceMatrix = EMPTabu.pdist(distAttr);
         Date t = new Date();
 
         String fileNameSplit[] = fileName.split("/");
@@ -2044,7 +2049,7 @@ public class EMP implements RegionalizationMethod {
             System.out.println("Construction time: " + constructionDuration);
             int max_p = rc.getMax_p();
             //System.out.println("MaxP: " + max_p);
-            Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
+            //Map<Integer, Integer> regionSpatialAttr = rc.getRegionSpatialAttr();
         /*System.out.println("regionSpatialAttr after construction_phase:");
         for(Map.Entry<Integer, Integer> entry: regionSpatialAttr.entrySet()){
             Integer rid = entry.getKey();
@@ -2054,7 +2059,7 @@ public class EMP implements RegionalizationMethod {
             //System.out.println();
         }*/
 
-            long totalWDS = Tabu.calculateWithinRegionDistance(rc.getRegionList(), distanceMatrix);
+            long totalWDS = EMPTabu.calculateWithinRegionDistance(rc.getRegionMap(), distanceMatrix);
             //System.out.println("totalWithinRegionDistance before tabu: \n" + totalWDS);
             int tabuLength = 10;
             int max_no_move = distAttr.size();
@@ -2062,7 +2067,7 @@ public class EMP implements RegionalizationMethod {
 
             //System.out.println("Start tabu");
 
-            TabuReturn tr = Tabu.performTabu(rc.getLabels(), rc.getRegionList(), sg, Tabu.pdist((distAttr)), tabuLength, max_no_move, minAttr, maxAttr, sumAttr, avgAttr);
+            TabuReturn tr = EMPTabu.performTabu(rc.getLabels(), rc.getRegionMap(), sg, EMPTabu.pdist((distAttr)), tabuLength, max_no_move, minAttr, maxAttr, sumAttr, avgAttr);
             int[] labels = tr.labels;
             //System.out.println(labels.length);
             long WDSDifference = totalWDS - tr.WDS;
