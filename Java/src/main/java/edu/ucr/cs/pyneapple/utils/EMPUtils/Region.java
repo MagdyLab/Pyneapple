@@ -1,7 +1,5 @@
 package edu.ucr.cs.pyneapple.utils.EMPUtils;
 
-import edu.ucr.cs.pyneapple.utils.SpatialGrid;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

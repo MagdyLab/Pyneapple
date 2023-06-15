@@ -4,7 +4,7 @@ import edu.ucr.cs.pyneapple.utils.EMPUtils.RegionCollection;
 import edu.ucr.cs.pyneapple.utils.EMPUtils.Region;
 import edu.ucr.cs.pyneapple.utils.EMPUtils.EMPTabu;
 import edu.ucr.cs.pyneapple.utils.EMPUtils.TabuReturn;
-import edu.ucr.cs.pyneapple.utils.SpatialGrid;
+import edu.ucr.cs.pyneapple.utils.EMPUtils.SpatialGrid;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
 import org.geotools.data.FeatureSource;

@@ -1,6 +1,5 @@
 package edu.ucr.cs.pyneapple.utils.EMPUtils;
 
-import edu.ucr.cs.pyneapple.utils.SpatialGrid;
 import edu.ucr.cs.pyneapple.regionalization.EMP;
 import java.util.*;
 

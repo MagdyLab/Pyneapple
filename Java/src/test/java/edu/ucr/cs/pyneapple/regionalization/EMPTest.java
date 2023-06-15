@@ -1,6 +1,6 @@
 package edu.ucr.cs.pyneapple.regionalization;
 
-import edu.ucr.cs.pyneapple.utils.ShapefileReader;
+import edu.ucr.cs.pyneapple.utils.EMPUtils.ShapefileReader;
 import junit.framework.TestCase;
 
 import java.util.Arrays;
