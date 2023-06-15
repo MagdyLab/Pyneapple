@@ -1,8 +1,0 @@
-README.md
-setup.py
-pyneapple/_init_.py
-pyneapple.egg-info/PKG-INFO
-pyneapple.egg-info/SOURCES.txt
-pyneapple.egg-info/dependency_links.txt
-pyneapple.egg-info/requires.txt
-pyneapple.egg-info/top_level.txt
