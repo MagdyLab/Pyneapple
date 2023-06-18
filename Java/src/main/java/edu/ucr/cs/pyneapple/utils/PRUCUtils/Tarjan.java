@@ -21,6 +21,11 @@ public class Tarjan
         time = 0;
     }
 
+
+    /**
+     *
+     * @return the articulation areas (areas that disconnect the region when removed)
+     */
     public ArrayList<Area> findAPs_Tarjan()
     {
         ArrayList<Area> r_articulation_points = new ArrayList<>();

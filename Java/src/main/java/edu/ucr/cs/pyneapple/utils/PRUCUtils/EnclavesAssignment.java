@@ -59,11 +59,6 @@ public class EnclavesAssignment {
     }
 
 
-    /**
-     * This method finds the neighbor region of an enclave that results in the minimum heterogeneity increase
-     * @param e the enclave to be assigned
-     * @return the neighboring region of the enclave e that results in the minimum heterogeneity increase
-     */
     private Region find_best_neigh_r(Area e)
     {
         ArrayList<Region> complete_region_neighs = new ArrayList<>();

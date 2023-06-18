@@ -87,7 +87,7 @@ public class Seed implements Cloneable{
      * This method computes the minimum area-area pair distance of the seeded areas
      * @return the minimum area-area pair distance
      */
-    public double compute_min_dist()
+    private double compute_min_dist()
     {
         double min_pair_dist = Double.MAX_VALUE;
         for(int i = 0 ; i < seeds.size() ; i++)
@@ -134,7 +134,7 @@ public class Seed implements Cloneable{
 
     }
 
-    public void replace_area(Area area_in_seed , Area area_not_in_seed)
+    private void replace_area(Area area_in_seed , Area area_not_in_seed)
     {
         seeds.remove(area_in_seed);
         seeds.add(area_not_in_seed);
@@ -143,15 +143,23 @@ public class Seed implements Cloneable{
     }
 
 
+    /**
+     *
+     * @return the seed identified in this phase
+     */
     public ArrayList<Area> get_seeds()
     {
         return seeds;
     }
 
+
+    /**
+     *
+     * @return the size of the seed, i.e., the number of areas in the seed
+     */
     public int get_seed_size()
     {
         return seed_size;
     }
 
-    public double get_min_dist() {return min_dist;}
 }

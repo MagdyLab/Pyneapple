@@ -17,6 +17,13 @@ public class Region {
     private ArrayList<Area> neigh_areas;
 
 
+    /**
+     *
+     * @param region_id the index of a region
+     * @param g the first area in the region
+     * @param threshold the threshold constraint
+     * @param all_areas the list of all areas
+     */
     public Region(int region_id , Area g , double threshold , ArrayList<Area> all_areas)
     {
         areas_in_region = new ArrayList<>();
@@ -36,6 +43,14 @@ public class Region {
         }
     }
 
+
+    /**
+     *
+     * @param areas_in_region the list of all areas in the region
+     * @param threshold the threshold constraints
+     * @param hetero the pre-computed heterogeneity of the region
+     * @param total_extensive_attribute the pre-computed total extensive attribute of the region
+     */
     public Region(ArrayList<Area> areas_in_region , double threshold , double hetero , double total_extensive_attribute)
     {
         if(hetero > 0 && total_extensive_attribute > 0)
@@ -71,12 +86,10 @@ public class Region {
     }
 
 
-
-
-
-
-
-
+    /**
+     * Add an area to the region, update the neighboring relationship, heterogeneity, and regional extensive attribute
+     * @param area the area to be added to the region
+     */
     public void add_area_to_region(Area area) {
 
         area.set_region(region_id);
@@ -174,6 +187,11 @@ public class Region {
 
     }
 
+
+    /**
+     * remove an area from the region, fixing the neighborhood relationship, the heterogeneity, and the extensive attribute
+     * @param area the area to be removed
+     */
     public void remove_area_in_region(Area area)
     {
         area.set_region(-1);
@@ -259,6 +277,11 @@ public class Region {
 
     }
 
+    /**
+     * compute the heterogeneity increase when adding an area to this region
+     * @param area the area to be added to the region
+     * @return the heterogeneity increase
+     */
     public double compute_hetero_incre(Area area)
     {
         double hetero_incre = 0;
@@ -268,6 +291,11 @@ public class Region {
         return hetero_incre;
     }
 
+    /**
+     * compute the number of connections between a new area g to the areas in the region
+     * @param g the area to be evaluated
+     * @return the number of connections between g and the areas in the region
+     */
     public int compute_connection_num(Area g)
     {
         int connection = 0;
@@ -282,6 +310,11 @@ public class Region {
     }
 
 
+    /**
+     * Compute the decrease of the heterogeneity when removing an area from the region
+     * @param area the area to be removed from the region
+     * @return the heterogeneity decrease when removing this area from the region
+     */
     public double compute_hetero_decre(Area area)
     {
         double hetero_decre = 0;
@@ -296,6 +329,11 @@ public class Region {
         return hetero_decre;
     }
 
+
+    /**
+     * determine whether the region is connected using graph traversal
+     * @return whether the region is connected
+     */
     public boolean is_connected() {
         boolean[] visited = new boolean[areas_in_region.size()];
         Area first_area_move = areas_in_region.get(0);
@@ -311,26 +349,8 @@ public class Region {
     }
 
 
-    public boolean area_disconect_region(Area area)
-    {
-        ArrayList<Area> areas_in_region_copy = (ArrayList<Area>) areas_in_region.clone();
-        areas_in_region_copy.remove(area);
-        boolean[] visited = new boolean[areas_in_region_copy.size()];
-        Area first_area_to_move = areas_in_region_copy.get(0);
-        DFS(first_area_to_move , visited , areas_in_region_copy);
-        for(boolean b : visited)
-        {
-            if(!b)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
-
-
-    public void DFS(Area visiting_area , boolean[] visited , ArrayList<Area> areas)
+    private void DFS(Area visiting_area , boolean[] visited , ArrayList<Area> areas)
     {
         visited[areas.indexOf(visiting_area)] = true;
         for(Area neigh_area : visiting_area.get_neigh_area(all_areas))
@@ -346,44 +366,81 @@ public class Region {
     }
 
 
-
-
-
+    /**
+     *
+     * @return the list that the areas on the margin of the region, i.e., area having at least one neighbor not in the region
+     */
     public ArrayList<Area> getAreas_on_margin()
     {
         return areas_on_margin;
     }
 
+
+    /**
+     *
+     * @return the number of areas in the region
+     */
     public int get_region_size() {return areas_in_region.size();}
 
-    public double getThreshold() {return threshold;}
 
-
+    /**
+     *
+     * @return the index of the region
+     */
     public int get_region_index() { return region_id; }
 
+
+    /**
+     *
+     * @return whether the region satisfies the user-defined constraint
+     */
     public boolean is_region_complete()
     {
         return region_complete;
     }
 
+
+    /**
+     *
+     * @return the neighboring areas of this region
+     */
     public ArrayList<Area> get_neigh_areas()
     {
         return neigh_areas;
     }
 
+
+    /**
+     *
+     * @return the list of areas in the region
+     */
     public ArrayList<Area> get_areas_in_region() {return areas_in_region; }
 
+
+    /**
+     *
+     * @return the total extensive attribute of the region
+     */
     public double get_region_extensive_attr()
     {
         return region_extensive_attr;
     }
 
+    /**
+     *
+     * @return the heterogeneity of the region
+     */
     public double get_region_hetero()
     {
         return region_heterogeneity;
     }
 
 
+    /**
+     *
+     * @param regions all regions from the partition
+     * @return the heterogeneity of the partition, i.e., the sum of heterogeneity of all regions
+     */
     public static double get_all_region_hetero(Region[] regions)
     {
         double total_hetero = 0;
@@ -394,6 +451,12 @@ public class Region {
         return total_hetero;
     }
 
+
+    /**
+     *
+     * @param regions the regions from all partitions
+     * @return whether there exists region that fails to satisfy the user-defined constraint
+     */
     public static boolean exist_incomplete_region(Region[] regions)
     {
         for(Region r : regions)
@@ -406,33 +469,14 @@ public class Region {
         return false;
     }
 
-    public static Region[] construct_region_from_areas(ArrayList<Area> all_areas , Seed seed , double threshold)
-    {
-        Region[] regions = new Region[seed.get_seeds().size()];
-        for(int i = 0 ; i < regions.length ; i++)
-        {
-            int g_index = seed.get_seeds().get(i).get_geo_index();
-            Area g = all_areas.get(g_index);
-            regions[i] = new Region(i , g , threshold , all_areas);
-        }
 
-
-        for(Area g : all_areas)
-        {
-            int r_id = g.get_associated_region_index();
-            Region r = regions[r_id];
-            if(r.get_areas_in_region().contains(g))
-            {
-                continue;
-            }
-            r.add_area_to_region(g);
-        }
-
-        return regions;
-    }
-
-
-
+    /**
+     * Test the correctness of the partition on heterogeneity, satisfaction of constraints, and connectivity
+     * @param regions the regions from the partition
+     * @param all_areas the list of all areas
+     * @param threshold the threshold from the constraint
+     *
+     */
     public static void test_result_correctness(Region[] regions , ArrayList<Area> all_areas , double threshold , boolean PRUC)
     {
         if(regions == null)

@@ -21,6 +21,15 @@ import java.util.*;
 public class Preprocess {
 
 
+    /**
+     *
+     * @param dataset the shapefile dataset to be processed
+     * @return the neighboring relationship of the polygons
+     * the list of dissimilarity attributes
+     * the list of extensive attributes
+     * the list of centroids of areas
+     * @throws IOException
+     */
     public static Object[] GeoSetBuilder(String dataset) throws IOException {
         ArrayList<Area> areas = new ArrayList<>();
         FeatureCollection<SimpleFeatureType, SimpleFeature> collection = preprocess(dataset);

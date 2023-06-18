@@ -47,6 +47,11 @@ public class LocalOptimization {
         heuristic();
     }
 
+
+    /**
+     *
+     * @return the labels of the regionalization results found through the searching that has the minimum heterogeneity
+     */
     public ArrayList<Integer> get_best_labels()
     {
         ArrayList<Integer> ints = new ArrayList<>();
@@ -60,7 +65,7 @@ public class LocalOptimization {
 
 
 
-    public void heuristic() throws CloneNotSupportedException {
+    private void heuristic() throws CloneNotSupportedException {
         if(!sol.solved()) //If Global Search did not find a feasible partition, then Local Optimization would not be executed
         {
             this.total_time = 0;
@@ -198,7 +203,7 @@ public class LocalOptimization {
 
     //in this greedy method, the parameter is the list of all movable units, we randomly process one of these movable units and try to ressign the unit
     //to the region with maximum heterogeneity decrease
-    public Object[] greedy_find(ArrayList<Area> movable_units)
+    private Object[] greedy_find(ArrayList<Area> movable_units)
     {
         //System.out.print(movable_units.size() + " | ");
         Area area = movable_units.get(new Random().nextInt(movable_units.size()));
@@ -260,7 +265,7 @@ public class LocalOptimization {
      * This method applies multi-threading parallelization to find the movable areas from each region
      * @return the list of all movable areas from the partition
      */
-    public ArrayList<Area> parallel_search_movable_units() {
+    private ArrayList<Area> parallel_search_movable_units() {
         ArrayList<Area> movable_units = new ArrayList<>();
         ReentrantLock lock = new ReentrantLock();
         ExecutorService threadPool = Executors.newFixedThreadPool(num_thread);

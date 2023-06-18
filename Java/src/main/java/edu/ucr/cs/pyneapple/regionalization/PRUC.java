@@ -180,6 +180,18 @@ public class PRUC implements RegionalizationMethod{
         return true;
     }
 
+    /**
+     * Execute the regionalization
+     * @param neighborSet the neighborhood relationship of the areas
+     * @param disAttr the list of similarity attribtues
+     * @param sumAttr the list of extensive attributes
+     * @param centroids the list of centroids of the areas
+     * @param threshold the threshold on the constraint
+     * @param p the predefined number of regions
+     * @return the heterogeneity and labels of the partition and areas if a feasible partition is found or null if a feasible partition is not found
+     * @throws InterruptedException
+     * @throws CloneNotSupportedException
+     */
     public Object[] execute_regionalization(Map<Integer, Set<Integer>> neighborSet, ArrayList<Long> disAttr, ArrayList<Long> sumAttr,  ArrayList<double[]> centroids, long threshold, int p) throws InterruptedException, CloneNotSupportedException {
 
         boolean issue = exam_neighborhood(neighborSet) && exam_disAttr(disAttr) && exam_sumAttr(sumAttr);
@@ -226,26 +238,6 @@ public class PRUC implements RegionalizationMethod{
 
 
         GlobalSearch sol = new GlobalSearch(areas , p , areas.size() , threshold);
-        /*
-        System.out.println("before local search the hetero is " + Region.get_all_region_hetero(sol.get_regions()));
-        for(Area a : sol.get_all_areas())
-        {
-            System.out.print(a.get_associated_region_index() + " , ");
-        }
-        System.out.println();
-
-         */
-        /*
-       Seed s = sol.getSeed();
-       ArrayList<Integer> seed_areas = new ArrayList<>();
-       for(Area a : s.get_seeds())
-       {
-           seed_areas.add(a.get_geo_index());
-       }
-        return new Object[]{sol.get_seed_quality(), seed_areas};
-
-
-         */
 
         //the number of iterations in the local optimization is set to the default value, which equals to the number of areas
         int iter = areas.size();
@@ -278,16 +270,30 @@ public class PRUC implements RegionalizationMethod{
 
     }
 
+
+    /**
+     *
+     * @return the number of regions
+     */
     @Override
     public int getP() {
         return p;
     }
 
+    /**
+     *
+     * @return the labels of the assignment of areas to regions
+     */
     @Override
     public int[] getRegionLabels() {
         return regionLabels;
     }
 
+
+    /**
+     *
+     * @return the heterogeneity of the region
+     */
     public double getHeterogeneity()
     {
         return heterogeneity;

@@ -24,7 +24,6 @@ public class GlobalSearch {
      * @param p the predefined number of regions
      * @param selection_max_iter the maximum number of iterations in Seed Identification
      * @param threshold the value on the user-defined constraint
-     * @param detect_island whether or not the input dataset includes island
      */
     public GlobalSearch(ArrayList<Area> all_areas, int p, int selection_max_iter, double threshold) throws InterruptedException {
         long start = System.currentTimeMillis();
@@ -89,57 +88,30 @@ public class GlobalSearch {
     }
 
 
-    public boolean isInterregion_flag()
-    {
-        return interregion_flag;
-    }
-
-    public boolean isFlow_flag()
-    {
-        return flow_flag;
-    }
-
-    public long getSeed_time()
-    {
-        return seed_time;
-    }
-
-    public long getRegion_growth_time()
-    {
-        return region_growth_time;
-    }
-
-    public long getEnclaves_assign_time()
-    {
-        return enclaves_assign_time;
-    }
-
-    public long getInterregion_update_time()
-    {
-        return interregion_update_time;
-    }
-
-    public long getIndirect_flow_time()
-    {
-        return indirect_flow_time;
-    }
-
-
+    /**
+     *
+     * @return the ArrayList of all areas involved in regionalization
+     */
     public ArrayList<Area> get_all_areas()
     {
         return all_areas;
     }
 
+
+    /**
+     *
+     * @return the regions produced in the regionalization process
+     */
     public Region[] get_regions()
     {
         return regions;
     }
 
-    public long getTotal_running_time()
-    {
-        return total_running_time;
-    }
 
+    /**
+     *
+     * @return whether a feasible partition is identified
+     */
     public boolean solved()
     {
         for(Region r : regions)
@@ -151,13 +123,6 @@ public class GlobalSearch {
         }
         return true;
     }
-
-    public double get_seed_quality()
-    {
-        return seed.get_min_dist();
-    }
-
-    public Seed getSeed(){return seed;}
 
 
 }

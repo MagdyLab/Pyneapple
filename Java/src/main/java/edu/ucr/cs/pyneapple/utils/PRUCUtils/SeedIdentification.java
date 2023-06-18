@@ -20,8 +20,6 @@ public class SeedIdentification {
      * @param all_areas the input areas
      * @param seed_num the number of seeded area, which equals to the number of predefined regions, p
      * @param max_iter the maximum number of iteration in Seed Identification, when set to 0 means random seeding
-     * @param kmeanspp whether or not to use the k-mean ++ seeding
-     * @param detect_island whether or not to consider island areas in the dataset
      */
     public SeedIdentification(ArrayList<Area> all_areas , int seed_num , int max_iter) {
         this.all_geoareas = all_areas;
@@ -48,7 +46,7 @@ public class SeedIdentification {
      * @param maxiter the maximum number of iterations
      * @return The selected seed
      */
-    public Seed island_seeding(ArrayList<Area> all_areas , int s_num , int maxiter)
+    private Seed island_seeding(ArrayList<Area> all_areas , int s_num , int maxiter)
     {
         ArrayList<ConnectedComponent> ccs = new ArrayList<>();
         Comparator<ConnectedComponent> cc_comparator = Comparator.comparingDouble(ConnectedComponent::getTotal_ext);
@@ -106,14 +104,14 @@ public class SeedIdentification {
         return new Seed(all_seed_areas);
     }
 
-    public ArrayList<Area> find_connected_component(Area area)
+    private ArrayList<Area> find_connected_component(Area area)
     {
         HashSet<Area> visited = new HashSet<>();
         DFS(area , visited);
         return new ArrayList<>(visited);
     }
 
-    public void DFS(Area area , HashSet<Area> visited)
+    private void DFS(Area area , HashSet<Area> visited)
     {
         visited.add(area);
         for(Area neigh_area : area.get_neigh_area(all_geoareas))
@@ -126,7 +124,7 @@ public class SeedIdentification {
     }
 
 
-    public Seed naive_seed_selection(ArrayList<Area> all_areas , int s_num , int maxiter)
+    private Seed naive_seed_selection(ArrayList<Area> all_areas , int s_num , int maxiter)
     {
         Seed seed = new Seed(all_areas , s_num);
         int iter_time = 0;
@@ -139,63 +137,10 @@ public class SeedIdentification {
     }
 
 
-    public Seed kmeanspp(ArrayList<Area> all_areas , int s_num)
-    {
-        Area init_area = all_areas.get(new Random().nextInt(all_areas.size()));
-        ArrayList<Area> seeded_areas = new ArrayList<>();
-        seeded_areas.add(init_area);
-        while(seeded_areas.size() < s_num)
-        {
-            ArrayList<Area> unseeded_areas = new ArrayList<>();
-            ArrayList<Double> dists = new ArrayList<>();
-            double total_dist = 0;
-            for(Area a : all_areas)
-            {
-                if(!seeded_areas.contains(a))
-                {
-                    double min_dist_to_seed = Double.MAX_VALUE;
-                    for(Area seed_a :seeded_areas)
-                    {
-                        double dist = a.compute_dist(seed_a);
-                        if(dist < min_dist_to_seed)
-                        {
-                            min_dist_to_seed = dist;
-                        }
-                    }
-                    unseeded_areas.add(a);
-                    dists.add(min_dist_to_seed);
-                    total_dist += (min_dist_to_seed * min_dist_to_seed);
-                }
-            }
-
-            double random_num = new Random().nextDouble();
-            double accu = 0;
-            Area selected_area = null;
-            for(int i = 0 ; i < unseeded_areas.size() ; i++)
-            {
-                double d = dists.get(i);
-                double prob = d * d / total_dist;
-                if(random_num >= accu && random_num <= accu + prob)
-                {
-                    selected_area = unseeded_areas.get(i);
-                    break;
-                }
-                accu += prob;
-            }
-
-
-
-            if(selected_area == null)
-            {
-                selected_area = seeded_areas.get(seeded_areas.size() - 1);
-            }
-            seeded_areas.add(selected_area);
-
-        }
-
-        return new Seed(seeded_areas);
-    }
-
+    /**
+     *
+     * @return the seed with the best quality
+     */
     public Seed getBest_seed() {
         return best_seed;
     }

@@ -35,9 +35,9 @@ public class Area implements Cloneable , Serializable {
 
 
     /**
-     *
+     * Compute the Euclidean between this area and area a based on their centroids
      * @param a the area to compute distance with
-     * @return the euclidean distance between this area and area a
+     * @return the Euclidean distance between this area and area a
      */
     public double compute_dist(Area a)
     {
@@ -46,39 +46,77 @@ public class Area implements Cloneable , Serializable {
 
     }
 
+
+    /**
+     * set the centroids of this area
+     * @param centroid the centroid of this area (regarding x and y)
+     */
     public void set_centroid(double[] centroid)
     {
         this.centroid = centroid;
     }
 
+    /**
+     * assign this area to a specific region by using region index
+     * @param region_index the index of the region this area is assigned to
+     */
     public void set_region(int region_index)
     {
         this.associate_region_index = region_index;
     }
 
+
+    /**
+     * add a neighboring area to this area through the index of areas
+     * @param add_index the index of the newly added area
+     */
     public void add_neighbor(int add_index)
     {
         neigh_area_index.add(add_index);
     }
 
+
+    /**
+     * construct the neighboring areas of this area
+     * @param neighbor_to_set the indicecs of the neighboring areas for this area
+     */
     public void set_neighbor_once(ArrayList<Integer> neighbor_to_set)
     {
         this.neigh_area_index = neighbor_to_set;
     }
 
+
+    /**
+     *
+     * @return the index of this area
+     */
     public int get_geo_index() { return index; }
 
+
+    /**
+     *
+     * @return the similarity attribute of this area
+     */
     public double get_internal_attr()
     {
         return sim_attr;
     }
 
+    /**
+     *
+     * @return the extensive attribute of this area
+     */
     public double get_extensive_attr()
     {
         return extensive_attr;
     }
 
 
+    /**
+     *
+     * @param all_areas the Arraylist that includes all the areas
+     * @return the neighboring areas of this area (in actual Area type rather than index)
+     */
     public ArrayList<Area> get_neigh_area(ArrayList<Area> all_areas) {
         ArrayList<Area> neigh_areas = new ArrayList<>();
         for(int neigh_index : neigh_area_index)
@@ -88,23 +126,55 @@ public class Area implements Cloneable , Serializable {
         return neigh_areas;
     }
 
+    /**
+     *
+     * @return the indices of the neighboring areas for this area
+     */
     public ArrayList<Integer> get_neigh_area_index()
     {
         return neigh_area_index;
     }
 
+    /**
+     *
+     * @return the index of the region that this area is associated with
+     */
     public int get_associated_region_index() { return associate_region_index; }
 
 
+    /**
+     *
+     * @return the centroid coordinate of this area
+     */
     public double[] get_centroid() { return centroid; }
 
 
+    /**
+     *
+     * @param neigh_area the area to compute heterogeneity with
+     * @return the heterogeneity between this area and neigh_area
+     */
     public double compute_hetero(Area neigh_area) {
         return Math.abs(sim_attr - neigh_area.get_internal_attr());
     }
 
+
+    /**
+     * initialize the neighbors of this area
+     */
     public void initialize_neighbor() {
         neigh_area_index = new ArrayList<>();
+    }
+
+
+
+    protected static ArrayList<Area> area_list_copy(ArrayList<Area> all_areas) throws CloneNotSupportedException {
+        ArrayList<Area> returned_areas = new ArrayList<>();
+        for(Area g : all_areas)
+        {
+            returned_areas.add((Area)g.clone());
+        }
+        return returned_areas;
     }
 
 
@@ -115,16 +185,6 @@ public class Area implements Cloneable , Serializable {
         g.set_region(this.get_associated_region_index());
         g.set_neighbor_once((ArrayList<Integer>)neigh_area_index.clone());
         return g;
-    }
-
-
-    public static ArrayList<Area> area_list_copy(ArrayList<Area> all_areas) throws CloneNotSupportedException {
-        ArrayList<Area> returned_areas = new ArrayList<>();
-        for(Area g : all_areas)
-        {
-            returned_areas.add((Area)g.clone());
-        }
-        return returned_areas;
     }
 
 
