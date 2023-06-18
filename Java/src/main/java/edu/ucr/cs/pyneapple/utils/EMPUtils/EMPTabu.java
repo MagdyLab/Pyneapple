@@ -13,7 +13,7 @@ public class EMPTabu {
      * The default constructor for the EMPTabu class. The functions should be all static so the constructor is not actually used.
      */
     public EMPTabu(){}
-    /**
+    /**1
      * Perform tabu search for the initial solution constructed in the construction phase
      * @param initLabels the initial region labels
      * @param integerRegionMap the initial region maps
