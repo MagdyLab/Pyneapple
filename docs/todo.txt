@@ -5,6 +5,7 @@ J1, Merge the code to the package. Make sure the project compiles. All algorithm
 	b. Utilities classes to edu.ucr.cs.pyneapple.utils
 	c. Test cases to test\java\edu\ucr\cs\pyneapple\regionalization. Please make sure the test cases follow the junit.framework.TestCase format.
 J2, Write javadoc documentation for all public functions
+	Note: if there is some error related to src.zip when using java 1.8, try unzipping and removing the zip file.
 
 Python:
 P1, Confirm the documentation of the Python APIs and move the files to the corresponding directory
