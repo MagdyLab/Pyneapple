@@ -1,4 +1,7 @@
-from setuptools import setup
+
+URL = 'https://github.com/MagdyLab/Pyneapple/tree/main/pyneapple/'
+
+from setuptools import setup, find_packages
 
 def _get_requirements_from_files(groups_files):
     groups_reqlist = {}
@@ -23,11 +26,13 @@ def setup_package():
 
    setup(
    name='pyneapple',
-   version='0.0.1',
+   version='0.1.0',
    description='Scalable and expressive spatial analysis',
    author='Yunfan Kang',
    author_email='ykang040@ucr.edu',
-   packages=['pyneapple'],  #same as name
+   url = 'https://github.com/MagdyLab/Pyneapple/tree/main/pyneapple/',
+   #packages=['pyneapple'],  #same as name
+   packages = ['pyneapple', 'pyneapple.regionalization', 'pyneapple.weight'],
    install_requires=install_reqs, #external packages as dependencies
 )
 
