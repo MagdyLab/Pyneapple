@@ -120,7 +120,7 @@ def pruc(
     
     
     if not jpype.isJVMStarted():
-        jpype.startJVM("-Xmx20480m", classpath = ["./Pineapple.jar"])
+        jpype.startJVM("-Xmx20480m", classpath = ["./Pineapple.jar"]])
 
     neighborHashMap = jpype.java.util.HashMap()
     for key, value in w.neighbors.items():
