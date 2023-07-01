@@ -29,8 +29,15 @@ public class PRUCTest extends TestCase{
         ArrayList<Long> disAttr = (ArrayList<Long>) ret[1];
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,2000L, -1);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x,centroids_y,2000L, -1);
     }
 
 
@@ -45,8 +52,15 @@ public class PRUCTest extends TestCase{
         ArrayList<Long> disAttr = (ArrayList<Long>) ret[1];
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,-2000L, 10);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x, centroids_y,-2000L, 10);
     }
 
 
@@ -62,9 +76,15 @@ public class PRUCTest extends TestCase{
         disAttr.set(0 , -1L);
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
-
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,2000L, 10);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x, centroids_y,2000L, 10);
     }
 
 
@@ -80,9 +100,15 @@ public class PRUCTest extends TestCase{
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         sumAttr.set(0, -1L);
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
-
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,2000L, 10);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x,centroids_y,2000L, 10);
     }
 
     /**
@@ -96,8 +122,15 @@ public class PRUCTest extends TestCase{
         ArrayList<Long> disAttr = (ArrayList<Long>) ret[1];
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,2000L, 10);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x,centroids_y,2000L, 10);
         System.out.println("successfully executed PRUC regionalization with p = 10 and threshold = 2000");
     }
 
@@ -112,8 +145,15 @@ public class PRUCTest extends TestCase{
         ArrayList<Long> disAttr = (ArrayList<Long>) ret[1];
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,0L, 10);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x,centroids_y,0L, 10);
         System.out.println("successfully executed PRUC regionalization in special case with p = 10 and threshold = 0");
     }
 
@@ -128,8 +168,15 @@ public class PRUCTest extends TestCase{
         ArrayList<Long> disAttr = (ArrayList<Long>) ret[1];
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,2000L, 10);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x,centroids_y,2000L, 10);
         System.out.println(pruc.getRegionLabels());
 
     }
@@ -146,8 +193,15 @@ public class PRUCTest extends TestCase{
         ArrayList<Long> disAttr = (ArrayList<Long>) ret[1];
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,2000L, 10);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x,centroids_y,2000L, 10);
         System.out.println(pruc.getHeterogeneity());
     }
 
@@ -163,8 +217,15 @@ public class PRUCTest extends TestCase{
         ArrayList<Long> disAttr = (ArrayList<Long>) ret[1];
         ArrayList<Long> sumAttr = (ArrayList<Long>) ret[2];
         ArrayList<double[]> centroids  = (ArrayList<double[]>) ret[3];
+        ArrayList<Double> centroids_x = new ArrayList<>();
+        ArrayList<Double> centroids_y = new ArrayList<>();
+        for(int i = 0 ; i < centroids.size() ; i++)
+        {
+            centroids_x.add(centroids.get(i)[0]);
+            centroids_y.add(centroids.get(i)[1]);
+        }
         PRUC pruc = new PRUC();
-        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids,2000L, 10);
+        pruc.execute_regionalization(neighborSet,disAttr,sumAttr,centroids_x,centroids_y,2000L, 10);
         System.out.println(pruc.getP());
     }
 

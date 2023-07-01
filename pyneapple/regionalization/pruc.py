@@ -33,10 +33,7 @@ def pruc(
         sim_attr,
         ext_attr,
         threshold,
-        p,
-        lo_iter = 1000,
-        seed = datetime.datetime.now().strftime("%Y%m%d%H%M%S"),
-        num_thread = os.cpu_count()
+        p
 ):
     """
     Parameters
@@ -59,17 +56,6 @@ def pruc(
         The number of regions
         Default is set to the size of the dataset
 
-    lo_iter : int
-        The number of iterations in local optimization
-        Default is 1000
-    
-    seed : int
-        The seed for randomness
-        Default is set to the current time
-    
-    num_thread : int
-        The number of thread used in the local optimization
-        Default is set to os.cpu_count()
         
     Returns
     ----------
@@ -113,14 +99,12 @@ def pruc(
     
     if (not isinstance(threshold, int) and not isinstance(threshold, float)) or (threshold < 0):
         raise Exception("threshold must be non-negative")
-    
-    
-    if (not isinstance(lo_iter , int)) or (lo_iter < 0):
-        raise Exception("lo_iter must be non-negative integers")
+
     
     
     if not jpype.isJVMStarted():
-        jpype.startJVM("-Xmx20480m", classpath = ["./Pineapple.jar"])
+        print("starting jvm")
+        jpype.startJVM("-Xmx20480m", classpath = ["./pyneappleNew.jar"])
 
     neighborHashMap = jpype.java.util.HashMap()
     for key, value in w.neighbors.items():
@@ -137,17 +121,19 @@ def pruc(
     
     
     for i in range(0, gdf.shape[0]):
-        sAttr.add(jpype.JDouble(gdf[sim_attr][i]))
-        extAttr.add(jpype.JDouble(gdf[ext_attr][i]))
+        sAttr.add(jpype.JLong(gdf[sim_attr][i]))
+        extAttr.add(jpype.JLong(gdf[ext_attr][i]))
         idList.add(jpype.JInt(i))
         x_centroids.add(jpype.JDouble(gdf['geometry'][i].centroid.x))
         y_centroids.add(jpype.JDouble(gdf['geometry'][i].centroid.y))
     
    
-    PRUC = jpype.JClass('edu.ucr.cs.pineapple.regionalization.PRUC')()
-    result = PRUC.execute_GSLO(jpype.JInt(p), jpype.JDouble(threshold), jpype.JInt(lo_iter),
-                               neighborHashMap, extAttr, sAttr, x_centroids, y_centroids, jpype.JLong(seed), jpype.JInt(num_thread))
-
+    PRUC = jpype.JClass('edu.ucr.cs.pyneapple.regionalization.PRUC')()
+    print("start")
+    print(jpype.JLong(threshold) )
+    print(type(jpype.JLong(threshold) ))
+    result = PRUC.execute_regionalization(neighborHashMap, sAttr, extAttr,  x_centroids, y_centroids, jpype.JLong(threshold) , jpype.JInt(p))
+    print("end")
     results = None
     if len(result) == 2:
         hetero = float(result[0])
@@ -163,4 +149,3 @@ def pruc(
 #gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
 #w = libpysal.weights.Queen.from_dataframe(gdf)
 #print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10))
-#print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10,  gdf.shape[0], 2023117, 1))

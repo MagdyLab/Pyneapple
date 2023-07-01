@@ -6,12 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="emp" />
+        <module name="pyneapple" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="emp" target="1.8" />
       <module name="PRUCCODE" target="1.8" />
-      <module name="pyneapple" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
