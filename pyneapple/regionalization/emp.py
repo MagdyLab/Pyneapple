@@ -99,3 +99,5 @@ def emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgN
     EMP.execute_regionalization(neighborHashMap, disAttr, minAttr,minLow, minHigh, maxAttr, maxLow, maxHigh, avgAttr, avgLow, avgHigh, sumAttr, sumLow, sumHigh, countLow, countHigh)
    
     return EMP.getP(), np.array(EMP.getRegionList())
+
+
