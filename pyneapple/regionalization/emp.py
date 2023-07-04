@@ -75,7 +75,8 @@ def emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgN
         Region IDs for observations.
 
     """
-    #jpype.startJVM("-Xmx20480m", classpath = ["./Pineapple.jar"])
+    if not jpype.isJVMStarted():
+        jpype.startJVM("-Xmx20480m", classpath = ["./Pineapple.jar"])
     neighborHashMap = java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = java.util.TreeSet()
