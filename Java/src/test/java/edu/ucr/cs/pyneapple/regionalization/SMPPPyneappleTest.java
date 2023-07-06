@@ -7,7 +7,7 @@ import java.util.*;
 
 public class SMPPPyneappleTest extends TestCase {
 
-    static String shp_file = "data/LACity/LACity.shp";
+    static String shp_file = "data/10K/10K.shp";
 
     public SMPPPyneappleTest(){}
 
