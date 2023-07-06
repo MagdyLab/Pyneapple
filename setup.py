@@ -32,7 +32,8 @@ def setup_package():
    author_email='ykang040@ucr.edu',
    url = 'https://github.com/MagdyLab/Pyneapple/tree/main/pyneapple/',
    #packages=['pyneapple'],  #same as name
-   packages = ['pyneapple', 'pyneapple.regionalization', 'pyneapple.weight'],
+   packages = ['pyneapple', 'pyneapple.regionalization', 'pyneapple.weight', 'pyneapple.tests'],
+   package_data={'': ['*.jar'], '': ['*.txt']},
    install_requires=install_reqs, #external packages as dependencies
 )
 

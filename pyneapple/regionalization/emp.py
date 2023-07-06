@@ -76,14 +76,14 @@ def emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgN
 
     """
     if not jpype.isJVMStarted():
-        jpype.startJVM("-Xmx20480m", classpath = ["./Pineapple.jar"])
+        jpype.startJVM("-Xmx20480m", classpath = ["../Pineapple.jar"])
     neighborHashMap = java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = java.util.TreeSet()
         for v in value:
             tempSet.add(jpype.JInt(v))
         neighborHashMap.put(jpype.JInt(key), tempSet)
-    EMP = jpype.JClass("edu.ucr.cs.pineapple.regionalization.EMP")()
+    EMP = jpype.JClass("edu.ucr.cs.pyneapple.regionalization.EMP")()
     idList = jpype.java.util.ArrayList()
     disAttr = jpype.java.util.ArrayList()
     minAttr = jpype.java.util.ArrayList()
@@ -99,6 +99,6 @@ def emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgN
         idList.add(jpype.JInt(i))
     EMP.execute_regionalization(neighborHashMap, disAttr, minAttr,minLow, minHigh, maxAttr, maxLow, maxHigh, avgAttr, avgLow, avgHigh, sumAttr, sumLow, sumHigh, countLow, countHigh)
    
-    return EMP.getP(), np.array(EMP.getRegionList())
+    return EMP.getP(), np.array(EMP.getRegionLabels())
 
 

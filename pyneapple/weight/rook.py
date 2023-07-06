@@ -4,11 +4,13 @@ from jpype import java
 from jpype import javax
 
 def from_dataframe(df):
+    if not jpype.isJVMStarted():
+        jpype.startJVM("-Xmx20480m", classpath = ["../Pineapple.jar"])
     gcolumn = df['geometry'].to_list()
     gArrayList = jpype.java.util.ArrayList()
     for gEntry in gcolumn:
         gArrayList.add(str(gEntry))
-    Rook = jpype.JClass("edu.ucr.cs.pineapple.utils.SpatialGrid")
+    Rook = jpype.JClass("edu.ucr.cs.pyneapple.utils.EMPUtils.SpatialGrid")
     SMPI = jpype.JClass("edu.ucr.cs.pineapple.regionalization.SMPPPythonInterface")
     r = Rook()
     geometry = SMPI.stringListToGeometryList(gArrayList);
