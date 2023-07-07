@@ -2,6 +2,7 @@ package edu.ucr.cs.pyneapple.utils.SMPPUtils;
 
 public class Move {
 
+
     private int recipientRegion;
     private int donorRegion;
     private int movedArea;

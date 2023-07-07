@@ -19,13 +19,13 @@ public class GlobalSearch {
     private boolean flow_flag;
 
     /**
-     *
+     * the global search stage of GSLO
      * @param all_areas the input areas
      * @param p the predefined number of regions
      * @param selection_max_iter the maximum number of iterations in Seed Identification
      * @param threshold the value on the user-defined constraint
      */
-    public GlobalSearch(ArrayList<Area> all_areas, int p, int selection_max_iter, double threshold) throws InterruptedException {
+    public GlobalSearch(ArrayList<Area> all_areas, int p, int selection_max_iter, double threshold) {
         long start = System.currentTimeMillis();
 
         this.all_areas = all_areas;
@@ -89,7 +89,7 @@ public class GlobalSearch {
 
 
     /**
-     *
+     * get the list of all areas from the input set
      * @return the ArrayList of all areas involved in regionalization
      */
     public ArrayList<Area> get_all_areas()
@@ -99,7 +99,7 @@ public class GlobalSearch {
 
 
     /**
-     *
+     * get the array of generated regions from the partition
      * @return the regions produced in the regionalization process
      */
     public Region[] get_regions()
@@ -109,7 +109,7 @@ public class GlobalSearch {
 
 
     /**
-     *
+     * test if the partition is feasible
      * @return whether a feasible partition is identified
      */
     public boolean solved()

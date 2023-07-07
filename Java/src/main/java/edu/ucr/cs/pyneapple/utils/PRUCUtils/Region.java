@@ -12,13 +12,13 @@ public class Region {
     private int region_id;
     private boolean region_complete;
     private double threshold;
-    public double region_extensive_attr;
+    private double region_extensive_attr;
     private double region_heterogeneity;
     private ArrayList<Area> neigh_areas;
 
 
     /**
-     *
+     * The class for a region
      * @param region_id the index of a region
      * @param g the first area in the region
      * @param threshold the threshold constraint
@@ -45,7 +45,7 @@ public class Region {
 
 
     /**
-     *
+     * the constructor of region class
      * @param areas_in_region the list of all areas in the region
      * @param threshold the threshold constraints
      * @param hetero the pre-computed heterogeneity of the region
@@ -367,7 +367,7 @@ public class Region {
 
 
     /**
-     *
+     * get the marginal areas from the region
      * @return the list that the areas on the margin of the region, i.e., area having at least one neighbor not in the region
      */
     public ArrayList<Area> getAreas_on_margin()
@@ -377,21 +377,21 @@ public class Region {
 
 
     /**
-     *
+     * get the number of areas in the region
      * @return the number of areas in the region
      */
     public int get_region_size() {return areas_in_region.size();}
 
 
     /**
-     *
+     * get the index of the region
      * @return the index of the region
      */
     public int get_region_index() { return region_id; }
 
 
     /**
-     *
+     * get whether the region is complete
      * @return whether the region satisfies the user-defined constraint
      */
     public boolean is_region_complete()
@@ -401,7 +401,7 @@ public class Region {
 
 
     /**
-     *
+     * get the neigboring areas of a region
      * @return the neighboring areas of this region
      */
     public ArrayList<Area> get_neigh_areas()
@@ -411,14 +411,14 @@ public class Region {
 
 
     /**
-     *
+     * get the neighboring areas of a region
      * @return the list of areas in the region
      */
     public ArrayList<Area> get_areas_in_region() {return areas_in_region; }
 
 
     /**
-     *
+     * get the total extensive attribute of a region
      * @return the total extensive attribute of the region
      */
     public double get_region_extensive_attr()
@@ -427,7 +427,7 @@ public class Region {
     }
 
     /**
-     *
+     * get the heterogeneity of the region
      * @return the heterogeneity of the region
      */
     public double get_region_hetero()
@@ -437,7 +437,7 @@ public class Region {
 
 
     /**
-     *
+     * get the heterogeneity of all regions
      * @param regions all regions from the partition
      * @return the heterogeneity of the partition, i.e., the sum of heterogeneity of all regions
      */
@@ -453,7 +453,7 @@ public class Region {
 
 
     /**
-     *
+     * test if there exists incomplete region
      * @param regions the regions from all partitions
      * @return whether there exists region that fails to satisfy the user-defined constraint
      */
@@ -475,7 +475,7 @@ public class Region {
      * @param regions the regions from the partition
      * @param all_areas the list of all areas
      * @param threshold the threshold from the constraint
-     *
+     * @param PRUC test whether connected
      */
     public static void test_result_correctness(Region[] regions , ArrayList<Area> all_areas , double threshold , boolean PRUC)
     {

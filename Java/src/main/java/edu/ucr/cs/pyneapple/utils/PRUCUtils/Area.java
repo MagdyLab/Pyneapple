@@ -8,18 +8,42 @@ import java.util.ArrayList;
  */
 public class Area implements Cloneable , Serializable {
 
+
+    /**
+     * the index of the area
+     */
     private int index;
+
+    /**
+     * the similarity attribute of the area
+     */
     private double sim_attr;
+
+    /**
+     * the extensive attribute of the area
+     */
     private double extensive_attr;
+
+    /**
+     * the centroids of the area
+     */
     private double[] centroid;
+
+    /**
+     * the index of the neighboring areas
+     */
     private ArrayList<Integer> neigh_area_index;
+    /**
+     * //the region it is associated to
+     */
     private int associate_region_index;
 
     /**
-     *
+     * The Area class correspond to a spatial polygon, which is the basic unit in regionalization
      * @param index the unique identifier of an area
      * @param sim_attr the similarity attribute
      * @param extensive_attr the extensive attribute
+     * @param centroid the arrays of centroids for each of the spatial polygons
      */
     public Area(int index , double sim_attr, double extensive_attr , double[] centroid)
     {
@@ -87,14 +111,14 @@ public class Area implements Cloneable , Serializable {
 
 
     /**
-     *
+     * get the index of the area
      * @return the index of this area
      */
     public int get_geo_index() { return index; }
 
 
     /**
-     *
+     * get the similarity attribute of the area
      * @return the similarity attribute of this area
      */
     public double get_internal_attr()
@@ -103,7 +127,7 @@ public class Area implements Cloneable , Serializable {
     }
 
     /**
-     *
+     * get the extensive attribute of the area
      * @return the extensive attribute of this area
      */
     public double get_extensive_attr()
@@ -113,7 +137,7 @@ public class Area implements Cloneable , Serializable {
 
 
     /**
-     *
+     * get the neighboring areas for this area
      * @param all_areas the Arraylist that includes all the areas
      * @return the neighboring areas of this area (in actual Area type rather than index)
      */
@@ -127,7 +151,7 @@ public class Area implements Cloneable , Serializable {
     }
 
     /**
-     *
+     * get the indices of the neighboring areas for this area
      * @return the indices of the neighboring areas for this area
      */
     public ArrayList<Integer> get_neigh_area_index()
@@ -136,21 +160,21 @@ public class Area implements Cloneable , Serializable {
     }
 
     /**
-     *
+     * get the index of the region that this area is associated with
      * @return the index of the region that this area is associated with
      */
     public int get_associated_region_index() { return associate_region_index; }
 
 
     /**
-     *
+     * get the centroids of the current area
      * @return the centroid coordinate of this area
      */
     public double[] get_centroid() { return centroid; }
 
 
     /**
-     *
+     * compute the heterogeneity when adding neigh_area to the current region
      * @param neigh_area the area to compute heterogeneity with
      * @return the heterogeneity between this area and neigh_area
      */

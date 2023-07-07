@@ -13,7 +13,7 @@ public class InterregionUpdate {
     private ArrayList<Area> all_areas;
 
     /**
-     *
+     * The Inter-Region Update phase that makes the incomplete regions complete
      * @param regions the grown regions
      * @param all_areas the input areas
      */
@@ -24,6 +24,9 @@ public class InterregionUpdate {
         this.all_areas = all_areas;
     }
 
+    /***
+     * This function extract all incomplete regions and move areas from complete region to incomplete region
+      */
     public void region_adjustment() {
         extract_incomplete_regions();
         inter_regional_move();

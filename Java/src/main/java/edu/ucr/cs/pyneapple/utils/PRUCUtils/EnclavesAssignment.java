@@ -13,7 +13,7 @@ public class EnclavesAssignment {
     private Region[] regions;
 
     /**
-     *
+     * The function assigns all the unassigned areas to regions
      * @param all_areas is the reference to the set of input areas
      * @param regions is the regions grown from the Region Growth Phase
      */

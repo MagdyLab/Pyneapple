@@ -15,7 +15,7 @@ public class Seed implements Cloneable{
     private Area[] min_pair_area;
 
     /**
-     *
+     * The construct of Seed
      * @param all_geoareas The input areas
      * @param seed_size The number of areas in the seed.
      */
@@ -29,7 +29,7 @@ public class Seed implements Cloneable{
     }
 
     /**
-     *
+     * The overwriting constructor
      * @param seeded_areas The list of seeded areas
      */
     public Seed(ArrayList<Area> seeded_areas)
@@ -144,7 +144,7 @@ public class Seed implements Cloneable{
 
 
     /**
-     *
+     * get the areas within the seed
      * @return the seed identified in this phase
      */
     public ArrayList<Area> get_seeds()
@@ -154,7 +154,7 @@ public class Seed implements Cloneable{
 
 
     /**
-     *
+     * get the number of areas within the seed
      * @return the size of the seed, i.e., the number of areas in the seed
      */
     public int get_seed_size()

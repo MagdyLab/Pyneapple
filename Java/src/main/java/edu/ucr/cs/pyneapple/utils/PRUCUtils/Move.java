@@ -10,7 +10,7 @@ public class Move{
     Region receiver;
 
     /**
-     *
+     * The Move of an area from a donor region to a receiver region
      * @param area The area to be moved
      * @param donor The region that donates the area
      * @param receiver The region that receives the area
@@ -22,16 +22,28 @@ public class Move{
         this.receiver = receiver;
     }
 
+    /**
+     * The area to be moved
+     * @return the area to be moved
+     */
     public Area get_area()
     {
         return area;
     }
 
+    /**
+     * Get the donor region where the area to be moved comes from
+     * @return the donor region
+     */
     public Region get_donor()
     {
         return donor;
     }
 
+    /**
+     * Get the receiver region where the area is going to be reassigned to
+     * @return the receiver region
+     */
     public Region getReceiver()
     {
         return receiver;

@@ -7,6 +7,9 @@ import junit.framework.TestCase;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The testing class of PRUC
+ */
 public class PRUCTest extends TestCase{
 
     static String normalDataset = "data/LACity/LACity.shp";
@@ -20,7 +23,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * Test the invalid p values (negative p values)
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedExceptio
      */
     public void test_invalid_p_input() throws Exception
     {
@@ -43,7 +46,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * test invalid threhsold values, i.e., negative threshold values
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedException
      */
     public void test_invalid_threshold_input() throws Exception
     {
@@ -66,7 +69,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * test invalid similarity attributes, i.e., negative similarity attribute
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedException
      */
     public void test_invalid_similarity_attribtue() throws Exception
     {
@@ -90,7 +93,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * test invalid extensive attribute, i.e., negative extensive attribute
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedException
      */
     public void test_invalid_extensive_attribtue() throws Exception
     {
@@ -113,7 +116,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * test the execution of PRUC regionalization in regular settings
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedException
      */
     public void test_execute_regionalization_pruc() throws Exception
     {
@@ -137,7 +140,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * test the execution of PRUC regionalization in special case, i.e., when number of regions is 0
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedException
      */
     public void test_execute_regionalization_pruc_special() throws Exception {
         Object[] ret = Preprocess.GeoSetBuilder(normalDataset);
@@ -159,7 +162,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * test the getRegionLables method in PRUC class
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedException
      */
     public void test_get_region_lable() throws Exception
     {
@@ -184,7 +187,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * test the getHeterogeneity() method in PRUC class
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedException
      */
     public void test_get_hetero() throws Exception
     {
@@ -208,7 +211,7 @@ public class PRUCTest extends TestCase{
 
     /**
      * test the getP() method in PRUC class
-     * @throws Exception
+     * @throws Exception InterruptedException and CloneNotSupportedException
      */
     public void test_get_p() throws Exception
     {
