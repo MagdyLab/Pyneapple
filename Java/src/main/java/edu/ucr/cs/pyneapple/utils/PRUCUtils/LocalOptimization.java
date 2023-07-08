@@ -26,16 +26,17 @@ public class LocalOptimization {
     private int num_thread;
 
     /**
-     *
-     * @param sol The partition obtained from the Global Search phase
-     * @param max_no_improve The maximum number iterations allowed without improving the best heterogeneity
-     * @param alpha The cooling rate
-     * @param all_areas The input areas
-     * @param regions The regions
-     * @param threshold The value of the user-defined constraint
-     *
+     * The LocalOptimization class that further optimizes the heterogeneity by moving areas between regions
+     * @param sol the partition identified from the global search
+     * @param max_no_improve the maximum number of non-improving move
+     * @param alpha the paramter for simulated annealing
+     * @param all_areas the list of all input areas
+     * @param regions the array of regions from the partition
+     * @param threshold the threshold value from the user-defined constraint
+     * @param num_thread the number of thread in the local optimization
+     * @throws CloneNotSupportedException cloning areas
      */
-    public LocalOptimization(GlobalSearch sol , int max_no_improve , double alpha, ArrayList<Area> all_areas , Region[] regions , double threshold, int num_thread) throws CloneNotSupportedException, InterruptedException {
+    public LocalOptimization(GlobalSearch sol , int max_no_improve , double alpha, ArrayList<Area> all_areas , Region[] regions , double threshold, int num_thread) throws CloneNotSupportedException {
         this.max_no_improve = max_no_improve;
         this.alpha = alpha;
         this.all_areas = all_areas;
@@ -49,7 +50,7 @@ public class LocalOptimization {
 
 
     /**
-     *
+     * get the labels of area to region in the partition that has the best heterogeneity
      * @return the labels of the regionalization results found through the searching that has the minimum heterogeneity
      */
     public ArrayList<Integer> get_best_labels()
@@ -287,11 +288,19 @@ public class LocalOptimization {
         return movable_units;
     }
 
+    /**
+     * Get the runtime from Local Optimization
+     * @return runtime from Local Optimization
+     */
     public long getTotal_time()
     {
         return total_time;
     }
 
+    /**
+     * Get the best heterogeneity found
+     * @return the best heterogeneity
+     */
     public double getBest_hetero()
     {
         return best_hetero;

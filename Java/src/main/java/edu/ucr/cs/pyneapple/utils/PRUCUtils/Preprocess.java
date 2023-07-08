@@ -22,13 +22,27 @@ public class Preprocess {
 
 
     /**
-     *
+     * extracts the centroids of the areas, get the neighboring relationship of areas
      * @param dataset the shapefile dataset to be processed
      * @return the neighboring relationship of the polygons
      * the list of dissimilarity attributes
      * the list of extensive attributes
      * the list of centroids of areas
-     * @throws IOException
+     * @throws IOException IOException when reading the shapefiles
+     */
+
+    /**
+     * The default constructor
+     */
+    public Preprocess(){
+
+    }
+
+    /**
+     * Build the neighboring relationship and centroids
+     * @param dataset the input polygons
+     * @return the neighborhood of each area and the centroids of areas
+     * @throws IOException IOException when reading the input polygons
      */
     public static Object[] GeoSetBuilder(String dataset) throws IOException {
         ArrayList<Area> areas = new ArrayList<>();

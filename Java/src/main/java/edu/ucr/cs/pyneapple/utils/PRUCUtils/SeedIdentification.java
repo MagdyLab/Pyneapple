@@ -16,7 +16,7 @@ public class SeedIdentification {
 
 
     /**
-     *
+     * identify p areas as the seed
      * @param all_areas the input areas
      * @param seed_num the number of seeded area, which equals to the number of predefined regions, p
      * @param max_iter the maximum number of iteration in Seed Identification, when set to 0 means random seeding
@@ -138,7 +138,7 @@ public class SeedIdentification {
 
 
     /**
-     *
+     * get the seed with the best objective function value
      * @return the seed with the best quality
      */
     public Seed getBest_seed() {

@@ -15,7 +15,7 @@ public class RegionGrowth {
     private int p;
 
     /**
-     *
+     * grow a region by adding areas to it
      * @param seed The seed obtained from the Seed Identification phase
      * @param threshold The value on the user-defined constraint
      * @param all_areas The input areas

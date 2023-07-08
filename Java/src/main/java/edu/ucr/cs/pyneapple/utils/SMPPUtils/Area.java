@@ -5,6 +5,10 @@ import org.locationtech.jts.geom.Geometry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * This is the class to represent a spatial polygon in SMP
+ */
 public class Area {
 
     private ArrayList<Integer> subareas_IDs; // coarsened graph areas

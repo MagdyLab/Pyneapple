@@ -13,6 +13,11 @@ public class Tarjan
     ArrayList<Area> areas_in_r;
     int time;
 
+    /**
+     * Identify all articualtion areas of a region using Tarjan algorithm
+     * @param r the region to be processed
+     * @param all_areas the set of all input areas
+     */
     public Tarjan(Region r , ArrayList<Area> all_areas)
     {
         this.r = r;
@@ -23,7 +28,7 @@ public class Tarjan
 
 
     /**
-     *
+     * find all the articulation areas
      * @return the articulation areas (areas that disconnect the region when removed)
      */
     public ArrayList<Area> findAPs_Tarjan()
