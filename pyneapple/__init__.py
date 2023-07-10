@@ -1,7 +1,7 @@
 import jpype
 import os
 hello_txt = os.path.join(os.path.dirname(__file__), 'example.txt')
-jar_dir = os.path.join(os.path.dirname(__file__), 'pyneappleNew.jar')
+jar_dir = os.path.join(os.path.dirname(__file__), 'pyneapple-0.0.1-SNAPSHOT-jar-with-dependencies.jar')
 with open(hello_txt,'r') as f:
         print (f.read())
 print(jar_dir)
