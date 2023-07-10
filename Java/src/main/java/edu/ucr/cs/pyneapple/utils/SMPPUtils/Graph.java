@@ -3,6 +3,10 @@ package edu.ucr.cs.pyneapple.utils.SMPPUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Graph class describes the Graph object which is used store areas as graph
+ */
+
 public class Graph {
 
     private HashMap<Integer,Area> graph_areas;

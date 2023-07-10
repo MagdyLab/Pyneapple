@@ -5,13 +5,25 @@ import org.locationtech.jts.geom.CoordinateFilter;
 
 import java.awt.geom.Rectangle2D;
 
+
+/**
+ * BoundsFilter class describes the BoundsFilter object for determining the bounds for a data partition
+ */
 public class BoundsFilter implements CoordinateFilter {
 
     double minx, miny, maxx, maxy;
     boolean first = true;
 
+
     /**
-     * constructor for BoundsFilter
+     * constructor for the BoundsFilter
+     */
+    public BoundsFilter() {
+
+    }
+
+    /**
+     * overrides the filter method
      * @param c coordinates
      */
 
@@ -30,6 +42,10 @@ public class BoundsFilter implements CoordinateFilter {
         }
     }
 
+    /**
+     * get the bounds for a data partition
+     * @return bounds for a data partition
+     */
     public Rectangle2D getBounds() {
 
         return new Rectangle2D.Double(minx, miny, maxx - minx, maxy - miny);

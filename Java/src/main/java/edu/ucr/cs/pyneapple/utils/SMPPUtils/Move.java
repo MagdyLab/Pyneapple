@@ -1,7 +1,9 @@
 package edu.ucr.cs.pyneapple.utils.SMPPUtils;
 
+/**
+ * Move class describes the Move object used in the local search
+ */
 public class Move {
-
 
     private int recipientRegion;
     private int donorRegion;

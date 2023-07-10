@@ -2,6 +2,9 @@ package edu.ucr.cs.pyneapple.utils.SMPPUtils;
 
 import java.util.ArrayList;
 
+/**
+ * Region class describes a Region object which is used to store data about a region in max-p solution
+ */
 public class Region {
 
     private ArrayList<Integer> areas;
