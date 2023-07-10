@@ -3,6 +3,9 @@ package edu.ucr.cs.pyneapple.utils.SMPPUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Partition class describes the Partition object which is used to store data for a max-p solution
+ */
 public class Partition {
 
     private int ID;

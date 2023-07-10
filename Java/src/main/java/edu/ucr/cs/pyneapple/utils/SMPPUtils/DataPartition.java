@@ -4,6 +4,9 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 
 import java.util.ArrayList;
 
+/**
+ * DataPartition class class describes the DataPartition object which is used to store data related to a data partition
+ */
 public class DataPartition {
 
     int ID;
