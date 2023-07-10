@@ -5,10 +5,16 @@ import org.locationtech.jts.geom.Geometry;
 
 import java.util.*;
 
+/**
+ * this class provides a test for SMP algorithm
+ */
 public class SMPPGraphPyneappleTest extends TestCase {
 
     static String shp_file = "data/10K/10K.shp";
 
+    /**
+     * the constructor for SMPPGraphPyneappleTest class
+     */
     public SMPPGraphPyneappleTest(){}
 
 
