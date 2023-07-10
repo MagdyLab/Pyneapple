@@ -169,6 +169,9 @@ class GrowRegionsThread implements Callable<Partition> {
 
 class GrowPartitionThread implements Callable<Partition> {
 
+    /**
+     * Random object
+     */
     public static Random rand = SMPPPyneapple.rand;
 
     double threshold;
@@ -386,6 +389,16 @@ class GrowPartitionThread implements Callable<Partition> {
 public class SMPPPyneapple implements RegionalizationMethod {
 
 
+    /**
+     * default constructor for SMPPPyneapple class
+     */
+    public SMPPPyneapple() {
+
+    }
+
+    /**
+     * Random object
+     */
     public static Random rand = new Random();
     Partition bestP;
 
