@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"edu.ucr.cs.pyneapple.regionalization"},{"l":"edu.ucr.cs.pyneapple.utils.EMPUtils"},{"l":"edu.ucr.cs.pyneapple.utils.PRUCUtils"},{"l":"edu.ucr.cs.pyneapple.utils.SMPPUtils"}];updateSearchResults();
