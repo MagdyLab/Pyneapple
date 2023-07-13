@@ -3,16 +3,12 @@ import array
 import numpy as np
 import geopandas
 import pandas
-import math
 from jpype import java
 from jpype import javax
-from .emp import emp
-from .smp import smp
-import spopt
-from spopt.region import maxp as MaxP
-
-def maxp(df, w, disName, sumName = None, sumLow = -math.inf, sumHigh = math.inf, minName = None, minLow = -math.inf, minHigh = math.inf, maxName = None, maxLow = -math.inf, maxHigh = math.inf, avgName = None, avgLow = -math.inf, avgHigh = math.inf, countLow = -math.inf, countHigh = math.inf):
-    """The API for the max-p regions algorithms. If only the parameters for the max-p regions problem are privided, it will call the scalable max-p algorithm. Otherwise, the expressive max-p regions algorithm is invoked.
+def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh):
+    """The expressive max-p-regions (EMP) involves the aggregation of n areas into an unknown maximum number of
+    homogeneous regions, while ensuring that each region is contiguous and satisfies a set of constraints. The constraints 
+    are 
 
     Parameters
     ----------
@@ -44,7 +40,7 @@ def maxp(df, w, disName, sumName = None, sumLow = -math.inf, sumHigh = math.inf,
     maxHigh : {int, float}, required
         The upperbound for the MAX range.
 
-    avgName : string, requied
+	avgName : string, requied
         The name of the spatial extensive attribute variable for the AVG constraint.
 
     avgLow : {int, float}, required
@@ -79,30 +75,30 @@ def maxp(df, w, disName, sumName = None, sumLow = -math.inf, sumHigh = math.inf,
         Region IDs for observations.
 
     """
-    EMP_flag = False
-    if(minLow != -float('inf') or minHigh != float('inf')):
-        if(minName == None):
-            print("Invalid MIN constraint!")
-        else:
-            EMP_flag = True
-    if(maxLow != -float('inf') or maxHigh != float('inf')):
-        if(maxName == None):
-            print("Invalid MAX constraint!")
-        else:
-            EMP_flag = True
-    if(avgLow != -float('inf') or maxHigh != float('inf')):
-        if(avgName == None):
-            print("Invalid AVG constraint!")
-        else:
-            EMP_flag = True
-    if((not EMP_flag) and sumName == None):
-        print("Invalid constraint")
-        return
-    if(EMP_flag):
-        p, regions = expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh)
-        return p, regions
-    else:
-        p, regions = MaxP.maxp(df, w, disName, sumName, sumLow, 2)
-        return p, regions
+    if not jpype.isJVMStarted():
+        jpype.startJVM("-Xmx20480m", classpath = ["../Pineapple.jar"])
+    neighborHashMap = java.util.HashMap()
+    for key, value in w.neighbors.items():
+        tempSet = java.util.TreeSet()
+        for v in value:
+            tempSet.add(jpype.JInt(v))
+        neighborHashMap.put(jpype.JInt(key), tempSet)
+    EMP = jpype.JClass("edu.ucr.cs.pyneapple.regionalization.EMP")()
+    idList = jpype.java.util.ArrayList()
+    disAttr = jpype.java.util.ArrayList()
+    minAttr = jpype.java.util.ArrayList()
+    maxAttr = jpype.java.util.ArrayList()
+    avgAttr = jpype.java.util.ArrayList()
+    sumAttr = jpype.java.util.ArrayList()
+    disSucc = disAttr.addAll(df[disName].tolist())
+    minSucc = minAttr.addAll(df[disName].tolist())
+    maxSucc = maxAttr.addAll(df[sumName].tolist())
+    avgSucc = avgAttr.addAll(df[disName].tolist())
+    sumSucc = sumAttr.addAll(df[sumName].tolist())#check for att assign
+    for i in range(0, df.shape[0]):
+        idList.add(jpype.JInt(i))
+    EMP.execute_regionalization(neighborHashMap, disAttr, minAttr,minLow, minHigh, maxAttr, maxLow, maxHigh, avgAttr, avgLow, avgHigh, sumAttr, sumLow, sumHigh, countLow, countHigh)
+   
+    return EMP.getP(), np.array(EMP.getRegionLabels())
 
 

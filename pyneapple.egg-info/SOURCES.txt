@@ -8,13 +8,13 @@ pyneapple.egg-info/dependency_links.txt
 pyneapple.egg-info/requires.txt
 pyneapple.egg-info/top_level.txt
 pyneapple/regionalization/__init__.py
-pyneapple/regionalization/emp.py
+pyneapple/regionalization/expressive_maxp.py
 pyneapple/regionalization/maxp.py
 pyneapple/regionalization/pruc.py
 pyneapple/regionalization/smp.py
 pyneapple/regionalization/smpp_graph.py
 pyneapple/tests/__init__.py
 pyneapple/tests/testPruc.py
-pyneapple/tests/tests_EMP.py
+pyneapple/tests/tests_expressive _maxp.py
 pyneapple/weight/__init__.py
 pyneapple/weight/rook.py
