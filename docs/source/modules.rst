@@ -1,10 +1,7 @@
-regionalization
-===============
+Pyneapple
+=========
 
 .. toctree::
    :maxdepth: 4
 
-   emp
-   pruc
-   smp
-   smpgraph
+   pyneapple

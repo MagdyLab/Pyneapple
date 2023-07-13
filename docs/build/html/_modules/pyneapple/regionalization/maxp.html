@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyneapple.regionalization.maxp &#8212; Pyneapple v0.1.0 Manual</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pysal-styles.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          Pyneapple</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../installation.html">Installation</a></li>
+                <li><a href="../../../tutorials.html">Tutorials</a></li>
+                <li><a href="../../../api.html">API</a></li>
+                <li><a href="../../../references.html">References</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Pyneapple</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pyneapple.html">pyneapple package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setup.html">setup module</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for pyneapple.regionalization.maxp</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">jpype</span>
+<span class="kn">import</span> <span class="nn">array</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">geopandas</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">jpype</span> <span class="kn">import</span> <span class="n">java</span>
+<span class="kn">from</span> <span class="nn">jpype</span> <span class="kn">import</span> <span class="n">javax</span>
+<span class="kn">from</span> <span class="nn">.expressive_maxp</span> <span class="kn">import</span> <span class="n">expressive_maxp</span>
+<span class="kn">from</span> <span class="nn">.smpp_graph</span> <span class="kn">import</span> <span class="n">smpp_graph</span>
+<span class="kn">import</span> <span class="nn">spopt</span>
+<span class="kn">from</span> <span class="nn">spopt.region</span> <span class="kn">import</span> <span class="n">maxp</span> <span class="k">as</span> <span class="n">MaxP</span>
+
+<div class="viewcode-block" id="maxp"><a class="viewcode-back" href="../../../pyneapple.regionalization.html#pyneapple.regionalization.maxp.maxp">[docs]</a><span class="k">def</span> <span class="nf">maxp</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">disName</span><span class="p">,</span> <span class="n">sumName</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sumLow</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">sumHigh</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">minName</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">minLow</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">minHigh</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">maxName</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">maxLow</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">maxHigh</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">avgName</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">avgLow</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">avgHigh</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">countLow</span> <span class="o">=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">countHigh</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The API for the max-p regions algorithms. If only the parameters for the max-p regions problem are privided, it will call the scalable max-p algorithm. Otherwise, the expressive max-p regions algorithm is invoked.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    df : geopandas.GeoDataFrame, required</span>
+<span class="sd">        Geodataframe containing original data</span>
+
+<span class="sd">    w : libpysal.weights.W, required</span>
+<span class="sd">        Weights object created from given data</span>
+
+<span class="sd">    disname : String, required</span>
+<span class="sd">        Strings for attribute names to measure similarity (cols of ``geopandas.GeoDataFrame``).</span>
+
+<span class="sd">    minName : string, requied</span>
+<span class="sd">        The name of the spatial extensive attribute variable for the MIN constraint.</span>
+
+<span class="sd">    minLow : {int, float}, required</span>
+<span class="sd">        The lowerbound for the MIN range.</span>
+
+<span class="sd">    minHigh : {int, float}, required</span>
+<span class="sd">        The upperbound for the MIN range.</span>
+
+<span class="sd">    maxName : string, requied</span>
+<span class="sd">        The name of the spatial extensive attribute variable for the MAX constraint.</span>
+
+<span class="sd">    maxLow : {int, float}, required</span>
+<span class="sd">        The lowerbound for the MAX range.</span>
+
+<span class="sd">    maxHigh : {int, float}, required</span>
+<span class="sd">        The upperbound for the MAX range.</span>
+
+<span class="sd">    avgName : string, requied</span>
+<span class="sd">        The name of the spatial extensive attribute variable for the AVG constraint.</span>
+
+<span class="sd">    avgLow : {int, float}, required</span>
+<span class="sd">        The lowerbound for the AVG range.</span>
+
+<span class="sd">    avgHigh : {int, float}, required</span>
+<span class="sd">        The upperbound for the AVG range.</span>
+
+<span class="sd">    sumName : string, requied</span>
+<span class="sd">        The name of the spatial extensive attribute variable for the SUM constraint.</span>
+
+<span class="sd">    sumLow : {int, float}, required</span>
+<span class="sd">        The lowerbound for the SUM range.</span>
+
+<span class="sd">    sumHigh : {int, float}, required</span>
+<span class="sd">        The upperbound for the SUM range.</span>
+
+<span class="sd">    countLow : {int, float}, required</span>
+<span class="sd">        The lowerbound for the COUNT range.</span>
+
+<span class="sd">    countHigh : {int, float}, required</span>
+<span class="sd">        The upperbound for the COUNT range.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    max_p : int</span>
+<span class="sd">        The number of regions.</span>
+
+<span class="sd">    labels : numpy.array</span>
+<span class="sd">        Region IDs for observations.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">EMP_flag</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">minLow</span> <span class="o">!=</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">minHigh</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">minName</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid MIN constraint!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">EMP_flag</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">maxLow</span> <span class="o">!=</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">maxHigh</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">maxName</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid MAX constraint!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">EMP_flag</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">avgLow</span> <span class="o">!=</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">maxHigh</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">avgName</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid AVG constraint!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">EMP_flag</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span><span class="p">((</span><span class="ow">not</span> <span class="n">EMP_flag</span><span class="p">)</span> <span class="ow">and</span> <span class="n">sumName</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid constraint&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">EMP_flag</span><span class="p">):</span>
+        <span class="n">p</span><span class="p">,</span> <span class="n">regions</span> <span class="o">=</span> <span class="n">expressive_maxp</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">disName</span><span class="p">,</span> <span class="n">minName</span><span class="p">,</span> <span class="n">minLow</span><span class="p">,</span> <span class="n">minHigh</span><span class="p">,</span> <span class="n">maxName</span><span class="p">,</span> <span class="n">maxLow</span><span class="p">,</span> <span class="n">maxHigh</span><span class="p">,</span> <span class="n">avgName</span><span class="p">,</span> <span class="n">avgLow</span><span class="p">,</span> <span class="n">avgHigh</span><span class="p">,</span> <span class="n">sumName</span><span class="p">,</span> <span class="n">sumLow</span><span class="p">,</span> <span class="n">sumHigh</span><span class="p">,</span> <span class="n">countLow</span><span class="p">,</span> <span class="n">countHigh</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">regions</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">smpp_graph</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">disName</span><span class="p">,</span> <span class="n">sumName</span><span class="p">,</span> <span class="n">sumLow</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2023, MagdyLab.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

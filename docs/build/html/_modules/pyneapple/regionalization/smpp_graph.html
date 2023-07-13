@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyneapple.regionalization.smpp_graph &#8212; Pyneapple v0.1.0 Manual</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pysal-styles.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          Pyneapple</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../installation.html">Installation</a></li>
+                <li><a href="../../../tutorials.html">Tutorials</a></li>
+                <li><a href="../../../api.html">API</a></li>
+                <li><a href="../../../references.html">References</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Pyneapple</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pyneapple.html">pyneapple package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setup.html">setup module</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for pyneapple.regionalization.smpp_graph</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">jpype</span> 
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">libpysal</span>
+<span class="kn">import</span> <span class="nn">geopandas</span>
+
+
+
+<div class="viewcode-block" id="smpp_graph"><a class="viewcode-back" href="../../../pyneapple.regionalization.html#pyneapple.regionalization.smpp_graph.smpp_graph">[docs]</a><span class="k">def</span> <span class="nf">smpp_graph</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+         <span class="n">w</span><span class="p">,</span> 
+         <span class="n">d_attribute_col</span><span class="p">,</span> 
+         <span class="n">s_attribute_col</span><span class="p">,</span> 
+         <span class="n">threshold</span><span class="p">,</span> 
+         <span class="n">maxItr</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span> 
+         <span class="n">convSA</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span>    
+         <span class="n">cores</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+         <span class="n">nRows</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+         <span class="n">nColumns</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The max-p-regions involves the aggregation of n areas into an unknown maximum number of</span>
+<span class="sd">    homogeneous regions, while ensuring that each region is contiguous and satisfies a minimum</span>
+<span class="sd">    threshold value imposed on a predefined spatially extensive attribute.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    df : geopandas.GeoDataFrame, required</span>
+<span class="sd">        Geodataframe containing original data</span>
+
+<span class="sd">    w : libpysal.weights.W, required</span>
+<span class="sd">        Weights object created from given data</span>
+
+<span class="sd">    d_attribute_col : list, required</span>
+<span class="sd">        Strings for attribute names to measure similarity (cols of ``geopandas.GeoDataFrame``).</span>
+
+<span class="sd">    s_attribute_col : string, requied</span>
+<span class="sd">        The name of the spatially extensive attribute variable.</span>
+
+<span class="sd">    threshold : {int, float}, required</span>
+<span class="sd">        The threshold value.</span>
+
+<span class="sd">    maxItr : int</span>
+<span class="sd">        Max number of iterations for construction phase.</span>
+
+<span class="sd">    convSA: int</span>
+<span class="sd">        Max number of iterations for customized simulated annealing.</span>
+
+<span class="sd">    cores: int</span>
+<span class="sd">       Number of cores</span>
+<span class="sd">       </span>
+<span class="sd">    nRows:</span>
+<span class="sd">       Number of rows for partitioning the data</span>
+<span class="sd">       </span>
+<span class="sd">    nRows:</span>
+<span class="sd">       Number of columns for partitioning the data</span>
+<span class="sd">       </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    max_p : int</span>
+<span class="sd">        The number of regions.</span>
+
+<span class="sd">    labels : list</span>
+<span class="sd">        list that corresponds to the area-region mapping where the index is the area ID and the value is the Region ID</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">jpype</span><span class="o">.</span><span class="n">isJVMStarted</span><span class="p">():</span>
+         <span class="c1">#print(&quot;starting jvm&quot;)</span>
+         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/smpp_graph.jar&quot;</span>
+         <span class="c1">#print(path)</span>
+         <span class="c1">#jpype.startJVM(jpype.getDefaultJVMPath(), &quot;-ea&quot;, &#39;-Djava.class.path=&#39;+ path)</span>
+         <span class="n">jpype</span><span class="o">.</span><span class="n">startJVM</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">getDefaultJVMPath</span><span class="p">(),</span> <span class="s2">&quot;-ea&quot;</span><span class="p">,</span> <span class="s2">&quot;-Xmx20480m&quot;</span><span class="p">,</span> <span class="n">classpath</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;./smpp_graph.jar&quot;</span><span class="p">])</span>
+         
+         
+         
+    <span class="n">random</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lengthTabu</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.9</span>
+    
+    
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;df must be a GeoDataFrame object&quot;</span><span class="p">)</span>
+        
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">libpysal</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">W</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;w must be a libpysal.weights.W object&quot;</span><span class="p">)</span>
+        
+    
+    <span class="k">if</span> <span class="n">d_attribute_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;similarity attribute not in the attribute list&quot;</span><span class="p">)</span>
+                
+    
+    <span class="k">if</span> <span class="n">s_attribute_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;extensive attribute not in the attribute list&quot;</span><span class="p">)</span>
+     
+    
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">threshold</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;threshold must be non-negative&quot;</span><span class="p">)</span>
+    
+    
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">maxItr</span> <span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">maxItr</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;maxItr must be a non-negative integer&quot;</span><span class="p">)</span>
+        
+        
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">convSA</span> <span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">convSA</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;convSA must be a non-negative integer&quot;</span><span class="p">)</span>
+        
+        
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cores</span> <span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">cores</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;cores must be a non-negative integer&quot;</span><span class="p">)</span>
+           
+    
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nRows</span> <span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">nRows</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;nRows must be a non-negative integer&quot;</span><span class="p">)</span>
+        
+        
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nColumns</span> <span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">nColumns</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;nColumns must be a non-negative integer&quot;</span><span class="p">)</span>
+        
+        
+    <span class="c1">#if threshold &lt; 0 or maxItr &lt; 0 or convSA &lt; 0 or cores &lt; 0 or nRows &lt; 0 or nColumns &lt; 0:</span>
+        <span class="c1">#raise ValueError(&#39;value should be positive&#39;)</span>
+    
+    <span class="c1">#print(&quot;start neighbors&quot;)</span>
+    <span class="n">neighbors</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">HashMap</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">neighbors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">tempSet</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">TreeSet</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">tempSet</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="n">neighbors</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">tempSet</span><span class="p">)</span>
+    <span class="c1">#print(neighbors)</span>
+    <span class="c1">#print(w.neighbors.items())</span>
+    <span class="c1">#print(&quot;end neighbors&quot;)</span>
+
+
+
+    <span class="c1">#print(&quot;start d&quot;)</span>
+    <span class="n">d_attribute_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">d_attribute_col</span><span class="p">]</span>
+    <span class="n">d_attribute</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ArrayList</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">d_attribute_df</span><span class="p">:</span>
+        <span class="n">d_attribute</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JDouble</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="c1">#print(d_attribute)</span>
+    <span class="c1">#print(d_attribute_df)</span>
+    <span class="c1">#print(&quot;end d&quot;)</span>
+   
+
+ 
+    <span class="c1">#print(&quot;start s&quot;)</span>
+    <span class="n">s_attribute_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">s_attribute_col</span><span class="p">]</span>
+    <span class="n">s_attribute</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ArrayList</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">s_attribute_df</span><span class="p">:</span>
+        <span class="n">s_attribute</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JDouble</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+    <span class="c1">#print(s_attribute)</span>
+    <span class="c1">#print(s_attribute_df)</span>
+    <span class="c1">#print(&quot;end s&quot;)</span>
+
+    
+    
+    <span class="n">SMPP</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JClass</span><span class="p">(</span><span class="s1">&#39;edu.ucr.cs.pyneapple.regionalization.SMPPGraphPyneapple&#39;</span><span class="p">)()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">SMPP</span><span class="o">.</span><span class="n">execute_regionalization</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">cores</span><span class="p">),</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">nRows</span><span class="p">),</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">nColumns</span><span class="p">),</span> 
+                               <span class="n">jpype</span><span class="o">.</span><span class="n">JDouble</span><span class="p">(</span><span class="n">threshold</span><span class="p">),</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">maxItr</span><span class="p">),</span> 
+                               <span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">lengthTabu</span><span class="p">),</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JDouble</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JDouble</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span>
+                               <span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">convSA</span><span class="p">),</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">random</span><span class="p">),</span> <span class="n">d_attribute</span><span class="p">,</span> 
+                               <span class="n">s_attribute</span><span class="p">,</span> <span class="n">neighbors</span><span class="p">)</span>
+
+    <span class="n">areas</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">max_p</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">hetero</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">areas</span><span class="p">,</span> <span class="n">max_p</span><span class="p">,</span> <span class="n">hetero</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+
+
+<span class="c1">########################################################################################</span>
+
+
+     
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">jpype</span><span class="o">.</span><span class="n">isJVMStarted</span><span class="p">():</span>
+    <span class="c1">#print(&quot;starting jvm&quot;)</span>
+     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;/smpp_graph.jar&quot;</span>
+    <span class="c1">#print(path)</span>
+    <span class="c1">#jpype.startJVM(jpype.getDefaultJVMPath(), &quot;-ea&quot;, &quot;-Xmx20480m&quot;, &#39;-Djava.class.path=&#39;+ path)</span>
+     <span class="n">jpype</span><span class="o">.</span><span class="n">startJVM</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">getDefaultJVMPath</span><span class="p">(),</span> <span class="s2">&quot;-ea&quot;</span><span class="p">,</span> <span class="s2">&quot;-Xmx20480m&quot;</span><span class="p">,</span> <span class="n">classpath</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;./smpp_graph.jar&quot;</span><span class="p">])</span>
+     
+<span class="c1"># test smpp_graph</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">path = libpysal.examples.get_path(&quot;mexicojoin.shp&quot;)</span>
+<span class="sd">print(&quot;start df&quot;) </span>
+<span class="sd">df = geopandas.read_file(path)</span>
+<span class="sd">print(&quot;end df&quot;) </span>
+<span class="sd">print(&quot;start w&quot;) </span>
+<span class="sd">GRAPH = jpype.JClass(&#39;org.geotools.SMPPPineapple&#39;)()</span>
+<span class="sd">w = libpysal.weights.W(GRAPH.execute_neighbors(path))</span>
+<span class="sd">print(w)</span>
+<span class="sd">w = libpysal.weights.Rook.from_dataframe(df)</span>
+<span class="sd">print(w)</span>
+<span class="sd">print(&quot;end w&quot;) </span>
+<span class="sd">result = smpp(df, w,&#39;PCGDP1940&#39;, &#39;PERIMETER&#39;, 0)</span>
+<span class="sd">print(result[1])</span>
+<span class="sd">print(result[2])</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">path = &quot;/Users/hessah/IdeaProjects/SMPPPineapple/Datasets/10K/10K.shp&quot;</span>
+<span class="sd">print(&quot;start df&quot;) </span>
+<span class="sd">df = geopandas.read_file(path)</span>
+<span class="sd">print(&quot;end df&quot;) </span>
+<span class="sd">print(&quot;start w&quot;) </span>
+<span class="sd">GRAPH = jpype.JClass(&#39;org.geotools.SMPPGraphPineapple&#39;)()</span>
+<span class="sd">#w = libpysal.weights.W(GRAPH.execute_neighbors(path))</span>
+<span class="sd">w = libpysal.weights.Rook.from_dataframe(df)</span>
+<span class="sd">print(&quot;end w&quot;) </span>
+<span class="sd">result = smpp_graph(df, w, &#39;AWATER&#39;, &#39;ALAND&#39;, 250000000)</span>
+<span class="sd">print(result[1])</span>
+<span class="sd">print(result[2])</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+
+
+
+<span class="c1">#jpype.shutdownJVM()</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2023, MagdyLab.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pyneapple.regionalization.pruc &#8212; Pyneapple v0.1.0 Manual</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/bootstrap-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pysal-styles.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../../_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          Pyneapple</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../../installation.html">Installation</a></li>
+                <li><a href="../../../tutorials.html">Tutorials</a></li>
+                <li><a href="../../../api.html">API</a></li>
+                <li><a href="../../../references.html">References</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Pyneapple</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pyneapple.html">pyneapple package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../setup.html">setup module</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for pyneapple.regionalization.pruc</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This is a sample Python script.</span>
+
+<span class="c1"># Press Shift+F10 to execute it or replace it with your code.</span>
+<span class="c1"># Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.</span>
+
+
+<span class="c1"># Press the green button in the gutter to run the script.</span>
+<span class="c1"># if __name__ == &#39;__main__&#39;:</span>
+<span class="c1">#    print_hi(&#39;PyCharm&#39;)</span>
+
+<span class="c1"># See PyCharm help at https://www.jetbrains.com/help/pycharm/</span>
+
+
+<span class="kn">import</span> <span class="nn">jpype</span>
+<span class="kn">import</span> <span class="nn">geopandas</span>
+<span class="kn">import</span> <span class="nn">libpysal</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">The heuristic algorithm for the PRUC problem in python-java hybrid implementation</span>
+<span class="sd">source: Yongyi Liu, Ahmed R. Mahmood, Amr Magdy, Sergio Rey, &quot;PRUC : P-Regions with User-Defined Constraint&quot;, PVLDB, 15(3)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+
+<div class="viewcode-block" id="pruc"><a class="viewcode-back" href="../../../pyneapple.regionalization.html#pyneapple.regionalization.pruc.pruc">[docs]</a><span class="k">def</span> <span class="nf">pruc</span><span class="p">(</span>
+        <span class="n">gdf</span><span class="p">,</span>
+        <span class="n">w</span><span class="p">,</span>
+        <span class="n">sim_attr</span><span class="p">,</span>
+        <span class="n">ext_attr</span><span class="p">,</span>
+        <span class="n">threshold</span><span class="p">,</span>
+        <span class="n">p</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    gdf : geopandas.GeoDataFrame</span>
+
+<span class="sd">    w : libpysal.weights.W</span>
+
+<span class="sd">    sim_attr : string</span>
+<span class="sd">        The name of the attribute to measure the heterogeneity</span>
+
+<span class="sd">    ext_attr : string</span>
+<span class="sd">        The name of the attribute to measure the spatial extensive attribute</span>
+
+<span class="sd">    threshold : {int , float}</span>
+<span class="sd">        The threshold value enforced on each region with regards to the regional extensive attribute</span>
+
+<span class="sd">    p : int</span>
+<span class="sd">        The number of regions</span>
+<span class="sd">        Default is set to the size of the dataset</span>
+
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    ----------</span>
+<span class="sd">    (hetero , label):</span>
+<span class="sd">        if a feasible partition is found</span>
+<span class="sd">        hetero is the heterogeneity of the partition found by the GSLO algorithm and the label is a list that corresponds to the area-region mapping</span>
+
+<span class="sd">    or</span>
+
+<span class="sd">    None:</span>
+<span class="sd">        if no feasible partition is found</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gdf</span><span class="p">,</span> <span class="n">geopandas</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;gdf must be a GeoDataFrame object&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">libpysal</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">W</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;w must be a libpysal.weights.W object&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">sim_attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;similarity attribute not in the attribute list&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="n">sim_attr</span><span class="p">]:</span>           
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$&#39;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;the values under the similarity attribute must be numerical values&quot;</span><span class="p">)</span>
+            
+    
+    <span class="k">if</span> <span class="n">ext_attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gdf</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;extensive attribute not in the attribute list&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">gdf</span><span class="p">[</span><span class="n">ext_attr</span><span class="p">]:</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$&#39;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;the values under the extensive attribute must be numerical values&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">p</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;the number of regions must be positive integer&quot;</span><span class="p">)</span>
+        
+    
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">threshold</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;threshold must be non-negative&quot;</span><span class="p">)</span>
+
+    
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">jpype</span><span class="o">.</span><span class="n">isJVMStarted</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;starting jvm&quot;</span><span class="p">)</span>
+        <span class="n">jpype</span><span class="o">.</span><span class="n">startJVM</span><span class="p">(</span><span class="s2">&quot;-Xmx20480m&quot;</span><span class="p">,</span> <span class="n">classpath</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;./pyneappleNew.jar&quot;</span><span class="p">])</span>
+
+    <span class="n">neighborHashMap</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">HashMap</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">neighbors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">tempSet</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">TreeSet</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">tempSet</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="n">neighborHashMap</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">tempSet</span><span class="p">)</span>
+
+    <span class="n">idList</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ArrayList</span><span class="p">()</span>
+    <span class="n">sAttr</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ArrayList</span><span class="p">()</span>
+    <span class="n">extAttr</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ArrayList</span><span class="p">()</span>
+    <span class="n">x_centroids</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ArrayList</span><span class="p">()</span>
+    <span class="n">y_centroids</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">ArrayList</span><span class="p">()</span>
+    
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">gdf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">sAttr</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JLong</span><span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="n">sim_attr</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+        <span class="n">extAttr</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JLong</span><span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="n">ext_attr</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+        <span class="n">idList</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">x_centroids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JDouble</span><span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">y_centroids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JDouble</span><span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+    
+   
+    <span class="n">PRUC</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JClass</span><span class="p">(</span><span class="s1">&#39;edu.ucr.cs.pyneapple.regionalization.PRUC&#39;</span><span class="p">)()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JLong</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">jpype</span><span class="o">.</span><span class="n">JLong</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span> <span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">PRUC</span><span class="o">.</span><span class="n">execute_regionalization</span><span class="p">(</span><span class="n">neighborHashMap</span><span class="p">,</span> <span class="n">sAttr</span><span class="p">,</span> <span class="n">extAttr</span><span class="p">,</span>  <span class="n">x_centroids</span><span class="p">,</span> <span class="n">y_centroids</span><span class="p">,</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JLong</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span> <span class="p">,</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JInt</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;end&quot;</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">hetero</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">hetero</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span>
+
+    <span class="c1">#jpype.shutdownJVM()</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+
+<span class="c1">#gdf = geopandas.read_file(libpysal.examples.get_path(&quot;mexicojoin.shp&quot;))</span>
+<span class="c1">#w = libpysal.weights.Queen.from_dataframe(gdf)</span>
+<span class="c1">#print(pruc(gdf, w, &#39;PCGDP1940&#39;, &#39;PERIMETER&#39;, 3000000, 10))</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2023, MagdyLab.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

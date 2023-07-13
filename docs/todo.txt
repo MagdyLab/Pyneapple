@@ -19,10 +19,16 @@ P2, Make sure the functions can be called by regionalization.xxx when the module
 	pip install git+https://github.com/MagdyLab/Pyneapple.git@main
 
 
-Hussah: J1, J2, P1
+Hussah: P1, P2
 
 Yunfan: 
 
-Yongyi: J1, J2, P1
+Yongyi: P2
 
+To generate the python documentation website: run "make html" under this folder. The generated html files are in build/html
+
+The generated javadoc is in ../JavaDoc
+
+To build the python package, go to the root directory where setup.py is located and run "python setup.py sdist", the package will be created in the /dist folder
+For instructions of publishing the package: https://realpython.com/pypi-publish-python-package/
 
