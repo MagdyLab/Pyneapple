@@ -7,7 +7,7 @@ import math
 from jpype import java
 from jpype import javax
 from .expressive_maxp import expressive_maxp
-from .smp import smp
+from .smpp_graph import smpp_graph
 import spopt
 from spopt.region import maxp as MaxP
 
@@ -102,7 +102,7 @@ def maxp(df, w, disName, sumName = None, sumLow = -math.inf, sumHigh = math.inf,
         p, regions = expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh)
         return p, regions
     else:
-        p, regions = MaxP.maxp(df, w, disName, sumName, sumLow, 2)
-        return p, regions
+        results = smpp_graph(df, w, disName, sumName, sumLow, 2)
+        return results[1], results[0]
 
 

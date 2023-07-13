@@ -75,8 +75,9 @@ def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, m
         Region IDs for observations.
 
     """
-    if not jpype.isJVMStarted():
-        jpype.startJVM("-Xmx20480m", classpath = ["../Pineapple.jar"])
+    #if not jpype.isJVMStarted():
+        #jpype.startJVM("-Xmx20480m", classpath = ["../Pineapple.jar"])
+    #The JVM is started when 'pyneapple' is imported
     neighborHashMap = java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = java.util.TreeSet()

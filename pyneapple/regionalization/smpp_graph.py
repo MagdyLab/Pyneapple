@@ -126,7 +126,7 @@ def smpp_graph(df,
     #if threshold < 0 or maxItr < 0 or convSA < 0 or cores < 0 or nRows < 0 or nColumns < 0:
         #raise ValueError('value should be positive')
     
-    print("start neighbors")
+    #print("start neighbors")
     neighbors = jpype.java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = jpype.java.util.TreeSet()
@@ -135,34 +135,34 @@ def smpp_graph(df,
         neighbors.put(jpype.JInt(key), tempSet)
     #print(neighbors)
     #print(w.neighbors.items())
-    print("end neighbors")
+    #print("end neighbors")
 
 
 
-    print("start d")
+    #print("start d")
     d_attribute_df = df[d_attribute_col]
     d_attribute = jpype.java.util.ArrayList()
     for d in d_attribute_df:
         d_attribute.add(jpype.JDouble(d))
     #print(d_attribute)
     #print(d_attribute_df)
-    print("end d")
+    #print("end d")
    
 
  
-    print("start s")
+    #print("start s")
     s_attribute_df = df[s_attribute_col]
     s_attribute = jpype.java.util.ArrayList()
     for s in s_attribute_df:
         s_attribute.add(jpype.JDouble(s))
     #print(s_attribute)
     #print(s_attribute_df)
-    print("end s")
+    #print("end s")
 
     
     
-    SMPP = jpype.JClass('org.geotools.SMPPGraphPineapple')()
-    result = SMPP.execute_SMPPGraph(jpype.JInt(cores), jpype.JInt(nRows), jpype.JInt(nColumns), 
+    SMPP = jpype.JClass('edu.ucr.cs.pyneapple.regionalization.SMPPGraphPyneapple')()
+    result = SMPP.execute_regionalization(jpype.JInt(cores), jpype.JInt(nRows), jpype.JInt(nColumns), 
                                jpype.JDouble(threshold), jpype.JInt(maxItr), 
                                jpype.JInt(lengthTabu), jpype.JDouble(t), jpype.JDouble(alpha),
                                jpype.JInt(convSA), jpype.JInt(random), d_attribute, 
