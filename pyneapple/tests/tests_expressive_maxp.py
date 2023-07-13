@@ -1,6 +1,6 @@
 import unittest
-from ..regionalization.expressive_maxp import expressive_maxp
-import weight.rook as rook
+from pyneapple.regionalization.expressive_maxp import expressive_maxp
+import pyneapple.weight.rook as rook
 import libpysal 
 import time
 from libpysal.weights import Queen, Rook, KNN, Kernel, DistanceBand
