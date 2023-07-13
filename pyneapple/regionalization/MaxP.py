@@ -6,10 +6,12 @@ import pandas
 import math
 from jpype import java
 from jpype import javax
-import emp
-import smp
+from .emp import emp
+from .smp import smp
+import spopt
+from spopt.region import maxp as MaxP
 
-def MaxP(df, w, disName, sumName, sumLow, sumHigh = math.inf, minName = None, minLow = -math.inf, minHigh = math.inf, maxName = None, maxLow = -math.inf, maxHigh = math.inf, avgName = None, avgLow = -math.inf, avgHigh = math.inf, countLow = -math.inf, countHigh = math.inf):
+def maxp(df, w, disName, sumName, sumLow, sumHigh = math.inf, minName = None, minLow = -math.inf, minHigh = math.inf, maxName = None, maxLow = -math.inf, maxHigh = math.inf, avgName = None, avgLow = -math.inf, avgHigh = math.inf, countLow = -math.inf, countHigh = math.inf):
 #def emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh):
     EMP_flag = False
     if(minLow != -float('inf') or minHigh != float('inf')):
@@ -28,8 +30,10 @@ def MaxP(df, w, disName, sumName, sumLow, sumHigh = math.inf, minName = None, mi
         else:
             EMP_flag = True
     if(EMP_flag):
-        return emp.mp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh)
+        p, regions = emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh)
+        return p, regions
     else:
-        return smp(df, w, disName, sumName, sumLow)
+        p, regions = MaxP.maxp(df, w, disName, sumName, sumLow, 2)
+        return p, regions
 
 
