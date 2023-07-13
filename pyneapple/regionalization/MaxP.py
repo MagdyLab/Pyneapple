@@ -11,8 +11,7 @@ from .smp import smp
 import spopt
 from spopt.region import maxp as MaxP
 
-def maxp(df, w, disName, sumName, sumLow, sumHigh = math.inf, minName = None, minLow = -math.inf, minHigh = math.inf, maxName = None, maxLow = -math.inf, maxHigh = math.inf, avgName = None, avgLow = -math.inf, avgHigh = math.inf, countLow = -math.inf, countHigh = math.inf):
-#def emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh):
+def maxp(df, w, disName, sumName = None, sumLow = -math.inf, sumHigh = math.inf, minName = None, minLow = -math.inf, minHigh = math.inf, maxName = None, maxLow = -math.inf, maxHigh = math.inf, avgName = None, avgLow = -math.inf, avgHigh = math.inf, countLow = -math.inf, countHigh = math.inf):
     EMP_flag = False
     if(minLow != -float('inf') or minHigh != float('inf')):
         if(minName == None):
@@ -29,8 +28,11 @@ def maxp(df, w, disName, sumName, sumLow, sumHigh = math.inf, minName = None, mi
             print("Invalid AVG constraint!")
         else:
             EMP_flag = True
+    if((not EMP_flag) and sumName == None):
+        print("Invalid constraint")
+        return
     if(EMP_flag):
-        p, regions = emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh)
+        p, regions = expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh)
         return p, regions
     else:
         p, regions = MaxP.maxp(df, w, disName, sumName, sumLow, 2)

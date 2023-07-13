@@ -5,8 +5,8 @@ import geopandas
 import pandas
 from jpype import java
 from jpype import javax
-def emp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh):
-    """The enriched max-p-regions (EMP) involves the aggregation of n areas into an unknown maximum number of
+def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh):
+    """The expressive max-p-regions (EMP) involves the aggregation of n areas into an unknown maximum number of
     homogeneous regions, while ensuring that each region is contiguous and satisfies a set of constraints. The constraints 
     are 
 

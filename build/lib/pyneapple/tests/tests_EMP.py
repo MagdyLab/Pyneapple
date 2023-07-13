@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import jpype
 from jpype import java
 from jpype import javax
+import pytest
 
 class TestEMP(unittest.TestCase):
     JVMup = 0

@@ -1,5 +1,5 @@
 import unittest
-import regionalization.emp as emp
+from ..regionalization.expressive_maxp import expressive_maxp
 import weight.rook as rook
 import libpysal 
 import time
@@ -13,10 +13,6 @@ from jpype import java
 from jpype import javax
 
 class TestEMP(unittest.TestCase):
-    JVMup = 0
-    if JVMup == 0:
-        jpype.startJVM("-Xmx20480m", classpath = ["./Pineapple.jar"])
-        JVMup = 1
     #pth = libpysal.examples.get_path("mexicojoin.shp")
     #mexico = geopandas.read_file(pth)
     def test_rook(self):
@@ -32,7 +28,7 @@ class TestEMP(unittest.TestCase):
         w = rook.from_dataframe(mexico)
         mexico["count"] = 1
         inf = java.lang.Double.POSITIVE_INFINITY
-        p, regions = emp.emp(mexico, w, 'count', 'count', -inf, inf, 'count', -inf, inf, 'count', -inf, inf, 'count', 1.0, inf, -inf, inf) 
+        p, regions = expressive_maxp(mexico, w, 'count', 'count', -inf, inf, 'count', -inf, inf, 'count', -inf, inf, 'count', 1.0, inf, -inf, inf) 
         self.assertTrue(p, mexico.shape[0])
         
 if __name__ == '__main__':
