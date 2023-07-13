@@ -11,9 +11,9 @@ def from_dataframe(df):
     for gEntry in gcolumn:
         gArrayList.add(str(gEntry))
     Rook = jpype.JClass("edu.ucr.cs.pyneapple.utils.EMPUtils.SpatialGrid")
-    SMPI = jpype.JClass("edu.ucr.cs.pineapple.regionalization.SMPPPythonInterface")
+    #SMPI = jpype.JClass("edu.ucr.cs.pineapple.regionalization.SMPPPythonInterface")
     r = Rook()
-    geometry = SMPI.stringListToGeometryList(gArrayList);
+    geometry = Rook.stringListToGeometryList(gArrayList);
     neighborList = r.RookWithGeometryNoGrid(geometry)
     nDic = {}
     wDic = {}

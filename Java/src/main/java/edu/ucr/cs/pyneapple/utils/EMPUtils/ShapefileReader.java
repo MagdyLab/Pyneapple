@@ -203,4 +203,5 @@ public class ShapefileReader {
     public Map<Integer, Set<Integer>> getNeighborMap() {
         return neighborMap;
     }
+
 }

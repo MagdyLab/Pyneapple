@@ -1,7 +1,7 @@
 README.md
 setup.py
 pyneapple/__init__.py
-pyneapple/pyneapple-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+pyneapple/pyneapple-0.1.0-SNAPSHOT-jar-with-dependencies.jar
 pyneapple.egg-info/PKG-INFO
 pyneapple.egg-info/SOURCES.txt
 pyneapple.egg-info/dependency_links.txt

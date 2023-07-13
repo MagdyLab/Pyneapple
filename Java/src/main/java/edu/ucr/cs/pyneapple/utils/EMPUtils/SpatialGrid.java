@@ -6,11 +6,13 @@ import org.geotools.data.FeatureSource;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.io.ParseException;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.io.WKTReader;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -245,7 +247,12 @@ public class SpatialGrid{
         }
     }
 
-    static ArrayList<List> RookWithGeometryNoGrid(ArrayList<Geometry> polygons) {
+    /**
+     * The function for computing the Rook without specifying grids. Mainly used by the python interface.
+     * @param polygons An arraylist of geometries
+     * @return An arraylist of lists. Each list contains the neighbor area of the corresponding area
+     */
+    public static ArrayList<List> RookWithGeometryNoGrid(ArrayList<Geometry> polygons) {
 
         ArrayList<List> neighbors = new ArrayList<>();
 
@@ -356,5 +363,31 @@ public class SpatialGrid{
      */
     public void setNeighbors(Map<Integer, Set<Integer>> n){
         this.RookNeighbors = n;
+    }
+
+    /**
+     * From SMPPythonInterface, interprets the geometry from a wktstring
+     * @param wktString a string for the geometry
+     * @return the geometry
+     * @throws ParseException Exception when the WKTReader parses the string with a wrong format
+     */
+    public static Geometry stringToGeometry(String wktString) throws ParseException {
+        WKTReader reader = new WKTReader();
+        Geometry geom = reader.read(wktString);
+        return geom;
+    }
+
+    /**From SMPPythonInterface, get a list of geometry from the strings
+     * @param wktStrings a list of strings for the geometry
+     * @return a list of geometries
+     * @throws ParseException Exception when the WKTReader parses the string with a wrong format
+     */
+    public static ArrayList stringListToGeometryList(ArrayList<String> wktStrings) throws ParseException {
+        ArrayList<Geometry> polygons = new ArrayList<>();
+        System.out.println(wktStrings.size());
+        for (String wktString:wktStrings) {
+            polygons.add(stringToGeometry(wktString));
+        }
+        return polygons;
     }
 }

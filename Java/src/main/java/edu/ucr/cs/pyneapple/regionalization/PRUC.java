@@ -17,17 +17,6 @@ public class PRUC implements RegionalizationMethod{
     private int p = 0;
 
 
-    /**
-     * the main function
-     * @param args from the input
-     * @throws InterruptedException multi-threading environment
-     * @throws CloneNotSupportedException cloning the areas
-     */
-    public static void main(String args[]) throws InterruptedException, CloneNotSupportedException {
-        new PRUC().Test_module();
-
-        //System.out.println(new Random(2023117).nextDouble());
-    }
 
     /**
      * The default constructor

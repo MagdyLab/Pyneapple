@@ -6,7 +6,7 @@ import pandas
 import math
 from jpype import java
 from jpype import javax
-from .emp import emp
+from .expressive_maxp import expressive_maxp
 from .smp import smp
 import spopt
 from spopt.region import maxp as MaxP
