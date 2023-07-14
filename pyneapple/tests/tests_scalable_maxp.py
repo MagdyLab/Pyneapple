@@ -4,9 +4,9 @@ Spyder Editor
 
 This is a temporary script file.
 """
-import sys
-sys.path.append("..")
-from regionalization.scalable_maxp import scalable_maxp
+#import sys
+#sys.path.append("..")
+from pyneapple.regionalization.scalable_maxp import scalable_maxp
 import geopandas
 import libpysal
 import unittest
