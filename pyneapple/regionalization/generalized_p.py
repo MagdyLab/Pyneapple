@@ -27,7 +27,7 @@ source: Yongyi Liu, Ahmed R. Mahmood, Amr Magdy, Sergio Rey, "PRUC : P-Regions w
 
 
 
-def pruc(
+def generalized_p(
         gdf,
         w,
         sim_attr,
@@ -129,11 +129,11 @@ def pruc(
     
    
     PRUC = jpype.JClass('edu.ucr.cs.pyneapple.regionalization.PRUC')()
-    print("start")
-    print(jpype.JLong(threshold) )
-    print(type(jpype.JLong(threshold) ))
+    #print("start")
+    #print(jpype.JLong(threshold) )
+    #print(type(jpype.JLong(threshold) ))
     result = PRUC.execute_regionalization(neighborHashMap, sAttr, extAttr,  x_centroids, y_centroids, jpype.JLong(threshold) , jpype.JInt(p))
-    print("end")
+    #print("end")
     results = None
     if len(result) == 2:
         hetero = float(result[0])

@@ -1,13 +1,13 @@
 import sys
-from region import pruc
+from pyneapple.regionalization.generalized_p import generalized_p
 import geopandas
 import libpysal
 import unittest
 
 mexico = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
 mexico_w = libpysal.weights.Queen.from_dataframe(mexico)
-#mexico_label = [1, 1, 8, 8, 4, 4, 2, 5, 5, 5, 3, 8, 3, 7, 7, 5, 7, 5, 3, 3, 0, 0, 8, 9, 2, 8, 9, 4, 2, 6, 6, 0]
-#mexico_het = 155076.0
+mexico_record_num = 32
+
 
 class TestPruc(unittest.TestCase):
     
@@ -17,12 +17,7 @@ class TestPruc(unittest.TestCase):
         threshold = 3000000
         p = 10
         het , label = pruc(mexico, mexico_w,  sim_attr , ext_attr , threshold , p)
-        print(type(het))
-        print(type(label))
-        print(mexico.shape)
-        print(type(mexico.shape))
-        #self.assertListEqual(label,mexico_label)
-        #self.assertEqual(het, mexico_het)
+        self.assertEqual(len(label),  mexico_record_num )
         
     def test_pruc_gdf_format(self):
         sim_attr = 'PCGDP1940'
