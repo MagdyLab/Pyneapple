@@ -3,6 +3,7 @@ import array
 import numpy as np
 import geopandas
 import pandas
+import libpysal
 from jpype import java
 from jpype import javax
 def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh):
@@ -78,6 +79,24 @@ def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, m
     #if not jpype.isJVMStarted():
         #jpype.startJVM("-Xmx20480m", classpath = ["../Pineapple.jar"])
     #The JVM is started when 'pyneapple' is imported
+    if not isinstance(df, geopandas.GeoDataFrame):
+        raise Exception("df must be a GeoDataFrame object")
+    
+    if not isinstance(w, libpysal.weights.W):
+        raise Exception("w must be a libpysal.weights.W object")
+    
+    if disName not in df.columns:
+        raise Exception("Dissimilarity attribute not in the attribute list")
+    if minName not in df.columns:
+        raise Exception("Min attribute not in the attribute list")
+    if maxName not in df.columns:
+        raise Exception("Max attribute not in the attribute list")
+    if avgName not in df.columns:
+        raise Exception("Avg attribute not in the attribute list")
+    if sumName not in df.columns:
+        raise Exception("Sum attribute not in the attribute list")
+
+
     neighborHashMap = java.util.HashMap()
     for key, value in w.neighbors.items():
         tempSet = java.util.TreeSet()
@@ -92,9 +111,9 @@ def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, m
     avgAttr = jpype.java.util.ArrayList()
     sumAttr = jpype.java.util.ArrayList()
     disSucc = disAttr.addAll(df[disName].tolist())
-    minSucc = minAttr.addAll(df[disName].tolist())
-    maxSucc = maxAttr.addAll(df[sumName].tolist())
-    avgSucc = avgAttr.addAll(df[disName].tolist())
+    minSucc = minAttr.addAll(df[minName].tolist())
+    maxSucc = maxAttr.addAll(df[maxName].tolist())
+    avgSucc = avgAttr.addAll(df[avgName].tolist())
     sumSucc = sumAttr.addAll(df[sumName].tolist())#check for att assign
     for i in range(0, df.shape[0]):
         idList.add(jpype.JInt(i))
