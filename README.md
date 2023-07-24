@@ -14,9 +14,9 @@ Max-P Regionalization with Enriched Constraints
 
 
 ## Examples
-- [PRUC](https://github.com/YunfanKang/Pyneapple/blob/main/notebooks/pruc.ipynb)
-- [SMP](https://github.com/YunfanKang/Pyneapple/blob/main/notebooks/smpp.ipynb)
-- [EMP](https://github.com/YunfanKang/Pyneapple/blob/main/notebooks/max-p-enriched.ipynb)
+- [Generalized P-Regions](https://github.com/MagdyLab/Pyneapple/blob/main/notebooks/generalized_p.ipynb)
+- [Scalable Max-P Regions](https://github.com/MagdyLab/Pyneapple/blob/main/notebooks/scalable_maxp.ipynb)
+- [Expressive Max-P Regions](https://github.com/MagdyLab/Pyneapple/blob/main/notebooks/expressive_max_p.ipynb)
 
 All examples can be run interactively by launching this repository as a [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/MagdyLab/Pyneapple/HEAD) or opened using Jupyter Notebook.
 
