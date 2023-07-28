@@ -4,6 +4,7 @@ import numpy as np
 import geopandas
 import pandas
 import libpysal
+import math
 from jpype import java
 from jpype import javax
 def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, maxHigh, avgName, avgLow, avgHigh, sumName, sumLow, sumHigh, countLow, countHigh):
@@ -88,13 +89,25 @@ def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, m
     if disName not in df.columns:
         raise Exception("Dissimilarity attribute not in the attribute list")
     if minName not in df.columns:
-        raise Exception("Min attribute not in the attribute list")
+        if minName == None and minLow == -math.inf and minHigh == math.inf:
+            minName = disName
+        else:
+            raise Exception("Min attribute not in the attribute list")
     if maxName not in df.columns:
-        raise Exception("Max attribute not in the attribute list")
+        if maxName == None and maxLow == -math.inf and maxHigh == math.inf:
+            maxName = disName
+        else:
+            raise Exception("Max attribute not in the attribute list")
     if avgName not in df.columns:
-        raise Exception("Avg attribute not in the attribute list")
+        if avgName == None and avgLow == -math.inf and avgHigh == math.inf:
+            avgName = disName
+        else:
+            raise Exception("Avg attribute not in the attribute list")
     if sumName not in df.columns:
-        raise Exception("Sum attribute not in the attribute list")
+        if sumName == None and sumLow == -math.inf and sumHigh == math.inf:
+            sumName = disName
+        else:
+            raise Exception("Sum attribute not in the attribute list")
 
 
     neighborHashMap = java.util.HashMap()
@@ -110,11 +123,12 @@ def expressive_maxp(df, w, disName, minName, minLow, minHigh, maxName, maxLow, m
     maxAttr = jpype.java.util.ArrayList()
     avgAttr = jpype.java.util.ArrayList()
     sumAttr = jpype.java.util.ArrayList()
-    disSucc = disAttr.addAll(df[disName].tolist())
-    minSucc = minAttr.addAll(df[minName].tolist())
-    maxSucc = maxAttr.addAll(df[maxName].tolist())
-    avgSucc = avgAttr.addAll(df[avgName].tolist())
-    sumSucc = sumAttr.addAll(df[sumName].tolist())#check for att assign
+    #df['Field_2'] = df['Field_2'].apply(np.int64)
+    disSucc = disAttr.addAll(df[disName].apply(np.int64).tolist())
+    minSucc = minAttr.addAll(df[minName].apply(np.int64).tolist())
+    maxSucc = maxAttr.addAll(df[maxName].apply(np.int64).tolist())
+    avgSucc = avgAttr.addAll(df[avgName].apply(np.int64).tolist())
+    sumSucc = sumAttr.addAll(df[sumName].apply(np.int64).tolist())#check for att assign
     for i in range(0, df.shape[0]):
         idList.add(jpype.JInt(i))
     EMP.execute_regionalization(neighborHashMap, disAttr, minAttr,minLow, minHigh, maxAttr, maxLow, maxHigh, avgAttr, avgLow, avgHigh, sumAttr, sumLow, sumHigh, countLow, countHigh)
