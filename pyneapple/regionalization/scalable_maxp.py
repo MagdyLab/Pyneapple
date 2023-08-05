@@ -173,7 +173,7 @@ def scalable_maxp(df,
     #max_p = int(SMPP.getP())
 
 
-    results = [areas, max_p]
+    results = [max_p, areas]
     
 
     

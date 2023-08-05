@@ -32,7 +32,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         #the number of thread has to be set to 1 for testing purpose due to the uncontrolled schedueling sequence in the multithreading environment
-        areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+        max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertEqual(max_p, df.shape[0])
        
        
@@ -46,7 +46,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(None, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(None, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("df must be a GeoDataFrame object") 
         
         
@@ -60,7 +60,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, None, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, None, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("w must be a libpysal.weights.W object") 
      
         
@@ -74,7 +74,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("similarity attribute not in the attribute list") 
         
         
@@ -88,7 +88,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("extensive attribute not in the attribute list") 
         
         
@@ -102,7 +102,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("threshold must be non-negative") 
         
 
@@ -116,7 +116,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("maxItr must be a non-negative integer") 
         
         
@@ -130,7 +130,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("convSA must be a non-negative integer")
         
         
@@ -144,7 +144,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("cores must be a non-negative integer")
         
         
@@ -158,7 +158,7 @@ class Test_SMP(unittest.TestCase):
         nRows = -1
         nColumns = 1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("nRows must be a non-negative integer")
         
         
@@ -172,7 +172,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = -1
         with self.assertRaises(Exception):
-            areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+            max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertTrue("convSA must be a non-negative integer")
         
         
