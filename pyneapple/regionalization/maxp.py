@@ -103,6 +103,6 @@ def maxp(df, w, disName, sumName = None, sumLow = -math.inf, sumHigh = math.inf,
         return p, regions
     else:
         results = scalable_maxp(df, w, disName, sumName, sumLow, 2)
-        return results[1], results[0]
+        return results[0], results[1]
 
 
