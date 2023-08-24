@@ -32,7 +32,7 @@ class Test_SMP(unittest.TestCase):
         nRows = 1
         nColumns = 1
         #the number of thread has to be set to 1 for testing purpose due to the uncontrolled schedueling sequence in the multithreading environment
-        max_p, areas = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
+        areas, max_p = scalable_maxp(df, w, d_attribute_col_name, s_attribute_col_name, threshold, maxItr, convSA, cores, nRows, nColumns)
         self.assertEqual(max_p, df.shape[0])
        
        
