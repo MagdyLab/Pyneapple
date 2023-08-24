@@ -2,6 +2,11 @@
 
 **Pyneapple** is an open-source Python library for scalable and enriched spatial data analysis. The regionalization module provides the algorithm for the generalized p-regions problem, the scalable max-p-regions solution, and the expressive max-p-regions problem solution. The spatial regression module provides the scalable Multi-scale Geographically Weighted Regression method. It is under development for the inclusion of newly proposed algorithms for scalable spatial analysis methods.
 
+## Documentation
+
+The documentation for the Python APIs can be found at: [`Pyneapple Python APIs`]((https://pyneapple.readthedocs.io/))
+The JavaDocs is available at : [`Pyneapple JavaDocs`](([https://pyneapple.readthedocs.io/](https://github.com/MagdyLab/Pyneapple/tree/main/JavaDoc)))
+
 ## Modules
 
 
