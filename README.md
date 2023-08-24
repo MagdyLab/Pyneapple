@@ -4,8 +4,8 @@
 
 ## Documentation
 
-The documentation for the Python APIs can be found at: [`Pyneapple Python APIs`]((https://pyneapple.readthedocs.io/))
-The JavaDocs is available at : [`Pyneapple JavaDocs`](([https://pyneapple.readthedocs.io/](https://github.com/MagdyLab/Pyneapple/tree/main/JavaDoc)))
+The documentation for the Python APIs can be found at: [Pyneapple Python APIs](https://pyneapple.readthedocs.io/)
+The JavaDocs is available at : [Pyneapple JavaDocs](https://github.com/MagdyLab/Pyneapple/tree/main/JavaDoc))
 
 ## Modules
 
