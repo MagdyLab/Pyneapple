@@ -2,7 +2,7 @@
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
 # Required
-version: 0.1.0
+version: 2
 
 # Set the OS, Python version and other tools you might need
 build:
@@ -33,3 +33,6 @@ sphinx:
 # python:
 #    install:
 #    - requirements: docs/requirements.txt
+python:
+  install:
+    - requirements: requirements_doc.txt
