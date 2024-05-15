@@ -26,3 +26,4 @@ def from_dataframe(df):
         wDic[i] = wList
     from libpysal.weights import W
     return W(nDic, wDic) 
+ 

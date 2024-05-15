@@ -8,3 +8,4 @@ print(jar_dir)
 if not jpype.isJVMStarted():
         jpype.startJVM("-Xmx20480m", classpath = [jar_dir])
  
+ 

@@ -149,3 +149,4 @@ def generalized_p(
 #gdf = geopandas.read_file(libpysal.examples.get_path("mexicojoin.shp"))
 #w = libpysal.weights.Queen.from_dataframe(gdf)
 #print(pruc(gdf, w, 'PCGDP1940', 'PERIMETER', 3000000, 10)) 
+ 
