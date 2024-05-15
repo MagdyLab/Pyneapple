@@ -7,3 +7,4 @@ jar_dir = os.path.join(os.path.dirname(__file__), 'pyneapple-0.1.0-SNAPSHOT-jar-
 print(jar_dir)
 if not jpype.isJVMStarted():
         jpype.startJVM("-Xmx20480m", classpath = [jar_dir])
+ 

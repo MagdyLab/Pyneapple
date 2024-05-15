@@ -17,4 +17,4 @@ pyneapple/tests/testPruc.py
 pyneapple/tests/tests_expressive_maxp.py
 pyneapple/tests/tests_scalable_maxp.py
 pyneapple/weight/__init__.py
-pyneapple/weight/rook.py
+pyneapple/weight/rook.py 
