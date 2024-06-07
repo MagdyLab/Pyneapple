@@ -105,4 +105,4 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/conversantmedia/disruptor/1.2.13/disruptor-1.2.13.jar" path-in-jar="/" />
     </root>
   </artifact>
-</component>    
+</component>     
